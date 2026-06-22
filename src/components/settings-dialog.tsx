@@ -1,9 +1,21 @@
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { clearAppStorage } from '../lib/local-store';
 import { SourceWithHealth } from '../lib/types';
 
 export function SettingsDialog({ open, sources, onClose }: { open: boolean; sources: SourceWithHealth[]; onClose: () => void }) {
   const [confirmingClear, setConfirmingClear] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        if (confirmingClear) setConfirmingClear(false);
+        else onClose();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [confirmingClear, onClose, open]);
   if (!open) return null;
   if (confirmingClear) {
     return (
