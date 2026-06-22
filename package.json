@@ -12,15 +12,19 @@
     "typecheck": "tsc -b"
   },
   "dependencies": {
+    "@fontsource-variable/red-hat-display": "^5.2.8",
+    "@fontsource-variable/red-hat-mono": "^5.2.8",
+    "@fontsource-variable/red-hat-text": "^5.2.8",
     "@preact-signals/query": "2.1.2",
     "@preact/signals": "2.9.2",
     "preact": "10.29.2",
+    "preact-feather": "^4.3.0",
     "preact-iso": "2.12.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "2.10.5",
-    "@testing-library/jest-dom": "6.9.1",
     "@tailwindcss/vite": "4.3.1",
+    "@testing-library/jest-dom": "6.9.1",
     "@testing-library/preact": "3.2.4",
     "jsdom": "29.1.1",
     "tailwindcss": "4.3.1",

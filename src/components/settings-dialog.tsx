@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'preact/hooks';
+import { X } from 'preact-feather';
 import { clearAppStorage } from '../lib/local-store';
 import { SourceWithHealth } from '../lib/types';
 
@@ -19,29 +20,39 @@ export function SettingsDialog({ open, sources, onClose }: { open: boolean; sour
   if (!open) return null;
   if (confirmingClear) {
     return (
-      <div class="backdrop" role="presentation" onClick={() => setConfirmingClear(false)}>
-        <section class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="clear-storage-title" onClick={(event) => event.stopPropagation()}>
-          <h2 id="clear-storage-title">Clear local storage?</h2>
-          <p>This removes cached metadata, source health, recent searches, and settings saved on this device.</p>
-          <div class="dialog-actions">
+      <div class="alert-backdrop is-open" role="presentation" onClick={() => setConfirmingClear(false)}>
+        <section class="alert-dialog" role="alertdialog" aria-modal="true" aria-labelledby="clear-storage-title" onClick={(event) => event.stopPropagation()}>
+          <h2 class="alert-title" id="clear-storage-title">Clear local storage?</h2>
+          <p class="alert-copy">This removes cached metadata, source health, recent searches, and settings saved on this device.</p>
+          <div class="alert-actions">
             <button type="button" onClick={() => setConfirmingClear(false)}>Cancel</button>
-            <button type="button" class="danger-button" onClick={() => { clearAppStorage(); setConfirmingClear(false); }}>Clear storage</button>
+            <button type="button" class="danger" onClick={() => { clearAppStorage(); localStorage.removeItem('stream:recent-searches'); setConfirmingClear(false); }}>Clear storage</button>
           </div>
         </section>
       </div>
     );
   }
   return (
-    <div class="backdrop" role="presentation" onClick={onClose}>
-      <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="settings-title" onClick={(event) => event.stopPropagation()}>
-        <button type="button" class="icon-button" aria-label="Close settings" onClick={onClose}>X</button>
-        <h2 id="settings-title">Settings</h2>
-        <p>Saved to this device. No account needed.</p>
-        <h3>SERVERS</h3>
-        <div class="server-list">
-          {sources.map((source) => <span key={source.id}>{source.name} · {source.health}</span>)}
+    <div class="modal-backdrop is-open" role="presentation" onClick={onClose}>
+      <section class="settings-dialog" role="dialog" aria-modal="true" aria-labelledby="settings-title" onClick={(event) => event.stopPropagation()}>
+        <div class="dialog-head">
+          <div><h2 class="dialog-title" id="settings-title">Settings</h2><div class="dialog-note">Saved to this device. No account needed.</div></div>
+          <button type="button" class="close-dialog" aria-label="Close settings" onClick={onClose}><X aria-hidden="true" /></button>
         </div>
-        <button type="button" class="link-button" onClick={() => setConfirmingClear(true)}>Clear local storage</button>
+        <div class="dialog-body">
+          <div class="server-head"><span class="eyebrow">Servers</span></div>
+          <div class="server-list" aria-label="Server status list">
+            {sources.map((source) => (
+              <div class="server-row" key={source.id}>
+                <span><span class="server-name">{source.name}</span><span class="server-location">Third-party provider</span></span>
+                <span class={`server-status ${source.health === 'up' || source.health === 'unknown' ? 'online' : ''}`}><span class="status-dot" />{source.health === 'down' ? 'Down' : 'Online'}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="dialog-foot">
+          <button type="button" class="clear-storage" onClick={() => setConfirmingClear(true)}>Clear local storage</button>
+        </div>
       </section>
     </div>
   );

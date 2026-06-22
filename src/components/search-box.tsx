@@ -1,12 +1,124 @@
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
+import { ArrowRight, Clock, Search } from 'preact-feather';
+import { apiClient } from '../lib/api-client';
+import { getSearchWithCache } from '../lib/queries';
+import { MediaItem } from '../lib/types';
 
-export function SearchBox({ initialQuery, onSearch }: { initialQuery: string; onSearch: (query: string) => void }) {
+const RECENTS_KEY = 'stream:recent-searches';
+
+function readRecents(): string[] {
+  try {
+    const value = localStorage.getItem(RECENTS_KEY);
+    return value ? JSON.parse(value).slice(0, 5) : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeRecents(values: string[]) {
+  localStorage.setItem(RECENTS_KEY, JSON.stringify(values.slice(0, 5)));
+}
+
+function labelFor(item: MediaItem) {
+  return [item.type.toUpperCase(), item.year].filter(Boolean).join(' - ');
+}
+
+export function rememberSearch(query: string) {
+  const trimmed = query.trim();
+  if (!trimmed) return;
+  const existing = readRecents().filter((item) => item.toLowerCase() !== trimmed.toLowerCase());
+  writeRecents([trimmed, ...existing]);
+}
+
+export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initialQuery: string; onSearch: (query: string) => void; onSelect?: (item: MediaItem) => void; onClose?: () => void }) {
   const [query, setQuery] = useState(initialQuery);
+  const [recents, setRecents] = useState<string[]>(readRecents());
+  const [results, setResults] = useState<MediaItem[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const trimmed = query.trim();
+    if (trimmed.length < 2) {
+      setResults([]);
+      setLoading(false);
+      return;
+    }
+    let cancelled = false;
+    setLoading(true);
+    getSearchWithCache(apiClient, { q: trimmed, page: 1 })
+      .then((response) => {
+        if (!cancelled) setResults(response.results.slice(0, 4));
+      })
+      .catch(() => {
+        if (!cancelled) setResults([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [query]);
+
+  function submit(nextQuery = query) {
+    const trimmed = nextQuery.trim();
+    if (!trimmed) return;
+    rememberSearch(trimmed);
+    setRecents(readRecents());
+    onSearch(trimmed);
+  }
+
+  function clearRecents() {
+    writeRecents([]);
+    setRecents([]);
+  }
+
+  function removeRecent(value: string) {
+    const next = recents.filter((item) => item !== value);
+    writeRecents(next);
+    setRecents(next);
+  }
+
+  const showingResults = query.trim().length >= 2;
+
   return (
-    <form class="search-box" onSubmit={(event) => { event.preventDefault(); onSearch(query.trim()); }}>
-      <label htmlFor="search-query">Search</label>
-      <input id="search-query" value={query} onInput={(event) => setQuery(event.currentTarget.value)} placeholder="Search movies or TV" />
-      <button type="submit">Search</button>
-    </form>
+    <div class="search-wrap">
+      <form class="search" aria-label="Search" onSubmit={(event) => { event.preventDefault(); submit(); }}>
+        <Search aria-hidden="true" />
+        <input value={query} onInput={(event) => setQuery(event.currentTarget.value)} placeholder="Search any title..." autocomplete="off" />
+        {onClose ? <button class="mobile-search-close" type="button" aria-label="Close search" onClick={onClose}>x</button> : null}
+      </form>
+
+      <div class="search-panel" aria-label="Search suggestions">
+        <div class={`search-mode ${showingResults ? '' : 'is-active'}`}>
+          <div class="search-panel-head">
+            <span class="search-label">Recent Searches</span>
+            <button class="clear-btn" type="button" onClick={clearRecents}>Clear all</button>
+          </div>
+          {recents.length === 0 ? <div class="empty-row">No recent searches yet.</div> : null}
+          {recents.map((recent) => (
+            <button class="recent-row" type="button" key={recent} onClick={() => { setQuery(recent); submit(recent); }}>
+              <Clock aria-hidden="true" />
+              <span class="recent-title">{recent}</span>
+              <span class="remove-recent" onClick={(event) => { event.stopPropagation(); removeRecent(recent); }}>x</span>
+            </button>
+          ))}
+        </div>
+
+        <div class={`search-mode ${showingResults ? 'is-active' : ''}`}>
+          <div class="search-panel-head"><span class="search-label">Results</span></div>
+          <div class="result-list">
+            {loading ? <div class="empty-row">Searching...</div> : null}
+            {!loading && results.length === 0 ? <div class="empty-row">No quick results.</div> : null}
+            {results.map((item) => (
+              <button class="result-row" type="button" key={`${item.type}-${item.id}`} onClick={() => { rememberSearch(query); onSelect?.(item); }}>
+                <span class="thumb">{item.type === 'movie' ? 'MV' : 'TV'}</span>
+                <span class="result-copy"><span class="result-title">{item.title}</span><span class="result-meta">{labelFor(item)}</span></span>
+                <span class="result-rating">{item.rating ? `★ ${item.rating.toFixed(1)}` : 'OPEN'}</span>
+              </button>
+            ))}
+          </div>
+          <button class="view-all" type="submit"><span>View all results for <strong>{`"${query.trim()}"`}</strong></span><ArrowRight aria-hidden="true" /></button>
+        </div>
+      </div>
+    </div>
   );
 }

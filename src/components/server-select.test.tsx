@@ -14,16 +14,17 @@ describe('ServerSelect', () => {
     render(<ServerSelect sources={sources} value="a" onChange={() => {}} />);
     const options = screen.getAllByRole('option');
     expect(options).toHaveLength(3);
-    expect(options[0]).toHaveTextContent('Alpha (up)');
-    expect(options[1]).toHaveTextContent('Beta (down)');
-    expect(options[2]).toHaveTextContent('Gamma (unknown)');
+    expect(options[0]).toHaveTextContent('Alpha');
+    expect(options[1]).toHaveTextContent('Beta');
+    expect(options[2]).toHaveTextContent('Gamma');
+    expect(options[1].querySelector('.status-dot')).toHaveClass('is-down');
   });
 
   it('marks the selected option', () => {
     render(<ServerSelect sources={sources} value="b" onChange={() => {}} />);
-    const options = screen.getAllByRole('option') as HTMLOptionElement[];
-    expect(options[0].selected).toBe(false);
-    expect(options[1].selected).toBe(true);
-    expect(options[2].selected).toBe(false);
+    const options = screen.getAllByRole('option');
+    expect(options[0]).toHaveAttribute('aria-selected', 'false');
+    expect(options[1]).toHaveAttribute('aria-selected', 'true');
+    expect(options[2]).toHaveAttribute('aria-selected', 'false');
   });
 });

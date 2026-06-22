@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
+import { Share2, Star, User } from 'preact-feather';
 import { apiClient } from '../lib/api-client';
 import { resolveEmbedUrl } from '../lib/embed-resolver';
 import { getTitleWithCache } from '../lib/queries';
@@ -38,18 +39,62 @@ export function WatchPage() {
   }
 
   return (
-    <main class="shell page watch-layout">
-      <section>
-        <iframe class="player" src={embedUrl} title={details?.title ?? 'Selected stream source'} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
-        <ServerSelect sources={sources} value={sourceId} onChange={setSourceId} />
-        {type === 'tv' ? <SeasonEpisodePicker season={season} episode={episode} onChange={updateEpisode} /> : null}
-        <p class="muted">TerniLabs does not host video. If one third-party source fails, try another server.</p>
-      </section>
-      <aside class="details-panel">
-        {error ? <ApiErrorMessage error={error} /> : null}
-        <h1>{details?.title ?? `Title ${id}`}</h1>
-        <p>{details?.overview ?? 'Details are unavailable, but the selected third-party player can still be tried.'}</p>
+    <main>
+      <div class="wrap detail-shell">
+      <div class="left-panel">
+        <section class="player-card" aria-label="Player area">
+          <div class="player-placeholder">
+            <iframe class="player-frame" src={embedUrl} title={details?.title ?? 'Selected stream source'} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
+          </div>
+          <div class="player-controls">
+            <div class="now-row">
+              <div class="now-copy"><span class="kicker">Now playing</span><span class="now-title">{details?.title ?? `Title ${id}`}{type === 'tv' ? ` S${season} E${episode}` : ''}</span></div>
+              <button class="share-button" type="button" aria-label="Share title" onClick={() => navigator.clipboard?.writeText(window.location.href)}><Share2 aria-hidden="true" /></button>
+              <ServerSelect sources={sources} value={sourceId} onChange={setSourceId} />
+            </div>
+            {type === 'tv' ? <SeasonEpisodePicker season={season} episode={episode} onChange={updateEpisode} /> : null}
+            <div class="note-line">Please try different servers if one isn't working, and consider using ad blockers or the Brave browser.</div>
+          </div>
+        </section>
+
+        <section class="panel-card recommendation" aria-label="Recommendations">
+          <div class="section-head"><h2 class="section-title">Recommendation</h2></div>
+          <div class="reco-grid"><div class="empty-row">Related titles load from search and category pages.</div></div>
+        </section>
+      </div>
+
+      <aside class="right-panel">
+        <section class="panel-card detail-card">
+          {error ? <ApiErrorMessage error={error} /> : null}
+          <div class="detail-top">
+            <div class="detail-poster">{details?.posterUrl ? <img src={details.posterUrl} alt="" /> : <span class="placeholder"><User aria-hidden="true" /></span>}</div>
+            <div>
+              <h1 class="detail-title">{details?.title ?? `Title ${id}`}</h1>
+              <div class="detail-facts">
+                <span><span class="fact-label">Type</span><span class="fact-value">{type.toUpperCase()}</span></span>
+                <span><span class="fact-label">Year</span><span class="fact-value">{details?.year ?? 'Unknown'}</span></span>
+                <span><span class="fact-label">Rating</span><span class="fact-value">{details?.rating ? <><Star aria-hidden="true" /> {details.rating.toFixed(1)}</> : 'Unrated'}</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="summary-box"><p class="summary-text collapsed">{details?.overview ?? 'Details are unavailable, but the selected third-party player can still be tried.'}</p></div>
+          {details?.genres?.length ? <div class="tag-list">{details.genres.map((genre) => <span class="tag" key={genre}>{genre}</span>)}</div> : null}
+        </section>
+
+        <section class="panel-card trailer-card">
+          <div class="section-head"><h2 class="section-title">Trailer</h2></div>
+          <div class="trailer-list">{details?.trailerUrl ? <a class="trailer-button" href={details.trailerUrl} target="_blank" rel="noreferrer">Open trailer <Share2 aria-hidden="true" /></a> : <span class="empty-row">No trailer available.</span>}</div>
+        </section>
+
+        <section class="panel-card characters-card">
+          <div class="character-head"><h2 class="section-title">Characters</h2><button class="character-view-all" type="button">view all</button></div>
+          <div class="character-list">
+            {(details?.cast ?? []).slice(0, 4).map((person) => <div class="character-row" key={person.id}><span class="avatar">{person.imageUrl ? <img src={person.imageUrl} alt="" /> : person.name.slice(0, 2).toUpperCase()}</span><span><span class="character-name">{person.character ?? person.name}</span><span class="actor-name">{person.name}</span></span></div>)}
+            {!details?.cast?.length ? <span class="empty-row">No character data available.</span> : null}
+          </div>
+        </section>
       </aside>
+      </div>
     </main>
   );
 }

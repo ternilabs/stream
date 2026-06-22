@@ -6,6 +6,7 @@ import { MediaItem } from '../lib/types';
 import { MediaCard } from '../components/media-card';
 import { ApiErrorMessage, StateMessage } from '../components/state-message';
 import { SearchBox } from '../components/search-box';
+import { Search, Sliders } from 'preact-feather';
 
 export function SearchPage() {
   const { route } = useLocation();
@@ -27,16 +28,20 @@ export function SearchPage() {
   }, [query]);
 
   return (
-    <main class="shell page">
-      <h1>Search</h1>
-      <SearchBox initialQuery={initialQuery} onSearch={(nextQuery) => { setQuery(nextQuery); route(`/search?q=${encodeURIComponent(nextQuery)}`); }} />
-      <div class="filters" aria-label="Filters"><button type="button" disabled>Advanced filters coming soon</button></div>
+    <main class="browse-page">
+      <div class="browse-shell">
+      <SearchBox initialQuery={initialQuery} onSearch={(nextQuery) => { setQuery(nextQuery); route(`/search?q=${encodeURIComponent(nextQuery)}`); }} onSelect={(item) => route(`/watch/${item.id}?type=${item.type}`)} />
+      <div class="browse-search-row" aria-label="Browse filters">
+        <label class="browse-search-box"><Search aria-hidden="true" /><input value={query} onInput={(event) => setQuery(event.currentTarget.value)} placeholder="Search the catalog..." /></label>
+        <button class="browse-advanced-toggle" type="button" disabled><Sliders aria-hidden="true" />Advanced</button>
+      </div>
       {loading ? <StateMessage title="Searching" /> : null}
       {error ? <ApiErrorMessage error={error} /> : null}
       {!loading && !error && query && items.length === 0 ? <StateMessage title="No results" /> : null}
-      <section class="search-grid" aria-label="Search results">
+      <section class="browse-grid" aria-label="Search results">
         {items.map((item) => <MediaCard key={`${item.type}-${item.id}`} item={item} />)}
       </section>
+      </div>
     </main>
   );
 }

@@ -10,7 +10,7 @@ describe('SettingsDialog', () => {
     setCachedValue('settings', 'selectedSource', 'vidlink');
     render(<SettingsDialog open sources={mergeSourceHealth(SOURCES)} onClose={() => undefined} />);
     expect(screen.getByText('Settings')).toBeInTheDocument();
-    expect(screen.getByText('SERVERS')).toBeInTheDocument();
+    expect(screen.getByText('Servers')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Clear local storage'));
     fireEvent.click(screen.getByText('Clear storage'));
     expect(localStorage.getItem('stream:v1:settings')).toBeNull();

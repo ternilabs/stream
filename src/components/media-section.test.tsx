@@ -11,4 +11,11 @@ describe('MediaSection', () => {
     render(<MediaSection title="Trending" items={items} />);
     expect(screen.getAllByRole('article')).toHaveLength(4);
   });
+
+  it('links visible cards to the watch route', () => {
+    setViewportWidth(1200);
+    render(<MediaSection title="Trending" items={items} />);
+
+    expect(screen.getByRole('link', { name: /Watch Movie 1/i })).toHaveAttribute('href', '/watch/1?type=movie');
+  });
 });

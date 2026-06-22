@@ -35,12 +35,21 @@ export function HomePage() {
   if (!data) return <main class="shell page"><StateMessage title="Loading metadata" /></main>;
 
   return (
-    <main class="shell page">
-      <section class="hero"><p>Streaming metadata and third-party source launcher.</p><h1>Find something to watch.</h1></section>
+    <main>
+      <div class="wrap">
+      <section class="announcement">
+        <div class="announcement-head"><span class="eyebrow">TerniLabs Stream</span><span class="date">Daily cache active</span></div>
+        <ul>
+          <li>Search movies and TV metadata without storing videos on this site.</li>
+          <li>Open third-party players from any visible title card.</li>
+          <li>If the free API limit is hit, cached data remains available where possible.</li>
+        </ul>
+      </section>
       <MediaSection title="Trending Movies" items={data.trendingMovies} />
       <MediaSection title="Trending TV" items={data.trendingTv} />
       <MediaSection title="Top Rated Movies" items={data.topMovies} />
       <MediaSection title="Top Rated TV" items={data.topTv} />
+      </div>
     </main>
   );
 }
