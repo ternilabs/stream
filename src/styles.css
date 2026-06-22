@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Red Hat Display", "Red Hat Text", Inter, system-ui, sans-serif;
+  --color-stream-bg: #08090b;
+  --color-stream-panel: #111318;
+  --color-stream-panel-2: #171a21;
+  --color-stream-border: #2a2f3a;
+  --color-stream-muted: #9ca3af;
+  --color-stream-text: #f3f4f6;
+  --color-stream-accent: #f43f5e;
+  --color-stream-danger: #fb7185;
+  --color-stream-ok: #34d399;
+}
+
+:root {
+  color-scheme: dark;
+  font-family: "Red Hat Display", "Red Hat Text", Inter, system-ui, sans-serif;
+  color: #f3f4f6;
+  background: #08090b;
+  --bg: #08090b;
+  --panel: #111318;
+  --panel-2: #171a21;
+  --border: #2a2f3a;
+  --muted: #9ca3af;
+  --text: #f3f4f6;
+  --accent: #f43f5e;
+  --danger: #fb7185;
+  --ok: #34d399;
+  --container: 1200px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+a { color: inherit; }
+button, input, select { font: inherit; }
+
+.shell {
+  width: min(var(--container), calc(100% - 32px));
+  margin: 0 auto;
+}
