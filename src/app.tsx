@@ -1,7 +1,8 @@
 import { ErrorBoundary, LocationProvider, Route, Router } from 'preact-iso';
+import { Nav } from './components/nav';
 
 function HomePlaceholder() {
-  return <main class="shell"><h1>TerniLabs</h1></main>;
+  return <main class="shell"><h1>Stream without stored video.</h1></main>;
 }
 
 function NotFound() {
@@ -12,6 +13,7 @@ export function App() {
   return (
     <LocationProvider>
       <ErrorBoundary>
+        <Nav />
         <Router>
           <Route path="/" component={HomePlaceholder} />
           <Route default component={NotFound} />
