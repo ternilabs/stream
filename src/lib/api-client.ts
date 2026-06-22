@@ -4,6 +4,32 @@ type FetchLike = typeof fetch;
 
 const TIMEOUT_MS = 4000;
 
+interface ApiListItem {
+  id: number;
+  type: 'movie' | 'tv';
+  title: string;
+  rating?: number;
+  year?: number | null;
+  cover?: string | null;
+}
+
+interface ApiPagination {
+  page: number;
+  totalPages: number;
+}
+
+interface ApiPaginatedList {
+  data: ApiListItem[];
+  pagination: ApiPagination;
+}
+
+interface ApiTitleDetails extends ApiListItem {
+  description?: string;
+  genres?: string[];
+  trailers?: Array<{ url: string }>;
+  cast?: Array<{ actor: string; character?: string; profile?: string | null }>;
+}
+
 function normalizeBaseUrl(baseUrl: string): string {
   return baseUrl.replace(/\/+$/, '');
 }
@@ -28,6 +54,35 @@ async function parseResponse<T>(response: Response): Promise<T> {
   return body as T;
 }
 
+function mapMediaItem(item: ApiListItem) {
+  return {
+    id: item.id,
+    type: item.type,
+    title: item.title,
+    ...(item.year == null ? {} : { year: String(item.year) }),
+    ...(item.cover ? { posterUrl: item.cover } : {}),
+    ...(item.rating === undefined ? {} : { rating: item.rating }),
+  };
+}
+
+function normalizeList(response: ApiPaginatedList): PagedMediaResponse {
+  return {
+    page: response.pagination.page,
+    totalPages: response.pagination.totalPages,
+    results: response.data.map(mapMediaItem),
+  };
+}
+
+function normalizeTitle(response: ApiTitleDetails): TitleDetails {
+  return {
+    ...mapMediaItem(response),
+    ...(response.description ? { overview: response.description } : {}),
+    ...(response.genres ? { genres: response.genres } : {}),
+    ...(response.trailers?.[0]?.url ? { trailerUrl: response.trailers[0].url } : {}),
+    ...(response.cast ? { cast: response.cast.map((person, index) => ({ id: index, name: person.actor, character: person.character, imageUrl: person.profile ?? undefined })) } : {}),
+  };
+}
+
 export function createApiClient(baseUrl = import.meta.env.VITE_API_BASE_URL ?? '', fetcher: FetchLike = fetch) {
   const base = normalizeBaseUrl(baseUrl);
 
@@ -48,16 +103,16 @@ export function createApiClient(baseUrl = import.meta.env.VITE_API_BASE_URL ?? '
 
   return {
     healthz: () => request<{ ok: boolean }>('/healthz'),
-    search: (params: ApiSearchParams) => {
+    search: async (params: ApiSearchParams) => {
       const query = new URLSearchParams();
       query.set('q', params.q.trim());
       if (params.page) query.set('page', String(params.page));
       if (params.type) query.set('type', params.type);
-      return request<PagedMediaResponse>(`/v1/search?${query.toString()}`);
+      return normalizeList(await request<ApiPaginatedList>(`/v1/search?${query.toString()}`));
     },
-    trending: (kind: 'movies' | 'tv') => request<PagedMediaResponse>(`/v1/trending/${kind}`),
-    topRated: (kind: 'movies' | 'tv') => request<PagedMediaResponse>(`/v1/top-rated/${kind}`),
-    title: (type: 'movie' | 'tv', id: number) => request<TitleDetails>(`/v1/titles/${type}/${id}`),
+    trending: async (kind: 'movies' | 'tv') => normalizeList(await request<ApiPaginatedList>(`/v1/trending/${kind}`)),
+    topRated: async (kind: 'movies' | 'tv') => normalizeList(await request<ApiPaginatedList>(`/v1/top-rated/${kind}`)),
+    title: async (type: 'movie' | 'tv', id: number) => normalizeTitle(await request<ApiTitleDetails>(`/v1/titles/${type}/${id}`)),
     sources: () => request<SourceHealthApiResponse>('/v1/sources'),
   };
 }

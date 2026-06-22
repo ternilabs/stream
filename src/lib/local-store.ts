@@ -1,6 +1,6 @@
 type Namespace = 'api-cache' | 'source-health' | 'recent-searches' | 'settings';
 
-const VERSION = 1;
+const VERSION = 2;
 const PREFIX = `stream:v${VERSION}`;
 
 interface StoredNamespace {
