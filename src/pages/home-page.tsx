@@ -38,11 +38,13 @@ export function HomePage() {
     <main>
       <div class="wrap">
       <section class="announcement">
-        <div class="announcement-head"><span class="eyebrow">TerniLabs Stream</span><span class="date">Daily cache active</span></div>
+        <div class="announcement-head"><span class="eyebrow">Announcement</span><span class="date">Daily cache active</span></div>
         <ul>
-          <li>Search movies and TV metadata without storing videos on this site.</li>
-          <li>Open third-party players from any visible title card.</li>
-          <li>If the free API limit is hit, cached data remains available where possible.</li>
+          <li>They can report bugs, pull request from the original repository (https://github.com/ternilabs/stream).</li>
+          <li>Donate to improve the performance and have independent servers through my ko-fi (ko-fi.com/mkgpdev).</li>
+          <li>The project is intended for educational and private use only. The developer does not condone or encourage copyright infringement.</li>
+          <li>We don't store any medias and only supported with third-party APIs.</li>
+          <li>The project is not affiliated with, endorsed by, or connected to any streaming platform.</li>
         </ul>
       </section>
       <MediaSection title="Trending Movies" items={data.trendingMovies} />

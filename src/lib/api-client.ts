@@ -28,6 +28,7 @@ interface ApiTitleDetails extends ApiListItem {
   genres?: string[];
   trailers?: Array<{ url: string }>;
   cast?: Array<{ actor: string; character?: string; profile?: string | null }>;
+  recommended?: ApiListItem[];
 }
 
 function normalizeBaseUrl(baseUrl: string): string {
@@ -80,6 +81,7 @@ function normalizeTitle(response: ApiTitleDetails): TitleDetails {
     ...(response.genres ? { genres: response.genres } : {}),
     ...(response.trailers?.[0]?.url ? { trailerUrl: response.trailers[0].url } : {}),
     ...(response.cast ? { cast: response.cast.map((person, index) => ({ id: index, name: person.actor, character: person.character, imageUrl: person.profile ?? undefined })) } : {}),
+    ...(response.recommended ? { recommended: response.recommended.map(mapMediaItem) } : {}),
   };
 }
 
@@ -105,9 +107,10 @@ export function createApiClient(baseUrl = import.meta.env.VITE_API_BASE_URL ?? '
     healthz: () => request<{ ok: boolean }>('/healthz'),
     search: async (params: ApiSearchParams) => {
       const query = new URLSearchParams();
-      query.set('q', params.q.trim());
+      query.set('query', params.q.trim());
       if (params.page) query.set('page', String(params.page));
       if (params.type) query.set('type', params.type);
+      if (params.limit) query.set('limit', String(params.limit));
       return normalizeList(await request<ApiPaginatedList>(`/v1/search?${query.toString()}`));
     },
     trending: async (kind: 'movies' | 'tv') => normalizeList(await request<ApiPaginatedList>(`/v1/trending/${kind}`)),

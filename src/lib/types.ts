@@ -9,7 +9,8 @@ export interface ApiErrorEnvelope {
 export interface ApiSearchParams {
   q: string;
   page?: number;
-  type?: MediaType;
+  type?: MediaType | 'multi';
+  limit?: number;
 }
 
 export interface MediaItem {
@@ -58,6 +59,7 @@ export interface TitleDetails extends MediaItem {
   runtimeMinutes?: number;
   trailerUrl?: string;
   cast?: Array<{ id: number; name: string; character?: string; imageUrl?: string }>;
+  recommended?: MediaItem[];
 }
 
 export type ApiFailureKind = 'bad-request' | 'not-found' | 'rate-limited' | 'upstream' | 'server' | 'network';

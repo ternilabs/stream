@@ -21,7 +21,7 @@ async function cached<T>(key: string, load: () => Promise<T>): Promise<T> {
 }
 
 export function getSearchWithCache(client: ApiClient, params: ApiSearchParams): Promise<PagedMediaResponse> {
-  return cached(cacheKey('search', { q: params.q.trim(), page: params.page ?? 1, type: params.type }), () => client.search(params));
+  return cached(cacheKey('search', { q: params.q.trim(), page: params.page ?? 1, type: params.type, limit: params.limit }), () => client.search(params));
 }
 
 export function getTrendingWithCache(client: Pick<ApiClient, 'trending'>, kind: ApiListKind): Promise<PagedMediaResponse> {

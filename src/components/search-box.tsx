@@ -45,9 +45,9 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
     }
     let cancelled = false;
     setLoading(true);
-    getSearchWithCache(apiClient, { q: trimmed, page: 1 })
+    getSearchWithCache(apiClient, { q: trimmed, page: 1, limit: 6 })
       .then((response) => {
-        if (!cancelled) setResults(response.results.slice(0, 4));
+        if (!cancelled) setResults(response.results.slice(0, 6));
       })
       .catch(() => {
         if (!cancelled) setResults([]);
@@ -116,7 +116,7 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
               </button>
             ))}
           </div>
-          <button class="view-all" type="submit"><span>View all results for <strong>{`"${query.trim()}"`}</strong></span><ArrowRight aria-hidden="true" /></button>
+          <button class="view-all" type="submit" disabled><span>View all results for <strong>{`"${query.trim()}"`}</strong></span><ArrowRight aria-hidden="true" /></button>
         </div>
       </div>
     </div>

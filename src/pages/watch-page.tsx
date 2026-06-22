@@ -7,6 +7,7 @@ import { mergeSourceHealth } from '../lib/source-health';
 import { SOURCES } from '../lib/source-registry';
 import { MediaType, TitleDetails } from '../lib/types';
 import { ApiErrorMessage } from '../components/state-message';
+import { MediaCard } from '../components/media-card';
 import { SeasonEpisodePicker } from '../components/season-episode-picker';
 import { ServerSelect } from '../components/server-select';
 
@@ -59,7 +60,10 @@ export function WatchPage() {
 
         <section class="panel-card recommendation" aria-label="Recommendations">
           <div class="section-head"><h2 class="section-title">Recommendation</h2></div>
-          <div class="reco-grid"><div class="empty-row">Related titles load from search and category pages.</div></div>
+          <div class="reco-grid">
+            {(details?.recommended ?? []).slice(0, 12).map((item) => <MediaCard item={item} key={`${item.type}-${item.id}`} />)}
+            {!details?.recommended?.length ? <div class="empty-row">No recommendations available.</div> : null}
+          </div>
         </section>
       </div>
 

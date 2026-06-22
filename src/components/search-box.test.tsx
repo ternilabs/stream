@@ -44,4 +44,20 @@ describe('SearchBox', () => {
     fireEvent.click(screen.getByText('The Matrix'));
     expect(onSelect).toHaveBeenCalledWith({ id: 603, type: 'movie', title: 'The Matrix', year: '1999', rating: 8.7 });
   });
+
+  it('requests and shows six quick results with disabled view-all action', async () => {
+    searchMock.mockResolvedValue({
+      page: 1,
+      totalPages: 1,
+      results: Array.from({ length: 7 }, (_, index) => ({ id: index + 1, type: 'movie', title: `Result ${index + 1}` })),
+    });
+    render(<SearchBox initialQuery="" onSearch={() => undefined} />);
+
+    fireEvent.input(screen.getByPlaceholderText('Search any title...'), { target: { value: 'result' } });
+
+    await waitFor(() => expect(screen.getByText('Result 6')).toBeInTheDocument());
+    expect(screen.queryByText('Result 7')).not.toBeInTheDocument();
+    expect(searchMock).toHaveBeenCalledWith(expect.anything(), { q: 'result', page: 1, limit: 6 });
+    expect(screen.getByRole('button', { name: /View all results for/i })).toBeDisabled();
+  });
 });

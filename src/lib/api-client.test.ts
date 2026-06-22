@@ -10,8 +10,27 @@ describe('api-client', () => {
   it('builds search URLs with normalized parameters', async () => {
     const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({ data: [], pagination: { page: 1, totalPages: 1, totalResults: 0, hasNext: false, hasPrevious: false } })));
     const client = createApiClient('https://api.example.test', fetchMock);
-    await client.search({ q: ' matrix ', page: 2, type: 'movie' });
-    expect(fetchMock).toHaveBeenCalledWith('https://api.example.test/v1/search?q=matrix&page=2&type=movie', expect.any(Object));
+    await client.search({ q: ' matrix ', page: 2, type: 'movie', limit: 6 });
+    expect(fetchMock).toHaveBeenCalledWith('https://api.example.test/v1/search?query=matrix&page=2&type=movie&limit=6', expect.any(Object));
+  });
+
+  it('normalizes title recommendations from details responses', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({
+      id: 603,
+      type: 'movie',
+      title: 'The Matrix',
+      rating: 8.2,
+      year: 1999,
+      cover: 'https://image.test/matrix.jpg',
+      recommended: [{ id: 604, type: 'movie', title: 'The Matrix Reloaded', rating: 7.1, year: 2003, cover: 'https://image.test/reloaded.jpg' }],
+    })));
+    const client = createApiClient('https://api.example.test', fetchMock);
+
+    await expect(client.title('movie', 603)).resolves.toMatchObject({
+      id: 603,
+      title: 'The Matrix',
+      recommended: [{ id: 604, type: 'movie', title: 'The Matrix Reloaded', rating: 7.1, year: '2003', posterUrl: 'https://image.test/reloaded.jpg' }],
+    });
   });
 
   it('normalizes paginated API lists into frontend media items', async () => {
