@@ -24,6 +24,10 @@ function labelFor(item: MediaItem) {
   return [item.type.toUpperCase(), item.year].filter(Boolean).join(' - ');
 }
 
+function fallbackThumbLabel(item: MediaItem) {
+  return item.type === 'movie' ? 'MV' : 'TV';
+}
+
 export function rememberSearch(query: string) {
   const trimmed = query.trim();
   if (!trimmed) return;
@@ -144,8 +148,10 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
               </div>
             ) : null}
             {results.map((item) => (
-              <button class="result-row" type="button" key={`${item.type}-${item.id}`} onClick={() => { rememberSearch(query); onSelect?.(item); }}>
-                <span class="thumb">{item.type === 'movie' ? 'MV' : 'TV'}</span>
+              <button class="result-row" type="button" key={`${item.type}-${item.id}`} onClick={() => { rememberSearch(trimmedQuery); onSelect?.(item); }}>
+                <span class="thumb" aria-hidden={item.posterUrl ? 'true' : undefined}>
+                  {item.posterUrl ? <img src={item.posterUrl} alt="" /> : fallbackThumbLabel(item)}
+                </span>
                 <span class="result-copy"><span class="result-title">{item.title}</span><span class="result-meta">{labelFor(item)}</span></span>
                 <span class="result-rating">{item.rating ? `★ ${item.rating.toFixed(1)}` : 'OPEN'}</span>
               </button>
