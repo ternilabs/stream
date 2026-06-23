@@ -44,7 +44,7 @@ export function SettingsDialog({ open, sources, onClose }: { open: boolean; sour
           <div class="server-list" aria-label="Server status list">
             {sources.map((source) => (
               <div class="server-row" key={source.id}>
-                <span><span class="server-name">{source.name}</span><span class="server-location">Third-party provider</span></span>
+                <span class="server-name">{source.name}</span>
                 <span class={`server-status ${source.health === 'up' || source.health === 'unknown' ? 'online' : ''}`}><span class="status-dot" />{source.health === 'down' ? 'Down' : 'Online'}</span>
               </div>
             ))}
