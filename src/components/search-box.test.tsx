@@ -22,6 +22,7 @@ describe('SearchBox', () => {
 
   it('hides recent-search content for fresh users with short queries', () => {
     render(<SearchBox initialQuery="" onSearch={() => undefined} />);
+    expect(document.querySelector('.search-panel')).toHaveClass('is-empty');
 
     expect(screen.queryByText('Recent Searches')).not.toBeInTheDocument();
     expect(screen.queryByText('No recent searches yet.')).not.toBeInTheDocument();
@@ -104,6 +105,7 @@ describe('SearchBox', () => {
     expect(screen.queryByRole('button', { name: /View all results for/i })).not.toBeInTheDocument();
     expect(screen.getByText('Searching for "zzzz"')).toBeInTheDocument();
     expect(screen.getByText('Checking the catalog...')).toBeInTheDocument();
+    expect(screen.getByText('Searching for "zzzz"')).toHaveClass('search-message-title');
 
     await vi.advanceTimersByTimeAsync(500);
     await screen.findByText('No matches for "zzzz"');
@@ -165,6 +167,7 @@ describe('SearchBox', () => {
     await vi.advanceTimersByTimeAsync(500);
 
     expect(await screen.findByAltText('')).toHaveAttribute('src', 'https://image.test/matrix.jpg');
+    expect(screen.getByAltText('').closest('.thumb')).toHaveClass('has-image');
     expect(screen.getByText('TV')).toBeInTheDocument();
     expect(screen.getByText('MOVIE - 1999')).toBeInTheDocument();
     expect(screen.getByText('★ 8.7')).toBeInTheDocument();

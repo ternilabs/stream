@@ -149,7 +149,7 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
             ) : null}
             {results.map((item) => (
               <button class="result-row" type="button" key={`${item.type}-${item.id}`} onClick={() => { rememberSearch(trimmedQuery); onSelect?.(item); }}>
-                <span class="thumb" aria-hidden={item.posterUrl ? 'true' : undefined}>
+                <span class={`thumb ${item.posterUrl ? 'has-image' : ''}`} aria-hidden={item.posterUrl ? 'true' : undefined}>
                   {item.posterUrl ? <img src={item.posterUrl} alt="" /> : fallbackThumbLabel(item)}
                 </span>
                 <span class="result-copy"><span class="result-title">{item.title}</span><span class="result-meta">{labelFor(item)}</span></span>
