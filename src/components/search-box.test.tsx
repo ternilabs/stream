@@ -15,7 +15,19 @@ describe('SearchBox', () => {
     searchMock.mockReset();
   });
 
-  it('shows template recent searches and clears them', () => {
+  it('hides recent-search content for fresh users with short queries', () => {
+    render(<SearchBox initialQuery="" onSearch={() => undefined} />);
+
+    expect(screen.queryByText('Recent Searches')).not.toBeInTheDocument();
+    expect(screen.queryByText('No recent searches yet.')).not.toBeInTheDocument();
+
+    fireEvent.input(screen.getByPlaceholderText('Search any title...'), { target: { value: 'd' } });
+
+    expect(screen.queryByText('Recent Searches')).not.toBeInTheDocument();
+    expect(screen.queryByText('No recent searches yet.')).not.toBeInTheDocument();
+  });
+
+  it('shows saved recents for short queries and supports clearing them', () => {
     localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune', 'Fallout']));
     render(<SearchBox initialQuery="" onSearch={() => undefined} />);
 
@@ -23,8 +35,27 @@ describe('SearchBox', () => {
     expect(screen.getByText('Dune')).toBeInTheDocument();
     expect(screen.getByText('Fallout')).toBeInTheDocument();
 
+    fireEvent.input(screen.getByPlaceholderText('Search any title...'), { target: { value: 'd' } });
+    expect(screen.getByText('Dune')).toBeInTheDocument();
+
     fireEvent.click(screen.getByText('Clear all'));
+    expect(screen.queryByText('Recent Searches')).not.toBeInTheDocument();
     expect(screen.queryByText('Dune')).not.toBeInTheDocument();
+  });
+
+  it('caps recents at five and removes one recent without submitting it', () => {
+    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune', 'Fallout', 'Matrix', 'Alien', 'Shogun', 'Extra']));
+    const onSearch = vi.fn();
+    render(<SearchBox initialQuery="" onSearch={onSearch} />);
+
+    expect(screen.getByText('Dune')).toBeInTheDocument();
+    expect(screen.queryByText('Extra')).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByLabelText('Remove Dune from recent searches'));
+
+    expect(screen.queryByText('Dune')).not.toBeInTheDocument();
+    expect(onSearch).not.toHaveBeenCalled();
+    expect(JSON.parse(localStorage.getItem('stream:recent-searches') ?? '[]')).toEqual(['Fallout', 'Matrix', 'Alien', 'Shogun']);
   });
 
   it('shows live results and selects a result for watch navigation', async () => {

@@ -9,7 +9,8 @@ const RECENTS_KEY = 'stream:recent-searches';
 function readRecents(): string[] {
   try {
     const value = localStorage.getItem(RECENTS_KEY);
-    return value ? JSON.parse(value).slice(0, 5) : [];
+    const parsed = value ? JSON.parse(value) : [];
+    return Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === 'string').slice(0, 5) : [];
   } catch {
     return [];
   }
@@ -77,7 +78,9 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
     setRecents(next);
   }
 
-  const showingResults = query.trim().length >= 2;
+  const trimmedQuery = query.trim();
+  const showingResults = trimmedQuery.length >= 2;
+  const showingRecents = !showingResults && recents.length > 0;
 
   return (
     <div class="search-wrap">
@@ -87,21 +90,35 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
         {onClose ? <button class="mobile-search-close" type="button" aria-label="Close search" onClick={onClose}>x</button> : null}
       </form>
 
-      <div class="search-panel" aria-label="Search suggestions">
-        <div class={`search-mode ${showingResults ? '' : 'is-active'}`}>
-          <div class="search-panel-head">
-            <span class="search-label">Recent Searches</span>
-            <button class="clear-btn" type="button" onClick={clearRecents}>Clear all</button>
+      <div class={`search-panel ${showingRecents || showingResults ? '' : 'is-empty'}`} aria-label="Search suggestions">
+        {showingRecents && (
+          <div class="search-mode is-active">
+            <div class="search-panel-head">
+              <span class="search-label">Recent Searches</span>
+              <button class="clear-btn" type="button" onClick={clearRecents}>Clear all</button>
+            </div>
+            {recents.map((recent) => (
+              <button class="recent-row" type="button" key={recent} onClick={() => { setQuery(recent); submit(recent); }}>
+                <Clock aria-hidden="true" />
+                <span class="recent-title">{recent}</span>
+                <span
+                  aria-label={`Remove ${recent} from recent searches`}
+                  class="remove-recent"
+                  role="button"
+                  tabIndex={0}
+                  onClick={(event) => { event.stopPropagation(); removeRecent(recent); }}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      removeRecent(recent);
+                    }
+                  }}
+                >x</span>
+              </button>
+            ))}
           </div>
-          {recents.length === 0 ? <div class="empty-row">No recent searches yet.</div> : null}
-          {recents.map((recent) => (
-            <button class="recent-row" type="button" key={recent} onClick={() => { setQuery(recent); submit(recent); }}>
-              <Clock aria-hidden="true" />
-              <span class="recent-title">{recent}</span>
-              <span class="remove-recent" onClick={(event) => { event.stopPropagation(); removeRecent(recent); }}>x</span>
-            </button>
-          ))}
-        </div>
+        )}
 
         <div class={`search-mode ${showingResults ? 'is-active' : ''}`}>
           <div class="search-panel-head"><span class="search-label">Results</span></div>
