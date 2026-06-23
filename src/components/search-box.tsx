@@ -44,19 +44,27 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
       setLoading(false);
       return;
     }
+
     let cancelled = false;
+    setResults([]);
     setLoading(true);
-    getSearchWithCache(apiClient, { q: trimmed, page: 1, limit: 6 })
-      .then((response) => {
-        if (!cancelled) setResults(response.results.slice(0, 6));
-      })
-      .catch(() => {
-        if (!cancelled) setResults([]);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-    return () => { cancelled = true; };
+    const timeout = window.setTimeout(() => {
+      getSearchWithCache(apiClient, { q: trimmed, page: 1, limit: 6 })
+        .then((response) => {
+          if (!cancelled) setResults(response.results.slice(0, 6));
+        })
+        .catch(() => {
+          if (!cancelled) setResults([]);
+        })
+        .finally(() => {
+          if (!cancelled) setLoading(false);
+        });
+    }, 500);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeout);
+    };
   }, [query]);
 
   function submit(nextQuery = query) {
@@ -123,8 +131,18 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
         <div class={`search-mode ${showingResults ? 'is-active' : ''}`}>
           <div class="search-panel-head"><span class="search-label">Results</span></div>
           <div class="result-list">
-            {loading ? <div class="empty-row">Searching...</div> : null}
-            {!loading && results.length === 0 ? <div class="empty-row">No quick results.</div> : null}
+            {loading ? (
+              <div class="search-message">
+                <span class="search-message-title">Searching for "{trimmedQuery}"</span>
+                <span class="search-message-copy">Checking the catalog...</span>
+              </div>
+            ) : null}
+            {!loading && results.length === 0 ? (
+              <div class="search-message">
+                <span class="search-message-title">No matches for "{trimmedQuery}"</span>
+                <span class="search-message-copy">Try a different title, actor, or genre.</span>
+              </div>
+            ) : null}
             {results.map((item) => (
               <button class="result-row" type="button" key={`${item.type}-${item.id}`} onClick={() => { rememberSearch(query); onSelect?.(item); }}>
                 <span class="thumb">{item.type === 'movie' ? 'MV' : 'TV'}</span>
@@ -133,7 +151,7 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
               </button>
             ))}
           </div>
-          <button class="view-all" type="submit" disabled><span>View all results for <strong>{`"${query.trim()}"`}</strong></span><ArrowRight aria-hidden="true" /></button>
+          {!loading && results.length > 0 ? <button class="view-all" type="button" onClick={() => submit(trimmedQuery)}><span>View all results for <strong>{`"${trimmedQuery}"`}</strong></span><ArrowRight aria-hidden="true" /></button> : null}
         </div>
       </div>
     </div>
