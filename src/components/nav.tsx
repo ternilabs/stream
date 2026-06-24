@@ -8,8 +8,13 @@ import { SOURCES } from '../lib/source-registry';
 
 export function Nav() {
   const { route: navigate } = useLocation();
+  const isSearchPage = window.location.pathname === '/search';
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+
+  useEffect(() => {
+    if (isSearchPage) setSearchOpen(false);
+  }, [isSearchPage]);
 
   useEffect(() => {
     document.body.classList.toggle('mobile-search-open', searchOpen);
@@ -30,15 +35,17 @@ export function Nav() {
     <header class="nav">
       <div class="wrap nav-inner">
         <a class="brand" href="/">TerniLabs</a>
-        <button type="button" class="mobile-search-button" aria-label="Open search" aria-expanded={searchOpen} onClick={() => setSearchOpen(true)}><Search aria-hidden="true" /></button>
-        <div class={searchOpen ? 'is-mobile-open' : ''}>
-          <SearchBox
-            initialQuery=""
-            onClose={() => setSearchOpen(false)}
-            onSearch={(query) => { navigate(`/search?q=${encodeURIComponent(query)}`); setSearchOpen(false); }}
-            onSelect={(item) => { navigate(`/watch/${item.id}?type=${item.type}`); setSearchOpen(false); }}
-          />
-        </div>
+        {!isSearchPage ? <button type="button" class="mobile-search-button" aria-label="Open search" aria-expanded={searchOpen} onClick={() => setSearchOpen(true)}><Search aria-hidden="true" /></button> : null}
+        {!isSearchPage ? (
+          <div class={searchOpen ? 'is-mobile-open' : ''}>
+            <SearchBox
+              initialQuery=""
+              onClose={() => setSearchOpen(false)}
+              onSearch={(query) => { navigate(`/search?q=${encodeURIComponent(query)}`); setSearchOpen(false); }}
+              onSelect={(item) => { navigate(`/watch/${item.id}?type=${item.type}`); setSearchOpen(false); }}
+            />
+          </div>
+        ) : null}
         <div class="nav-actions">
           <button type="button" class="icon-button" aria-label="Settings" onClick={() => setSettingsOpen(true)}><Settings aria-hidden="true" /></button>
         </div>
