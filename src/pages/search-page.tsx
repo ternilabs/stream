@@ -30,7 +30,7 @@ export function SearchPage() {
   const [type, setType] = useState<SearchType>(initialType);
   const [items, setItems] = useState<MediaItem[]>([]);
   const [error, setError] = useState<unknown>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(initialQuery.length > 0);
   const requestId = useRef(0);
 
   useEffect(() => {
@@ -64,7 +64,11 @@ export function SearchPage() {
     const trimmed = nextQuery.trim();
     setDraftQuery(trimmed);
     setQuery(trimmed);
-    if (trimmed) route(searchUrl(trimmed, nextType));
+    route(trimmed ? searchUrl(trimmed, nextType) : '/search');
+  }
+
+  function onTypeChange(nextValue: string) {
+    changeType(normalizeSearchType(nextValue));
   }
 
   function changeType(nextType: SearchType) {
@@ -86,7 +90,7 @@ export function SearchPage() {
           </label>
           <label class="browse-type-select">
             <span class="sr-only">Media type</span>
-            <select aria-label="Media type" value={type} onChange={(event) => changeType(event.currentTarget.value as SearchType)}>
+            <select aria-label="Media type" value={type} onChange={(event) => onTypeChange(event.currentTarget.value)}>
               <option value="multi">All</option>
               <option value="tv">TV</option>
               <option value="movie">Movie</option>
