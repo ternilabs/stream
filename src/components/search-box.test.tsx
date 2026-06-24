@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/preact';
+import { fireEvent, render, screen, within } from '@testing-library/preact';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { SearchBox } from './search-box';
 
@@ -57,7 +57,9 @@ describe('SearchBox', () => {
     expect(screen.getByText('Dune')).toBeInTheDocument();
     expect(screen.queryByText('Extra')).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByLabelText('Remove Dune from recent searches'));
+    const removeDune = screen.getByLabelText('Remove Dune from recent searches');
+    expect(within(removeDune).getByTestId('remove-recent-icon')).toBeInTheDocument();
+    fireEvent.click(removeDune);
 
     expect(screen.queryByText('Dune')).not.toBeInTheDocument();
     expect(onSearch).not.toHaveBeenCalled();
@@ -147,6 +149,29 @@ describe('SearchBox', () => {
 
     expect(onSearch).toHaveBeenCalledWith('result');
     expect(JSON.parse(localStorage.getItem('stream:recent-searches') ?? '[]')).toEqual(['result']);
+
+    vi.useRealTimers();
+  });
+
+  it('closes the quick-search panel before submitting view-all', async () => {
+    vi.useFakeTimers();
+    const onSearch = vi.fn();
+    const onClose = vi.fn();
+    searchMock.mockResolvedValue({
+      page: 1,
+      totalPages: 1,
+      results: [{ id: 1, type: 'movie', title: 'Result 1' }],
+    });
+    render(<SearchBox initialQuery="" onSearch={onSearch} onClose={onClose} />);
+
+    fireEvent.input(screen.getByPlaceholderText('Search any title...'), { target: { value: 'result' } });
+    await vi.advanceTimersByTimeAsync(500);
+    await screen.findByText('Result 1');
+    fireEvent.click(screen.getByRole('button', { name: /View all results for "result"/i }));
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onSearch).toHaveBeenCalledWith('result');
+    expect(onClose.mock.invocationCallOrder[0]).toBeLessThan(onSearch.mock.invocationCallOrder[0]);
 
     vi.useRealTimers();
   });

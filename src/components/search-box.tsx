@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'preact/hooks';
-import { ArrowRight, Clock, Search } from 'preact-feather';
+import { ArrowRight, Clock, Search, X } from 'preact-feather';
 import { apiClient } from '../lib/api-client';
 import { getSearchWithCache } from '../lib/queries';
 import { MediaItem } from '../lib/types';
@@ -71,11 +71,12 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
     };
   }, [query]);
 
-  function submit(nextQuery = query) {
+  function submit(nextQuery = query, closeFirst = false) {
     const trimmed = nextQuery.trim();
     if (!trimmed) return;
     rememberSearch(trimmed);
     setRecents(readRecents());
+    if (closeFirst) onClose?.();
     onSearch(trimmed);
   }
 
@@ -113,20 +114,12 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
               <button class="recent-row" type="button" key={recent} onClick={() => { setQuery(recent); submit(recent); }}>
                 <Clock aria-hidden="true" />
                 <span class="recent-title">{recent}</span>
-                <span
+                <button
                   aria-label={`Remove ${recent} from recent searches`}
                   class="remove-recent"
-                  role="button"
-                  tabIndex={0}
+                  type="button"
                   onClick={(event) => { event.stopPropagation(); removeRecent(recent); }}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                      event.preventDefault();
-                      event.stopPropagation();
-                      removeRecent(recent);
-                    }
-                  }}
-                >x</span>
+                ><X aria-hidden="true" data-testid="remove-recent-icon" /></button>
               </button>
             ))}
           </div>
@@ -157,7 +150,7 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
               </button>
             ))}
           </div>
-          {!loading && results.length > 0 ? <button class="view-all" type="button" onClick={() => submit(trimmedQuery)}><span>View all results for <strong>{`"${trimmedQuery}"`}</strong></span><ArrowRight aria-hidden="true" /></button> : null}
+          {!loading && results.length > 0 ? <button class="view-all" type="button" onClick={() => submit(trimmedQuery, true)}><span>View all results for <strong>{`"${trimmedQuery}"`}</strong></span><ArrowRight aria-hidden="true" /></button> : null}
         </div>
       </div>
     </div>
