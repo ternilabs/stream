@@ -1,4 +1,4 @@
-import { ApiFailure, ApiSearchParams, PagedMediaResponse, SourceHealthApiResponse, TitleDetails } from './types';
+import { ApiFailure, ApiSearchParams, PagedMediaResponse, SourceHealthApiResponse, TitleDetails, TvSeasonSummary } from './types';
 
 type FetchLike = typeof fetch;
 
@@ -23,9 +23,22 @@ interface ApiPaginatedList {
   pagination: ApiPagination;
 }
 
+interface ApiTvSeasonSummary {
+  seasonNumber: number;
+  title: string;
+  episodeCount: number;
+  episodes: Array<{
+    episodeNumber: number;
+    title: string;
+    aired: string | null;
+  }>;
+}
+
 interface ApiTitleDetails extends ApiListItem {
   description?: string;
   genres?: string[];
+  production?: string[];
+  seasons?: ApiTvSeasonSummary[];
   trailers?: Array<{ url: string }>;
   cast?: Array<{ actor: string; character?: string; profile?: string | null }>;
   recommended?: ApiListItem[];
@@ -74,11 +87,26 @@ function normalizeList(response: ApiPaginatedList): PagedMediaResponse {
   };
 }
 
+function mapTvSeason(season: ApiTvSeasonSummary): TvSeasonSummary {
+  return {
+    seasonNumber: season.seasonNumber,
+    title: season.title,
+    episodeCount: season.episodeCount,
+    episodes: season.episodes.map((episode) => ({
+      episodeNumber: episode.episodeNumber,
+      title: episode.title,
+      aired: episode.aired,
+    })),
+  };
+}
+
 function normalizeTitle(response: ApiTitleDetails): TitleDetails {
   return {
     ...mapMediaItem(response),
     ...(response.description ? { overview: response.description } : {}),
     ...(response.genres ? { genres: response.genres } : {}),
+    ...(response.production ? { production: response.production } : {}),
+    ...(response.seasons ? { seasons: response.seasons.map(mapTvSeason) } : {}),
     ...(response.trailers?.[0]?.url ? { trailerUrl: response.trailers[0].url } : {}),
     ...(response.cast ? { cast: response.cast.map((person, index) => ({ id: index, name: person.actor, character: person.character, imageUrl: person.profile ?? undefined })) } : {}),
     ...(response.recommended ? { recommended: response.recommended.map(mapMediaItem) } : {}),

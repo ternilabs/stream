@@ -54,10 +54,23 @@ export interface SourceWithHealth extends SourceDefinition {
   checkedAt?: string;
 }
 
+export interface TvSeasonSummary {
+  seasonNumber: number;
+  title: string;
+  episodeCount: number;
+  episodes: Array<{
+    episodeNumber: number;
+    title: string;
+    aired: string | null;
+  }>;
+}
+
 export interface TitleDetails extends MediaItem {
   genres?: string[];
   runtimeMinutes?: number;
   trailerUrl?: string;
+  production?: string[];
+  seasons?: TvSeasonSummary[];
   cast?: Array<{ id: number; name: string; character?: string; imageUrl?: string }>;
   recommended?: MediaItem[];
 }

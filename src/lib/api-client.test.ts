@@ -33,6 +33,47 @@ describe('api-client', () => {
     });
   });
 
+  it('normalizes production companies and TV seasons from title details responses', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({
+      id: 1399,
+      type: 'tv',
+      title: 'Game of Thrones',
+      rating: 8.4,
+      year: 2011,
+      cover: 'https://image.test/got.jpg',
+      production: ['HBO', 'Revolution Sun Studios'],
+      seasons: [
+        {
+          seasonNumber: 1,
+          title: 'Season 1',
+          episodeCount: 2,
+          episodes: [
+            { episodeNumber: 1, title: 'Winter Is Coming', aired: '2011-04-17' },
+            { episodeNumber: 2, title: 'The Kingsroad', aired: '2011-04-24' },
+          ],
+        },
+      ],
+    })));
+    const client = createApiClient('https://api.example.test', fetchMock);
+
+    await expect(client.title('tv', 1399)).resolves.toMatchObject({
+      id: 1399,
+      title: 'Game of Thrones',
+      production: ['HBO', 'Revolution Sun Studios'],
+      seasons: [
+        {
+          seasonNumber: 1,
+          title: 'Season 1',
+          episodeCount: 2,
+          episodes: [
+            { episodeNumber: 1, title: 'Winter Is Coming', aired: '2011-04-17' },
+            { episodeNumber: 2, title: 'The Kingsroad', aired: '2011-04-24' },
+          ],
+        },
+      ],
+    });
+  });
+
   it('normalizes paginated API lists into frontend media items', async () => {
     const fetchMock = vi.fn().mockResolvedValue(new Response(JSON.stringify({
       data: [{ id: 603, type: 'movie', title: 'The Matrix', rating: 8.2, year: 1999, cover: 'https://image.test/matrix.jpg' }],
