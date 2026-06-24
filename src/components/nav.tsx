@@ -7,8 +7,8 @@ import { mergeSourceHealth } from '../lib/source-health';
 import { SOURCES } from '../lib/source-registry';
 
 export function Nav() {
-  const { route: navigate } = useLocation();
-  const isSearchPage = window.location.pathname === '/search';
+  const { path, route: navigate } = useLocation();
+  const isSearchPage = path === '/search';
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
