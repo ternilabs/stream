@@ -1,0 +1,24 @@
+Copyright (c) TerniLabs
+
+All rights reserved.
+
+Permission is granted to any person obtaining a copy of this software and associated documentation files (the "Software") to:
+
+- Use the Software for personal, non-commercial purposes.
+- Modify the Software for personal, non-commercial use.
+- Create forks of the original repository for the purpose of contributing back (for example, opening pull requests or issues).
+
+The following are NOT permitted without prior written permission from the copyright holder:
+
+- Redistributing the Software, in original or modified form, as a separate public project, product, or service.
+- Using the Software, in original or modified form, for commercial, financial, or client-facing use.
+- Hosting or publishing the Software (or a modified version) and presenting it as your own work.
+- Removing or altering any copyright or attribution notices.
+- Claiming authorship or sole creation of the Software.
+
+Attribution:
+
+- Any public mention, use, or derivative work based on this project must credit:
+  "Original project: Stream by TerniLabs".
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
