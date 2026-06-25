@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/preact';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/preact';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { WatchPage } from './watch-page';
 
@@ -44,6 +44,19 @@ function mockSummaryOverflow(isOverflowing: boolean) {
   Object.defineProperty(HTMLElement.prototype, 'clientHeight', { configurable: true, get: () => clientHeight });
 }
 
+function expectInvalidWatchRoute() {
+  const state = screen.getByRole('status', { name: 'Invalid watch route' });
+  expect(state).toHaveClass('invalid-watch-state');
+  expect(within(state).getByLabelText('Invalid watch route')).toBeInTheDocument();
+  expect(within(state).getByRole('heading', { name: 'Invalid watch route' })).toBeInTheDocument();
+  expect(within(state).getByText('This watch URL does not match a known movie or TV title. Check the link or search for the title again.')).toBeInTheDocument();
+  expect(screen.queryByLabelText('Player area')).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Recommendations')).not.toBeInTheDocument();
+  expect(screen.queryByText('Trailer')).not.toBeInTheDocument();
+  expect(screen.queryByText('Characters')).not.toBeInTheDocument();
+  expect(titleMock).not.toHaveBeenCalled();
+}
+
 describe('WatchPage', () => {
   beforeEach(() => {
     titleMock.mockReset();
@@ -59,6 +72,31 @@ describe('WatchPage', () => {
       cast: [],
     });
     window.history.replaceState(null, '', '/watch/1?type=movie');
+  });
+
+  it.each(['/watch/foo', '/watch/0', '/watch/-1', '/watch/1.5'])('renders an invalid state and skips the API for invalid id %s', (path) => {
+    window.history.replaceState(null, '', path);
+
+    render(<WatchPage />);
+
+    expectInvalidWatchRoute();
+  });
+
+  it('renders an invalid state and skips the API for unsupported watch type', () => {
+    window.history.replaceState(null, '', '/watch/1?type=person');
+
+    render(<WatchPage />);
+
+    expectInvalidWatchRoute();
+  });
+
+  it('defaults missing watch type to movie for valid ids', async () => {
+    window.history.replaceState(null, '', '/watch/1');
+
+    render(<WatchPage />);
+
+    await screen.findByTitle('Test Movie');
+    expect(titleMock).toHaveBeenCalledWith(expect.anything(), 'movie', 1);
   });
 
   it('renders skeletons while title details are loading', () => {

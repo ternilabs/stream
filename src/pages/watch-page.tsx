@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { ChevronDown, ChevronUp, Share2, Star, User } from 'preact-feather';
+import { AlertTriangle, ChevronDown, ChevronUp, Share2, Star, User } from 'preact-feather';
 import { apiClient } from '../lib/api-client';
 import { resolveEmbedUrl } from '../lib/embed-resolver';
 import { getTitleWithCache } from '../lib/queries';
@@ -17,6 +17,35 @@ const PLAYER_IFRAME_PERMISSIONS = {
   webkitallowfullscreen: 'true',
   mozallowfullscreen: 'true',
 } as const;
+
+type WatchRoute =
+  | { isValid: true; id: number; type: MediaType }
+  | { isValid: false };
+
+function parseWatchRoute(): WatchRoute {
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const idText = pathParts[1] ?? '';
+  const id = Number(idText);
+  const params = new URLSearchParams(window.location.search);
+  const rawType = params.get('type');
+
+  if (!Number.isInteger(id) || id <= 0) return { isValid: false };
+  if (rawType !== null && rawType !== 'movie' && rawType !== 'tv') return { isValid: false };
+
+  return { isValid: true, id, type: rawType === 'tv' ? 'tv' : 'movie' };
+}
+
+function InvalidWatchRoute() {
+  return (
+    <main class="invalid-watch-shell">
+      <section class="invalid-watch-state" role="status" aria-labelledby="invalid-watch-title">
+        <span class="invalid-watch-icon"><AlertTriangle aria-label="Invalid watch route" /></span>
+        <h1 id="invalid-watch-title">Invalid watch route</h1>
+        <p>This watch URL does not match a known movie or TV title. Check the link or search for the title again.</p>
+      </section>
+    </main>
+  );
+}
 
 function getValidTvSelection(seasons: TvSeasonSummary[] | undefined, season: number, episode: number) {
   const firstSeason = seasons?.[0];
@@ -61,11 +90,8 @@ function CharacterSkeleton() {
   return <div class="character-list" aria-label="Loading characters">{Array.from({ length: 4 }, (_, index) => <div class="character-row" key={index}><span class="avatar watch-skeleton" /><span class="watch-skeleton-lines"><span class="watch-skeleton line" /><span class="watch-skeleton line short" /></span></div>)}</div>;
 }
 
-export function WatchPage() {
-  const pathParts = window.location.pathname.split('/').filter(Boolean);
-  const id = Number(pathParts[1]);
+function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
   const params = new URLSearchParams(window.location.search);
-  const type = (params.get('type') === 'tv' ? 'tv' : 'movie') as MediaType;
   const [season, setSeason] = useState(Number(params.get('season')) || 1);
   const [episode, setEpisode] = useState(Number(params.get('episode')) || 1);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
@@ -193,4 +219,11 @@ export function WatchPage() {
       </div>
     </main>
   );
+}
+
+export function WatchPage() {
+  const route = parseWatchRoute();
+  if (!route.isValid) return <InvalidWatchRoute />;
+
+  return <ValidWatchPage id={route.id} type={route.type} />;
 }
