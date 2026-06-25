@@ -201,7 +201,7 @@ describe('SearchBox', () => {
     vi.useRealTimers();
   });
 
-  it('selects a quick result and remembers the active query', async () => {
+  it('selects a quick result, calls onClose, and remembers the active query', async () => {
     vi.useFakeTimers();
     searchMock.mockResolvedValue({
       page: 1,
@@ -209,13 +209,16 @@ describe('SearchBox', () => {
       results: [{ id: 603, type: 'movie', title: 'The Matrix', year: '1999', rating: 8.7 }],
     });
     const onSelect = vi.fn();
-    render(<SearchBox initialQuery="" onSearch={() => undefined} onSelect={onSelect} />);
+    const onClose = vi.fn();
+    render(<SearchBox initialQuery="" onSearch={() => undefined} onSelect={onSelect} onClose={onClose} />);
 
     fireEvent.input(screen.getByPlaceholderText('Search any title...'), { target: { value: 'matrix' } });
     await vi.advanceTimersByTimeAsync(500);
     fireEvent.click(await screen.findByText('The Matrix'));
 
+    expect(onClose).toHaveBeenCalledTimes(1);
     expect(onSelect).toHaveBeenCalledWith({ id: 603, type: 'movie', title: 'The Matrix', year: '1999', rating: 8.7 });
+    expect(onClose.mock.invocationCallOrder[0]).toBeLessThan(onSelect.mock.invocationCallOrder[0]);
     expect(JSON.parse(localStorage.getItem('stream:recent-searches') ?? '[]')).toEqual(['matrix']);
 
     vi.useRealTimers();

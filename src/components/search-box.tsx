@@ -141,7 +141,7 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
               </div>
             ) : null}
             {results.map((item) => (
-              <button class="result-row" type="button" key={`${item.type}-${item.id}`} onClick={() => { rememberSearch(trimmedQuery); onSelect?.(item); }}>
+              <button class="result-row" type="button" key={`${item.type}-${item.id}`} onClick={() => { rememberSearch(trimmedQuery); onClose?.(); onSelect?.(item); }}>
                 <span class={`thumb ${item.posterUrl ? 'has-image' : ''}`} aria-hidden={item.posterUrl ? 'true' : undefined}>
                   {item.posterUrl ? <img src={item.posterUrl} alt="" /> : fallbackThumbLabel(item)}
                 </span>
