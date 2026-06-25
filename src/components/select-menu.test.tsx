@@ -55,16 +55,18 @@ describe('SelectMenu', () => {
       return { x: 0, y: 0, width: 240, height: 100, top: 0, right: 240, bottom: 100, left: 0, toJSON: () => ({}) } as DOMRect;
     });
 
-    render(<SelectMenu label="Server" value="alpha" options={options} onChange={() => {}} />);
+    try {
+      render(<SelectMenu label="Server" value="alpha" options={options} onChange={() => {}} />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Server' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Server' }));
 
-    const root = screen.getByRole('button', { name: 'Server' }).closest('.select-menu');
-    await waitFor(() => expect(root).toHaveClass('is-above'));
-    expect(screen.getByRole('listbox', { name: 'Server list' })).toHaveStyle({ width: '240px' });
-
-    rectSpy.mockRestore();
-    Object.defineProperty(window, 'innerHeight', { configurable: true, value: originalInnerHeight });
+      const root = screen.getByRole('button', { name: 'Server' }).closest('.select-menu');
+      await waitFor(() => expect(root).toHaveClass('is-above'));
+      expect(screen.getByRole('listbox', { name: 'Server list' })).toHaveStyle({ width: '240px' });
+    } finally {
+      rectSpy.mockRestore();
+      Object.defineProperty(window, 'innerHeight', { configurable: true, value: originalInnerHeight });
+    }
   });
 
   it('renders a disabled empty state when no options exist', () => {
