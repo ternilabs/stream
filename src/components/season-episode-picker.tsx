@@ -1,3 +1,4 @@
+import { SelectMenu } from './select-menu';
 import { TvSeasonSummary } from '../lib/types';
 
 interface SeasonEpisodePickerProps {
@@ -29,26 +30,28 @@ export function SeasonEpisodePicker({ seasons, season, episode, onChange }: Seas
       <div class="season-picker">
         <label class="field">
           Season
-          <select
-            aria-label="Season"
+          <SelectMenu
+            label="Season"
             value={String(selectedSeason.seasonNumber)}
-            onChange={(event) => {
-              const nextSeasonNumber = Number(event.currentTarget.value);
+            options={seasons.map((item) => ({ value: String(item.seasonNumber), label: item.title || `Season ${item.seasonNumber}` }))}
+            onChange={(value) => {
+              const nextSeasonNumber = Number(value);
               const nextSeason = seasons.find((item) => item.seasonNumber === nextSeasonNumber);
               const nextEpisode = nextSeason?.episodes.some((item) => item.episodeNumber === episode)
                 ? episode
                 : nextSeason?.episodes[0]?.episodeNumber;
               if (nextSeason && nextEpisode) onChange(nextSeason.seasonNumber, nextEpisode);
             }}
-          >
-            {seasons.map((item) => <option value={String(item.seasonNumber)} key={item.seasonNumber}>{item.title || `Season ${item.seasonNumber}`}</option>)}
-          </select>
+          />
         </label>
         <label class="field">
           Episode
-          <select aria-label="Episode" value={String(episode)} onChange={(event) => onChange(selectedSeason.seasonNumber, Number(event.currentTarget.value))}>
-            {selectedSeason.episodes.map((item) => <option value={String(item.episodeNumber)} key={item.episodeNumber}>{episodeLabel(item)}</option>)}
-          </select>
+          <SelectMenu
+            label="Episode"
+            value={String(episode)}
+            options={selectedSeason.episodes.map((item) => ({ value: String(item.episodeNumber), label: episodeLabel(item) }))}
+            onChange={(value) => onChange(selectedSeason.seasonNumber, Number(value))}
+          />
         </label>
       </div>
     </div>

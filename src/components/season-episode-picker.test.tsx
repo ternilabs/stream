@@ -22,12 +22,16 @@ const seasons: TvSeasonSummary[] = [
 ];
 
 describe('SeasonEpisodePicker', () => {
-  it('renders API-backed season and episode selects', () => {
+  it('renders custom season and episode dropdowns from API data', () => {
     render(<SeasonEpisodePicker seasons={seasons} season={1} episode={2} onChange={() => {}} />);
 
-    expect(screen.getByLabelText('Season')).toHaveValue('1');
-    expect(screen.getByLabelText('Episode')).toHaveValue('2');
+    expect(screen.getByRole('button', { name: 'Season' })).toHaveTextContent('Season 1');
+    expect(screen.getByRole('button', { name: 'Episode' })).toHaveTextContent('E2 - The Kingsroad');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Season' }));
     expect(screen.getByRole('option', { name: 'Season 1' })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Episode' }));
     expect(screen.getByRole('option', { name: 'E2 - The Kingsroad' })).toBeInTheDocument();
   });
 
@@ -35,7 +39,8 @@ describe('SeasonEpisodePicker', () => {
     const onChange = vi.fn();
     render(<SeasonEpisodePicker seasons={seasons} season={1} episode={2} onChange={onChange} />);
 
-    fireEvent.change(screen.getByLabelText('Season'), { target: { value: '2' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Season' }));
+    fireEvent.click(screen.getByRole('option', { name: 'Season 2' }));
 
     expect(onChange).toHaveBeenCalledWith(2, 1);
   });
@@ -44,7 +49,8 @@ describe('SeasonEpisodePicker', () => {
     const onChange = vi.fn();
     render(<SeasonEpisodePicker seasons={seasons} season={1} episode={1} onChange={onChange} />);
 
-    fireEvent.change(screen.getByLabelText('Episode'), { target: { value: '2' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Episode' }));
+    fireEvent.click(screen.getByRole('option', { name: 'E2 - The Kingsroad' }));
 
     expect(onChange).toHaveBeenCalledWith(1, 2);
   });
@@ -53,7 +59,7 @@ describe('SeasonEpisodePicker', () => {
     render(<SeasonEpisodePicker seasons={[]} season={1} episode={1} onChange={() => {}} />);
 
     expect(screen.getByText('Episode data unavailable.')).toBeInTheDocument();
-    expect(screen.queryByLabelText('Season')).not.toBeInTheDocument();
-    expect(screen.queryByLabelText('Episode')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Season' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Episode' })).not.toBeInTheDocument();
   });
 });
