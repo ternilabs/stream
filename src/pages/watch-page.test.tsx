@@ -74,7 +74,11 @@ describe('WatchPage', () => {
   it('renders movie player iframe after movie details load', async () => {
     render(<WatchPage />);
 
-    await waitFor(() => expect(screen.getByTitle('Test Movie')).toBeInTheDocument());
+    const iframe = await screen.findByTitle('Test Movie');
+    expect(iframe).toHaveAttribute('allow', 'autoplay; fullscreen *; picture-in-picture; encrypted-media');
+    expect(iframe).toHaveAttribute('allowfullscreen');
+    expect(iframe).toHaveAttribute('webkitallowfullscreen', 'true');
+    expect(iframe).toHaveAttribute('mozallowfullscreen', 'true');
   });
 
   it('shows only the first Production value and removes the player share button', async () => {

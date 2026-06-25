@@ -11,6 +11,13 @@ import { MediaCard } from '../components/media-card';
 import { SeasonEpisodePicker } from '../components/season-episode-picker';
 import { ServerSelect } from '../components/server-select';
 
+const PLAYER_IFRAME_PERMISSIONS = {
+  allow: 'autoplay; fullscreen *; picture-in-picture; encrypted-media',
+  allowFullScreen: true,
+  webkitallowfullscreen: 'true',
+  mozallowfullscreen: 'true',
+} as const;
+
 function getValidTvSelection(seasons: TvSeasonSummary[] | undefined, season: number, episode: number) {
   const firstSeason = seasons?.[0];
   if (!firstSeason) return undefined;
@@ -126,7 +133,7 @@ export function WatchPage() {
         <div class="left-panel">
           <section class="player-card" aria-label="Player area">
             <div class="player-placeholder">
-              {embedUrl ? <iframe class="player-frame" src={embedUrl} title={details?.title ?? 'Selected stream source'} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen /> : <div class="blocked-player">Episodes are unavailable until valid season data exists.</div>}
+              {embedUrl ? <iframe class="player-frame" src={embedUrl} title={details?.title ?? 'Selected stream source'} {...PLAYER_IFRAME_PERMISSIONS} /> : <div class="blocked-player">Episodes are unavailable until valid season data exists.</div>}
             </div>
             <div class="player-controls">
               <div class="now-row">
