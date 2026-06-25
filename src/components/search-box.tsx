@@ -41,6 +41,13 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
   const [results, setResults] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(false);
 
+  function closePanel() {
+    setQuery('');
+    setResults([]);
+    setLoading(false);
+    onClose?.();
+  }
+
   useEffect(() => {
     const trimmed = query.trim();
     if (trimmed.length < 2) {
@@ -76,7 +83,7 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
     if (!trimmed) return;
     rememberSearch(trimmed);
     setRecents(readRecents());
-    if (closeFirst) onClose?.();
+    if (closeFirst) closePanel();
     onSearch(trimmed);
   }
 
@@ -100,7 +107,7 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
       <form class="search" aria-label="Search" onSubmit={(event) => { event.preventDefault(); submit(); }}>
         <Search aria-hidden="true" />
         <input value={query} onInput={(event) => setQuery(event.currentTarget.value)} placeholder="Search any title..." autocomplete="off" />
-        {onClose ? <button class="mobile-search-close" type="button" aria-label="Close search" onClick={onClose}>x</button> : null}
+        {onClose ? <button class="mobile-search-close" type="button" aria-label="Close search" onClick={closePanel}>x</button> : null}
       </form>
 
       <div class={`search-panel ${showingRecents || showingResults ? '' : 'is-empty'}`} aria-label="Search suggestions">
@@ -141,7 +148,7 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
               </div>
             ) : null}
             {results.map((item) => (
-              <button class="result-row" type="button" key={`${item.type}-${item.id}`} onClick={() => { rememberSearch(trimmedQuery); onClose?.(); onSelect?.(item); }}>
+              <button class="result-row" type="button" key={`${item.type}-${item.id}`} onClick={() => { rememberSearch(trimmedQuery); closePanel(); onSelect?.(item); }}>
                 <span class={`thumb ${item.posterUrl ? 'has-image' : ''}`} aria-hidden={item.posterUrl ? 'true' : undefined}>
                   {item.posterUrl ? <img src={item.posterUrl} alt="" /> : fallbackThumbLabel(item)}
                 </span>

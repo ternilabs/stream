@@ -219,6 +219,8 @@ describe('SearchBox', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
     expect(onSelect).toHaveBeenCalledWith({ id: 603, type: 'movie', title: 'The Matrix', year: '1999', rating: 8.7 });
     expect(onClose.mock.invocationCallOrder[0]).toBeLessThan(onSelect.mock.invocationCallOrder[0]);
+    expect(screen.queryByText('The Matrix')).not.toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Search any title...')).toHaveValue('');
     expect(JSON.parse(localStorage.getItem('stream:recent-searches') ?? '[]')).toEqual(['matrix']);
 
     vi.useRealTimers();
