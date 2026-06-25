@@ -35,7 +35,7 @@ describe('SearchPage', () => {
 
     expect(screen.getByPlaceholderText('Search the catalog...')).toBeInTheDocument();
     expect(screen.queryByPlaceholderText('Search any title...')).not.toBeInTheDocument();
-    expect(screen.getByLabelText('Media type')).toHaveValue('multi');
+    expect(screen.getByRole('button', { name: 'Media type' })).toBeInTheDocument();
   });
 
   it('uses q and type from the URL for the initial API request', async () => {
@@ -45,14 +45,15 @@ describe('SearchPage', () => {
 
     await waitFor(() => expect(mockedGetSearchWithCache).toHaveBeenCalledWith(expect.anything(), { q: 'matrix', page: 1, type: 'tv' }));
     expect(screen.getByPlaceholderText('Search the catalog...')).toHaveValue('matrix');
-    expect(screen.getByLabelText('Media type')).toHaveValue('tv');
+    expect(screen.getByRole('button', { name: 'Media type' })).toHaveTextContent('TV');
   });
 
   it('updates the URL and sends the selected type when the form is submitted', async () => {
     renderSearchPage();
 
     fireEvent.input(screen.getByPlaceholderText('Search the catalog...'), { target: { value: 'dune' } });
-    fireEvent.change(screen.getByLabelText('Media type'), { target: { value: 'movie' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Media type' }));
+    fireEvent.click(screen.getByRole('option', { name: 'Movie' }));
     fireEvent.submit(screen.getByRole('search', { name: 'Search catalog' }));
 
     await waitFor(() => expect(mockedGetSearchWithCache).toHaveBeenCalledWith(expect.anything(), { q: 'dune', page: 1, type: 'movie' }));
@@ -82,5 +83,80 @@ describe('SearchPage', () => {
 
     pending.resolve({ page: 1, totalPages: 1, results: [{ id: 348, type: 'movie', title: 'Alien' }] });
     expect(await screen.findByRole('link', { name: 'Watch Alien' })).toBeInTheDocument();
+  });
+
+  it('renders pagination controls from page and totalPages', async () => {
+    mockedGetSearchWithCache.mockResolvedValue({
+      page: 3, totalPages: 5,
+      results: [{ id: 1, type: 'movie', title: 'Matrix' }],
+    });
+    window.history.pushState(null, '', '/search?q=matrix&type=multi&page=3');
+
+    renderSearchPage();
+
+    await screen.findByRole('navigation', { name: 'Pagination' });
+    expect(screen.getByRole('button', { name: 'First page' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Previous page' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Page 3' })).toHaveClass('is-active');
+    expect(screen.getByRole('button', { name: 'Next page' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Last page' })).toBeEnabled();
+  });
+
+  it('disables boundary pagination controls on first page', async () => {
+    mockedGetSearchWithCache.mockResolvedValue({
+      page: 1, totalPages: 3,
+      results: [{ id: 1, type: 'movie', title: 'Matrix' }],
+    });
+    window.history.pushState(null, '', '/search?q=matrix&type=multi');
+
+    renderSearchPage();
+
+    await screen.findByRole('navigation', { name: 'Pagination' });
+    expect(screen.getByRole('button', { name: 'First page' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Next page' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Last page' })).toBeEnabled();
+  });
+
+  it('requests the selected page and updates the URL', async () => {
+    window.history.pushState(null, '', '/search?q=alien&type=movie');
+    mockedGetSearchWithCache.mockResolvedValueOnce({
+      page: 1, totalPages: 3,
+      results: [{ id: 1, type: 'movie', title: 'Alien' }],
+    });
+    renderSearchPage();
+
+    await waitFor(() => expect(mockedGetSearchWithCache).toHaveBeenCalledWith(expect.anything(), { q: 'alien', page: 1, type: 'movie' }));
+
+    mockedGetSearchWithCache.mockResolvedValueOnce({
+      page: 2, totalPages: 3,
+      results: [{ id: 1, type: 'movie', title: 'Aliens' }],
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Next page' }));
+
+    await waitFor(() => expect(mockedGetSearchWithCache).toHaveBeenCalledWith(expect.anything(), { q: 'alien', page: 2, type: 'movie' }));
+    expect(window.location.search).toContain('page=2');
+  });
+
+  it('hides pagination when there is no query', () => {
+    renderSearchPage();
+    expect(screen.queryByRole('navigation', { name: 'Pagination' })).not.toBeInTheDocument();
+  });
+
+  it('renders inert ellipsis separators in pagination', async () => {
+    mockedGetSearchWithCache.mockResolvedValue({
+      page: 5, totalPages: 10,
+      results: [{ id: 1, type: 'movie', title: 'Matrix' }],
+    });
+    window.history.pushState(null, '', '/search?q=matrix&type=multi&page=5');
+
+    renderSearchPage();
+
+    await screen.findByRole('navigation', { name: 'Pagination' });
+    const ellipses = document.querySelectorAll('[aria-hidden="true"]');
+    expect(ellipses.length).toBeGreaterThanOrEqual(1);
+    ellipses.forEach(el => {
+      expect(el.tagName).not.toBe('BUTTON');
+    });
   });
 });

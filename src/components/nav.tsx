@@ -32,7 +32,7 @@ export function Nav() {
 
   return (
     <>
-    <header class="nav">
+    <header class={`nav${isSearchPage ? ' is-search-page' : ''}`}>
       <div class="wrap nav-inner">
         <a class="brand" href="/">TerniLabs</a>
         {!isSearchPage ? <button type="button" class="mobile-search-button" aria-label="Open search" aria-expanded={searchOpen} onClick={() => setSearchOpen(true)}><Search aria-hidden="true" /></button> : null}
