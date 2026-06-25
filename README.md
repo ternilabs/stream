@@ -102,7 +102,7 @@ npm run test:watch  # vitest watch mode
 | --- | --- | --- |
 | `/` | `HomePage` | Four paged catalog rails with skeleton loading. |
 | `/search` | `SearchPage` | Full search with type filter, pagination, and URL-synced state. |
-| `/watch/:id` | `WatchPage` | Player, server selector, TV picker, details, recommendations, cast, trailer. |
+| `/watch/:id` | `WatchPage` | Player, server selector, TV picker, details, recommendations, cast, trailer; invalid watch routes render a centered invalid state. |
 
 ### Query parameters
 
@@ -111,8 +111,9 @@ npm run test:watch  # vitest watch mode
 | `/search` | `q` | Search query. |
 | `/search` | `type` | `multi` (default), `tv`, or `movie`. |
 | `/search` | `page` | 1-based page index. |
-| `/watch/:id` | `type` | `movie` (default) or `tv`. |
-| `/watch/:id` | `season`, `episode` | Required when `type=tv`. Invalid values are normalized to the first valid season and episode from the API. |
+| `/watch/:id` | `id` | Must be a positive integer. Invalid IDs render the invalid watch state without calling the API. |
+| `/watch/:id` | `type` | `movie` (default when omitted) or `tv`. Unsupported values render the invalid watch state without calling the API. |
+| `/watch/:id` | `season`, `episode` | Used when `type=tv`. Invalid values are normalized to the first valid season and episode from the API. |
 
 ### Keyboard and pointer
 
