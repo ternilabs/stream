@@ -37,6 +37,13 @@ const tvDetails = {
   recommended: Array.from({ length: 13 }, (_, index) => ({ id: index + 10, type: 'movie', title: `Recommended ${index + 1}` })),
 };
 
+function mockSummaryOverflow(isOverflowing: boolean) {
+  const scrollHeight = isOverflowing ? 80 : 40;
+  const clientHeight = 40;
+  Object.defineProperty(HTMLElement.prototype, 'scrollHeight', { configurable: true, get: () => scrollHeight });
+  Object.defineProperty(HTMLElement.prototype, 'clientHeight', { configurable: true, get: () => clientHeight });
+}
+
 describe('WatchPage', () => {
   beforeEach(() => {
     titleMock.mockReset();
@@ -70,16 +77,31 @@ describe('WatchPage', () => {
     await waitFor(() => expect(screen.getByTitle('Test Movie')).toBeInTheDocument());
   });
 
-  it('shows Production instead of Type and removes the player share button', async () => {
+  it('shows only the first Production value and removes the player share button', async () => {
+    titleMock.mockResolvedValue({
+      id: 1,
+      title: 'Test Movie',
+      type: 'movie',
+      year: '2024',
+      rating: 7.4,
+      overview: 'Movie description',
+      production: ['Movie Studio', 'Second Studio'],
+      recommended: [],
+      cast: [],
+    });
+
     render(<WatchPage />);
 
     await waitFor(() => expect(screen.getByText('Movie Studio')).toBeInTheDocument());
+    expect(screen.queryByText('Movie Studio, Second Studio')).not.toBeInTheDocument();
+    expect(screen.queryByText('Second Studio')).not.toBeInTheDocument();
     expect(screen.getByText('Production')).toBeInTheDocument();
     expect(screen.queryByText('Type')).not.toBeInTheDocument();
     expect(screen.queryByLabelText('Share title')).not.toBeInTheDocument();
   });
 
-  it('expands and collapses the description with accessible chevron controls', async () => {
+  it('expands and collapses the description only when collapsed text is truncated', async () => {
+    mockSummaryOverflow(true);
     render(<WatchPage />);
 
     const seeMore = await screen.findByRole('button', { name: 'See more description' });
@@ -90,6 +112,14 @@ describe('WatchPage', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'See less description' }));
     expect(screen.getByRole('button', { name: 'See more description' })).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('hides the description toggle when collapsed text is not truncated', async () => {
+    mockSummaryOverflow(false);
+    render(<WatchPage />);
+
+    await waitFor(() => expect(screen.getByText('Movie description')).toBeInTheDocument());
+    expect(screen.queryByRole('button', { name: 'See more description' })).not.toBeInTheDocument();
   });
 
   it('expands and collapses characters with accessible chevron controls', async () => {
@@ -109,7 +139,7 @@ describe('WatchPage', () => {
     expect(screen.getByRole('button', { name: 'Show fewer characters' })).toHaveAttribute('aria-expanded', 'true');
   });
 
-  it('renders TV season episode selects and updates the URL from API metadata', async () => {
+  it('renders TV season episode dropdowns and updates the URL from API metadata', async () => {
     titleMock.mockResolvedValue(tvDetails);
     window.history.replaceState(null, '', '/watch/2?type=tv&season=1&episode=1');
 
@@ -117,7 +147,8 @@ describe('WatchPage', () => {
 
     await waitFor(() => expect(screen.getByTitle('Test Show')).toBeInTheDocument());
 
-    fireEvent.change(screen.getByLabelText('Season'), { target: { value: '2' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Season' }));
+    fireEvent.click(screen.getByRole('option', { name: 'Season 2' }));
 
     expect(window.location.search).toContain('type=tv');
     expect(window.location.search).toContain('season=2');

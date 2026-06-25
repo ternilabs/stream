@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { ChevronDown, ChevronUp, Share2, Star, User } from 'preact-feather';
 import { apiClient } from '../lib/api-client';
 import { resolveEmbedUrl } from '../lib/embed-resolver';
@@ -62,6 +62,8 @@ export function WatchPage() {
   const [season, setSeason] = useState(Number(params.get('season')) || 1);
   const [episode, setEpisode] = useState(Number(params.get('episode')) || 1);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
+  const [descriptionTruncated, setDescriptionTruncated] = useState(false);
+  const summaryRef = useRef<HTMLParagraphElement>(null);
   const [charactersExpanded, setCharactersExpanded] = useState(false);
   const sources = useMemo(() => mergeSourceHealth(SOURCES), []);
   const [sourceId, setSourceId] = useState(sources[0].id);
@@ -72,7 +74,7 @@ export function WatchPage() {
   const validTvSelection = type === 'tv' ? getValidTvSelection(details?.seasons, season, episode) : undefined;
   const canRenderPlayer = type === 'movie' || Boolean(validTvSelection);
   const embedUrl = canRenderPlayer ? resolveEmbedUrl(source, { type, id, season: validTvSelection?.season ?? season, episode: validTvSelection?.episode ?? episode }) : undefined;
-  const production = details?.production?.length ? details.production.join(', ') : 'Unknown';
+  const production = details?.production?.[0] ?? 'Unknown';
   const visibleCast = charactersExpanded ? details?.cast ?? [] : (details?.cast ?? []).slice(0, 4);
   const showCharacterToggle = (details?.cast?.length ?? 0) > 4;
 
@@ -85,6 +87,21 @@ export function WatchPage() {
       .catch(setError)
       .finally(() => setIsLoading(false));
   }, [id, type]);
+
+  useEffect(() => {
+    setDescriptionExpanded(false);
+    setDescriptionTruncated(false);
+  }, [details?.overview]);
+
+  useEffect(() => {
+    if (descriptionExpanded) return;
+    const summary = summaryRef.current;
+    if (!summary || !details?.overview) {
+      setDescriptionTruncated(false);
+      return;
+    }
+    setDescriptionTruncated(summary.scrollHeight > summary.clientHeight + 1);
+  }, [descriptionExpanded, details?.overview, isLoading]);
 
   useEffect(() => {
     if (type !== 'tv' || !details) return;
@@ -146,8 +163,8 @@ export function WatchPage() {
                 </div>
               </div>
               <div class="summary-box">
-                <p class={`summary-text${descriptionExpanded ? '' : ' collapsed'}`}>{details?.overview ?? 'Details are unavailable.'}</p>
-                {details?.overview ? <button class="see-more" type="button" aria-expanded={descriptionExpanded} aria-label={descriptionExpanded ? 'See less description' : 'See more description'} onClick={() => setDescriptionExpanded((value) => !value)}>{descriptionExpanded ? 'See less' : 'See more'} {descriptionExpanded ? <ChevronUp aria-hidden="true" /> : <ChevronDown aria-hidden="true" />}</button> : null}
+                <p ref={summaryRef} class={`summary-text${descriptionExpanded ? '' : ' collapsed'}`}>{details?.overview ?? 'Details are unavailable.'}</p>
+                {details?.overview && descriptionTruncated ? <button class="see-more" type="button" aria-expanded={descriptionExpanded} aria-label={descriptionExpanded ? 'See less description' : 'See more description'} onClick={() => setDescriptionExpanded((value) => !value)}>{descriptionExpanded ? 'See less' : 'See more'} {descriptionExpanded ? <ChevronUp aria-hidden="true" /> : <ChevronDown aria-hidden="true" />}</button> : null}
               </div>
               {details?.genres?.length ? <div class="tag-list">{details.genres.map((genre) => <span class="tag" key={genre}>{genre}</span>)}</div> : null}
             </>}
