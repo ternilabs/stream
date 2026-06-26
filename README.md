@@ -9,7 +9,7 @@
 [![Preact](https://img.shields.io/badge/Preact-673ab8?style=flat-square&logo=preact&logoColor=white)](https://preactjs.com)
 [![Vite](https://img.shields.io/badge/Vite-646cff?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
 [![License](https://img.shields.io/badge/License-TerniLabs-blue?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.1-71d083?style=flat-square)](#)
+[![Version](https://img.shields.io/badge/Version-1.0.2-71d083?style=flat-square)](#)
 
 [Overview](#overview) • [Features](#features) • [Getting started](#getting-started) • [Usage](#usage) • [Architecture](#architecture) • [Configuration](#configuration) • [Disclaimer](#disclaimer)
 
