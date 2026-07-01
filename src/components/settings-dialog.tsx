@@ -2,8 +2,9 @@ import { useEffect, useState } from 'preact/hooks';
 import { X } from 'preact-feather';
 import { clearAppStorage } from '../lib/local-store';
 import { SourceWithHealth } from '../lib/types';
+import { ServersUnavailableState } from './state-message';
 
-export function SettingsDialog({ open, sources, onClose }: { open: boolean; sources: SourceWithHealth[]; onClose: () => void }) {
+export function SettingsDialog({ open, sources, sourcesUnavailable, onClose }: { open: boolean; sources: SourceWithHealth[]; sourcesUnavailable: boolean; onClose: () => void }) {
   const [confirmingClear, setConfirmingClear] = useState(false);
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export function SettingsDialog({ open, sources, onClose }: { open: boolean; sour
           <p class="alert-copy">This removes cached metadata, source health, recent searches, and settings saved on this device.</p>
           <div class="alert-actions">
             <button type="button" onClick={() => setConfirmingClear(false)}>Cancel</button>
-            <button type="button" class="danger" onClick={() => { clearAppStorage(); localStorage.removeItem('stream:recent-searches'); setConfirmingClear(false); }}>Clear storage</button>
+            <button type="button" class="danger" onClick={() => { clearAppStorage(); setConfirmingClear(false); onClose(); }}>Clear storage</button>
           </div>
         </section>
       </div>
@@ -41,14 +42,18 @@ export function SettingsDialog({ open, sources, onClose }: { open: boolean; sour
         </div>
         <div class="dialog-body">
           <div class="server-head"><span class="eyebrow">Servers</span></div>
-          <div class="server-list" aria-label="Server status list">
-            {sources.map((source) => (
-              <div class="server-row" key={source.id}>
-                <span class="server-name">{source.name}</span>
-                <span class={`server-status ${source.health === 'up' || source.health === 'unknown' ? 'online' : ''}`}><span class="status-dot" />{source.health === 'down' ? 'Down' : 'Online'}</span>
-              </div>
-            ))}
-          </div>
+          {sourcesUnavailable ? (
+            <ServersUnavailableState compact />
+          ) : (
+            <div class="server-list" aria-label="Server status list">
+              {sources.map((source) => (
+                <div class="server-row" key={source.id}>
+                  <span class="server-name">{source.name}</span>
+                  <span class={`server-status ${source.health === 'up' ? 'online' : ''}`}><span class="status-dot" />{source.health === 'up' ? 'Online' : 'Down'}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div class="dialog-foot">
           <button type="button" class="clear-storage" onClick={() => setConfirmingClear(true)}>Clear local storage</button>

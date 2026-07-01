@@ -3,13 +3,13 @@ import { useLocation } from 'preact-iso';
 import { Search, Settings } from 'preact-feather';
 import { SettingsDialog } from './settings-dialog';
 import { SearchBox } from './search-box';
-import { mergeSourceHealth } from '../lib/source-health';
-import { SOURCES } from '../lib/source-registry';
+import { useSourceHealth } from '../hooks/use-source-health';
 
 export function Nav() {
   const { path, route: navigate } = useLocation();
   const isSearchPage = path === '/search';
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const sourceHealth = useSourceHealth();
   const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export function Nav() {
           <button type="button" class="icon-button" aria-label="Settings" onClick={() => setSettingsOpen(true)}><Settings aria-hidden="true" /></button>
         </div>
       </div>
-      <SettingsDialog open={settingsOpen} sources={mergeSourceHealth(SOURCES)} onClose={() => setSettingsOpen(false)} />
+      <SettingsDialog open={settingsOpen} sources={sourceHealth.sources} sourcesUnavailable={sourceHealth.isUnavailable} onClose={() => setSettingsOpen(false)} />
     </header>
     <div class="mobile-search-scrim" aria-hidden="true" onClick={() => setSearchOpen(false)} />
     </>

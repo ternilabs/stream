@@ -63,4 +63,5 @@ export function clearAppStorage(): void {
   for (const namespace of ['api-cache', 'source-health', 'recent-searches', 'settings'] satisfies Namespace[]) {
     localStorage.removeItem(storageKey(namespace));
   }
+  localStorage.removeItem('stream:recent-searches');
 }

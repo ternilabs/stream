@@ -11,8 +11,9 @@ vi.mock('./search-box', () => ({
   SearchBox: () => <div data-testid="nav-search-box"><input placeholder="Search any title..." /></div>,
 }));
 
-vi.mock('../lib/source-health', () => ({ mergeSourceHealth: () => [] }));
-vi.mock('../lib/source-registry', () => ({ SOURCES: [] }));
+vi.mock('../hooks/use-source-health', () => ({
+  useSourceHealth: () => ({ sources: [], availableSources: [], isLoading: false, isUnavailable: true }),
+}));
 
 function renderNav() {
   return render(<LocationProvider><Nav /></LocationProvider>);

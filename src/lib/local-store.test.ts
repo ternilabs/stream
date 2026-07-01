@@ -23,7 +23,19 @@ describe('local-store', () => {
     setCachedValue('settings', 'selectedSource', 'vidlink');
     localStorage.setItem('other-app:key', 'keep');
     clearAppStorage();
-    expect(localStorage.getItem('stream:v1:settings')).toBeNull();
+    expect(localStorage.getItem('stream:v2:settings')).toBeNull();
+    expect(localStorage.getItem('other-app:key')).toBe('keep');
+  });
+
+  it('clears the raw recent searches key with app storage', () => {
+    setCachedValue('settings', 'selectedSource', 'vidlink');
+    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune']));
+    localStorage.setItem('other-app:key', 'keep');
+
+    clearAppStorage();
+
+    expect(localStorage.getItem('stream:v2:settings')).toBeNull();
+    expect(localStorage.getItem('stream:recent-searches')).toBeNull();
     expect(localStorage.getItem('other-app:key')).toBe('keep');
   });
 
