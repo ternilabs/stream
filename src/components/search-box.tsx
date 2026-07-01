@@ -118,16 +118,18 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
               <button class="clear-btn" type="button" onClick={clearRecents}>Clear all</button>
             </div>
             {recents.map((recent) => (
-              <button class="recent-row" type="button" key={recent} onClick={() => { setQuery(recent); submit(recent); }}>
-                <Clock aria-hidden="true" />
-                <span class="recent-title">{recent}</span>
+              <div class="recent-row" key={recent}>
+                <button class="recent-select" type="button" aria-label={`Search for ${recent}`} onClick={() => { setQuery(recent); submit(recent); }}>
+                  <Clock aria-hidden="true" />
+                  <span class="recent-title">{recent}</span>
+                </button>
                 <button
                   aria-label={`Remove ${recent} from recent searches`}
                   class="remove-recent"
                   type="button"
-                  onClick={(event) => { event.stopPropagation(); removeRecent(recent); }}
+                  onClick={() => removeRecent(recent)}
                 ><X aria-hidden="true" data-testid="remove-recent-icon" /></button>
-              </button>
+              </div>
             ))}
           </div>
         )}

@@ -225,4 +225,32 @@ describe('SearchBox', () => {
 
     vi.useRealTimers();
   });
+
+  it('renders recent search actions without nesting buttons', () => {
+    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune']));
+    render(<SearchBox initialQuery="" onSearch={() => undefined} />);
+
+    const recentButton = screen.getByRole('button', { name: 'Search for Dune' });
+    const removeButton = screen.getByRole('button', { name: 'Remove Dune from recent searches' });
+
+    expect(recentButton.querySelector('button')).toBeNull();
+    expect(removeButton.closest('button')).toBe(removeButton);
+  });
+
+  it('submits query when clicking the recent search select button', () => {
+    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune']));
+    const onSearch = vi.fn();
+    render(<SearchBox initialQuery="" onSearch={onSearch} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Search for Dune' }));
+    expect(onSearch).toHaveBeenCalledWith('Dune');
+  });
+
+  it('removes recent search when clicking the remove button', () => {
+    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune']));
+    render(<SearchBox initialQuery="" onSearch={() => undefined} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Remove Dune from recent searches' }));
+    expect(screen.queryByText('Dune')).not.toBeInTheDocument();
+  });
 });
