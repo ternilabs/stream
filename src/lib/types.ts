@@ -37,7 +37,7 @@ export interface SourceHealthApiItem {
 }
 
 export interface SourceHealthApiResponse {
-  checkedAt: string;
+  checkedAt: string | null;
   sources: SourceHealthApiItem[];
 }
 
@@ -51,7 +51,7 @@ export interface SourceDefinition {
 
 export interface SourceWithHealth extends SourceDefinition {
   health: SourceHealthStatus;
-  checkedAt?: string;
+  checkedAt?: string | null;
 }
 
 export interface TvSeasonSummary {
