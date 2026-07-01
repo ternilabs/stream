@@ -49,7 +49,7 @@ export function SettingsDialog({ open, sources, sourcesUnavailable, onClose }: {
               {sources.map((source) => (
                 <div class="server-row" key={source.id}>
                   <span class="server-name">{source.name}</span>
-                  <span class={`server-status ${source.health === 'up' ? 'online' : ''}`}><span class="status-dot" />{source.health === 'up' ? 'Online' : 'Down'}</span>
+                  <span class={`server-status ${source.health === 'up' ? 'online' : ''}`}><span class="status-dot" />{source.health === 'up' ? 'Online' : source.health === 'down' ? 'Down' : 'Unknown'}</span>
                 </div>
               ))}
             </div>

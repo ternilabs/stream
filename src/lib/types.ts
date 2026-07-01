@@ -46,7 +46,6 @@ export interface SourceDefinition {
   name: string;
   movieTemplate: string;
   tvTemplate: string;
-  notes?: string;
 }
 
 export interface SourceWithHealth extends SourceDefinition {
