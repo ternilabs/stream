@@ -11,6 +11,7 @@ export function ServerSelect({ sources, value, onChange }: { sources: SourceWith
       options={sources.map((source) => ({
         value: source.id,
         label: source.name,
+        disabled: source.health === 'down',
         decoration: <span class={`status-dot ${source.health === 'down' ? 'is-down' : ''}`} />,
       }))}
       emptyLabel="No servers available"

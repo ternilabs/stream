@@ -50,4 +50,13 @@ describe('ServerSelect', () => {
     expect(screen.getByRole('button', { name: 'Server' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Server' })).toHaveTextContent('No servers available');
   });
+
+  it('disables down sources in the dropdown', () => {
+    render(<ServerSelect sources={sources} value="a" onChange={() => {}} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Server' }));
+
+    expect(screen.getByRole('option', { name: 'Beta' })).toBeDisabled();
+    expect(screen.getByRole('option', { name: 'Beta' })).toHaveAttribute('aria-disabled', 'true');
+  });
 });

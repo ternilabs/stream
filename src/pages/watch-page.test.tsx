@@ -8,6 +8,12 @@ vi.mock('../lib/queries', () => ({
   getTitleWithCache: (...args: unknown[]) => titleMock(...args),
 }));
 
+const sourceHealthMock = vi.fn();
+
+vi.mock('../hooks/use-source-health', () => ({
+  useSourceHealth: () => sourceHealthMock(),
+}));
+
 const tvDetails = {
   id: 2,
   title: 'Test Show',
@@ -72,6 +78,19 @@ describe('WatchPage', () => {
       cast: [],
     });
     window.history.replaceState(null, '', '/watch/1?type=movie');
+
+    sourceHealthMock.mockReset();
+    sourceHealthMock.mockReturnValue({
+      isLoading: false,
+      isUnavailable: false,
+      sources: [
+        { id: 'mapple', name: 'Mapple', movieTemplate: 'https://mapple.uk/watch/movie/{id}?autoPlay=true', tvTemplate: 'https://mapple.uk/watch/tv/{id}-{season}-{episode}?autoPlay=true', health: 'up', checkedAt: null },
+        { id: 'vidlink', name: 'VidLink', movieTemplate: 'https://vidlink.pro/movie/{id}', tvTemplate: 'https://vidlink.pro/tv/{id}/{season}/{episode}', health: 'down', checkedAt: null },
+      ],
+      availableSources: [
+        { id: 'mapple', name: 'Mapple', movieTemplate: 'https://mapple.uk/watch/movie/{id}?autoPlay=true', tvTemplate: 'https://mapple.uk/watch/tv/{id}-{season}-{episode}?autoPlay=true', health: 'up', checkedAt: null },
+      ],
+    });
   });
 
   it.each(['/watch/foo', '/watch/0', '/watch/-1', '/watch/1.5'])('renders an invalid state and skips the API for invalid id %s', (path) => {
@@ -237,5 +256,27 @@ describe('WatchPage', () => {
     expect(screen.queryByLabelText('Recommendations')).not.toBeInTheDocument();
     expect(screen.queryByText('Trailer')).not.toBeInTheDocument();
     expect(screen.queryByText('Characters')).not.toBeInTheDocument();
+  });
+
+  it('keeps metadata but blocks player controls when source data is unavailable', async () => {
+    sourceHealthMock.mockReturnValue({ sources: [], availableSources: [], isLoading: false, isUnavailable: true });
+
+    render(<WatchPage />);
+
+    await waitFor(() => expect(screen.getByText('Test Movie')).toBeInTheDocument());
+    expect(screen.getByRole('status', { name: 'Servers unavailable' })).toBeInTheDocument();
+    expect(screen.queryByTitle('Test Movie')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Server' })).not.toBeInTheDocument();
+    expect(screen.getByText('Movie description')).toBeInTheDocument();
+  });
+
+  it('disables down sources and uses an up source for playback', async () => {
+    render(<WatchPage />);
+
+    const iframe = await screen.findByTitle('Test Movie');
+    expect(iframe).toHaveAttribute('src', 'https://mapple.uk/watch/movie/1?autoPlay=true');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Server' }));
+    expect(screen.getByRole('option', { name: 'VidLink' })).toBeDisabled();
   });
 });

@@ -4,7 +4,7 @@ import { SelectMenu } from './select-menu';
 
 const options = [
   { value: 'alpha', label: 'Alpha' },
-  { value: 'beta', label: 'Beta', decoration: <span class="status-dot is-down" /> },
+  { value: 'beta', label: 'Beta', decoration: <span class="status-dot is-down" />, disabled: true },
   { value: 'gamma', label: 'Gamma' },
 ];
 
@@ -74,5 +74,19 @@ describe('SelectMenu', () => {
 
     expect(screen.getByRole('button', { name: 'Server' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Server' })).toHaveTextContent('No servers available');
+  });
+
+  it('renders disabled options and does not call onChange for them', () => {
+    const onChange = vi.fn();
+    render(<SelectMenu label="Server" value="alpha" options={options} onChange={onChange} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Server' }));
+    const beta = screen.getByRole('option', { name: 'Beta' });
+
+    expect(beta).toHaveAttribute('aria-disabled', 'true');
+    expect(beta).toBeDisabled();
+    fireEvent.click(beta);
+    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.getByRole('button', { name: 'Server' })).toHaveAttribute('aria-expanded', 'true');
   });
 });

@@ -6,6 +6,7 @@ export interface SelectMenuOption {
   value: string;
   label: ComponentChildren;
   decoration?: ComponentChildren;
+  disabled?: boolean;
 }
 
 interface SelectMenuProps {
@@ -51,8 +52,9 @@ export function SelectMenu({ label, value, options, onChange, emptyLabel = 'No o
     setPlacement(menuHeight > belowSpace && aboveSpace > belowSpace ? 'above' : 'below');
   }, [open, options.length]);
 
-  function chooseOption(nextValue: string) {
-    onChange(nextValue);
+  function chooseOption(option: SelectMenuOption) {
+    if (option.disabled) return;
+    onChange(option.value);
     setOpen(false);
   }
 
@@ -78,8 +80,10 @@ export function SelectMenu({ label, value, options, onChange, emptyLabel = 'No o
             type="button"
             role="option"
             aria-selected={option.value === value}
+            aria-disabled={option.disabled ? 'true' : undefined}
+            disabled={option.disabled}
             key={option.value}
-            onClick={() => chooseOption(option.value)}
+            onClick={() => chooseOption(option)}
           >
             <span class="radio" />
             <span>{option.label}</span>

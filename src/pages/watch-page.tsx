@@ -1,12 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { ChevronDown, ChevronUp, Share2, Star, User } from 'preact-feather';
 import { apiClient } from '../lib/api-client';
 import { resolveEmbedUrl } from '../lib/embed-resolver';
 import { getTitleWithCache } from '../lib/queries';
-import { mergeSourceHealth } from '../lib/source-health';
-import { SOURCES } from '../lib/source-registry';
 import { MediaType, TitleDetails, TvSeasonSummary } from '../lib/types';
-import { ApiErrorMessage, InvalidWatchLinkState } from '../components/state-message';
+import { ApiErrorMessage, InvalidWatchLinkState, ServersUnavailableState } from '../components/state-message';
+import { useSourceHealth } from '../hooks/use-source-health';
 import { MediaCard } from '../components/media-card';
 import { SeasonEpisodePicker } from '../components/season-episode-picker';
 import { ServerSelect } from '../components/server-select';
@@ -90,15 +89,18 @@ function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
   const [descriptionTruncated, setDescriptionTruncated] = useState(false);
   const summaryRef = useRef<HTMLParagraphElement>(null);
   const [charactersExpanded, setCharactersExpanded] = useState(false);
-  const sources = useMemo(() => mergeSourceHealth(SOURCES), []);
-  const [sourceId, setSourceId] = useState(sources[0].id);
+  const sourceHealth = useSourceHealth();
+  const sources = sourceHealth.sources;
+  const availableSources = sourceHealth.availableSources;
+  const [sourceId, setSourceId] = useState('');
   const [details, setDetails] = useState<TitleDetails>();
   const [error, setError] = useState<unknown>();
   const [isLoading, setIsLoading] = useState(true);
-  const source = sources.find((item) => item.id === sourceId) ?? sources[0];
+  const source = availableSources.find((item) => item.id === sourceId) ?? availableSources[0];
   const validTvSelection = type === 'tv' ? getValidTvSelection(details?.seasons, season, episode) : undefined;
-  const canRenderPlayer = type === 'movie' || Boolean(validTvSelection);
+  const canRenderPlayer = Boolean(source) && (type === 'movie' || Boolean(validTvSelection));
   const embedUrl = canRenderPlayer ? resolveEmbedUrl(source, { type, id, season: validTvSelection?.season ?? season, episode: validTvSelection?.episode ?? episode }) : undefined;
+  const sourcesUnavailable = sourceHealth.isUnavailable || (!sourceHealth.isLoading && availableSources.length === 0);
   const production = details?.production?.[0] ?? 'Unknown';
   const visibleCast = charactersExpanded ? details?.cast ?? [] : (details?.cast ?? []).slice(0, 4);
   const showCharacterToggle = (details?.cast?.length ?? 0) > 4;
@@ -129,6 +131,16 @@ function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
   }, [descriptionExpanded, details?.overview, isLoading]);
 
   useEffect(() => {
+    if (!availableSources.length) {
+      setSourceId('');
+      return;
+    }
+    if (!availableSources.some((item) => item.id === sourceId)) {
+      setSourceId(availableSources[0].id);
+    }
+  }, [availableSources, sourceId]);
+
+  useEffect(() => {
     if (type !== 'tv' || !details) return;
     const validSelection = getValidTvSelection(details.seasons, season, episode);
     if (!validSelection) return;
@@ -153,12 +165,12 @@ function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
         <div class="left-panel">
           <section class="player-card" aria-label="Player area">
             <div class="player-placeholder">
-              {embedUrl ? <iframe class="player-frame" src={embedUrl} title={details?.title ?? 'Selected stream source'} {...PLAYER_IFRAME_PERMISSIONS} /> : <div class="blocked-player">Episodes are unavailable until valid season data exists.</div>}
+              {sourcesUnavailable ? <ServersUnavailableState compact /> : embedUrl ? <iframe class="player-frame" src={embedUrl} title={details?.title ?? 'Selected stream source'} {...PLAYER_IFRAME_PERMISSIONS} /> : <div class="blocked-player">Episodes are unavailable until valid season data exists.</div>}
             </div>
             <div class="player-controls">
               <div class="now-row">
                 <div class="now-copy"><span class="kicker">Now playing</span><span class="now-title">{details?.title ?? (isLoading ? 'Loading title...' : `Title ${id}`)}{type === 'tv' && validTvSelection ? ` S${validTvSelection.season} E${validTvSelection.episode}` : ''}</span></div>
-                <ServerSelect sources={sources} value={sourceId} onChange={setSourceId} />
+                {sourcesUnavailable ? null : <ServerSelect sources={sources} value={sourceId} onChange={setSourceId} />}
               </div>
               {type === 'tv' ? <SeasonEpisodePicker seasons={details?.seasons ?? []} season={validTvSelection?.season ?? season} episode={validTvSelection?.episode ?? episode} onChange={updateEpisode} /> : null}
               <div class="note-line">Please try different servers if one isn't working, and consider using ad blockers or the Brave browser.</div>
