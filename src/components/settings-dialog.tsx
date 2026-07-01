@@ -2,8 +2,6 @@ import { useEffect, useState } from 'preact/hooks';
 import { X } from 'preact-feather';
 import { clearAppStorage } from '../lib/local-store';
 import { SourceWithHealth } from '../lib/types';
-import { ServersUnavailableState } from './state-message';
-
 export function SettingsDialog({ open, sources, sourcesUnavailable, onClose }: { open: boolean; sources: SourceWithHealth[]; sourcesUnavailable: boolean; onClose: () => void }) {
   const [confirmingClear, setConfirmingClear] = useState(false);
 
@@ -43,7 +41,10 @@ export function SettingsDialog({ open, sources, sourcesUnavailable, onClose }: {
         <div class="dialog-body">
           <div class="server-head"><span class="eyebrow">Servers</span></div>
           {sourcesUnavailable ? (
-            <ServersUnavailableState compact />
+            <div class="server-unavailable" role="status" aria-labelledby="server-unavailable-title">
+              <h3 id="server-unavailable-title">Servers unavailable</h3>
+              <p>No streaming servers are available right now. Please try again later.</p>
+            </div>
           ) : (
             <div class="server-list" aria-label="Server status list">
               {sources.map((source) => (

@@ -59,9 +59,10 @@ export function deleteCachedValue(namespace: Namespace, key: string): void {
   writeNamespace(namespace, data);
 }
 
+export const APP_STORAGE_CLEARED_EVENT = 'stream:storage-cleared';
+
 export function clearAppStorage(): void {
-  for (const namespace of ['api-cache', 'source-health', 'recent-searches', 'settings'] satisfies Namespace[]) {
-    localStorage.removeItem(storageKey(namespace));
-  }
-  localStorage.removeItem('stream:recent-searches');
+  const keys = Object.keys(localStorage).filter((key) => key.startsWith('stream:'));
+  for (const key of keys) localStorage.removeItem(key);
+  window.dispatchEvent(new Event(APP_STORAGE_CLEARED_EVENT));
 }

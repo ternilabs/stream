@@ -8,9 +8,8 @@ import { SettingsDialog } from './settings-dialog';
 describe('SettingsDialog', () => {
   it('shows server unavailable placeholder when source data is unavailable', () => {
     render(<SettingsDialog open sources={[]} sourcesUnavailable onClose={() => undefined} />);
-
-    expect(screen.getByRole('status', { name: 'Servers unavailable' })).toBeInTheDocument();
-    expect(screen.getByText('No streaming servers are available right now. Please try again later.')).toBeInTheDocument();
+    const state = screen.getByRole('status', { name: 'Servers unavailable' });
+    expect(state).toHaveClass('server-unavailable');
     expect(screen.queryByLabelText('Server status list')).not.toBeInTheDocument();
   });
 

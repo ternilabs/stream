@@ -2,6 +2,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { ArrowRight, Clock, Search, X } from 'preact-feather';
 import { apiClient } from '../lib/api-client';
 import { getSearchWithCache } from '../lib/queries';
+import { APP_STORAGE_CLEARED_EVENT } from '../lib/local-store';
 import { MediaItem } from '../lib/types';
 
 const RECENTS_KEY = 'stream:recent-searches';
@@ -40,6 +41,12 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
   const [recents, setRecents] = useState<string[]>(readRecents());
   const [results, setResults] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const onStorageCleared = () => setRecents(readRecents());
+    window.addEventListener(APP_STORAGE_CLEARED_EVENT, onStorageCleared);
+    return () => window.removeEventListener(APP_STORAGE_CLEARED_EVENT, onStorageCleared);
+  }, []);
 
   function closePanel() {
     setQuery('');

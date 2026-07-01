@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { clearAppStorage, getCachedValue, getLocalDayStamp, setCachedValue } from './local-store';
+import { APP_STORAGE_CLEARED_EVENT, clearAppStorage, getCachedValue, getLocalDayStamp, setCachedValue } from './local-store';
 
 describe('local-store', () => {
   beforeEach(() => {
@@ -37,6 +37,26 @@ describe('local-store', () => {
     expect(localStorage.getItem('stream:v2:settings')).toBeNull();
     expect(localStorage.getItem('stream:recent-searches')).toBeNull();
     expect(localStorage.getItem('other-app:key')).toBe('keep');
+  });
+
+  it('clears old versioned app keys', () => {
+    localStorage.setItem('stream:v1:settings', 'old');
+    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune']));
+    localStorage.setItem('other-app:key', 'keep');
+
+    clearAppStorage();
+
+    expect(localStorage.getItem('stream:v1:settings')).toBeNull();
+    expect(localStorage.getItem('stream:recent-searches')).toBeNull();
+    expect(localStorage.getItem('other-app:key')).toBe('keep');
+  });
+
+  it('dispatches a storage-cleared event', () => {
+    const listener = vi.fn();
+    window.addEventListener(APP_STORAGE_CLEARED_EVENT, listener);
+    clearAppStorage();
+    expect(listener).toHaveBeenCalledTimes(1);
+    window.removeEventListener(APP_STORAGE_CLEARED_EVENT, listener);
   });
 
   it('formats local day stamps as YYYY-MM-DD', () => {

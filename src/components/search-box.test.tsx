@@ -1,5 +1,6 @@
-import { fireEvent, render, screen, within } from '@testing-library/preact';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/preact';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { APP_STORAGE_CLEARED_EVENT } from '../lib/local-store';
 import { SearchBox } from './search-box';
 
 const searchMock = vi.fn();
@@ -252,5 +253,17 @@ describe('SearchBox', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Remove Dune from recent searches' }));
     expect(screen.queryByText('Dune')).not.toBeInTheDocument();
+  });
+
+  it('clears visible recent searches when app storage is cleared', async () => {
+    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune']));
+    render(<SearchBox initialQuery="" onSearch={() => undefined} />);
+
+    expect(screen.getByRole('button', { name: 'Search for Dune' })).toBeInTheDocument();
+
+    localStorage.removeItem('stream:recent-searches');
+    window.dispatchEvent(new Event(APP_STORAGE_CLEARED_EVENT));
+
+    await waitFor(() => expect(screen.queryByRole('button', { name: 'Search for Dune' })).not.toBeInTheDocument());
   });
 });
