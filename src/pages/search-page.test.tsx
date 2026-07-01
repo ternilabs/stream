@@ -143,6 +143,20 @@ describe('SearchPage', () => {
     expect(screen.queryByRole('navigation', { name: 'Pagination' })).not.toBeInTheDocument();
   });
 
+  it('keeps the search form visible and hides results when search metadata fails', async () => {
+    mockedGetSearchWithCache.mockRejectedValue(new Error('network'));
+    window.history.pushState(null, '', '/search?q=matrix&type=multi&page=2');
+
+    renderSearchPage();
+
+    expect(screen.getByRole('search', { name: 'Search catalog' })).toBeInTheDocument();
+    const state = await screen.findByRole('status', { name: 'Something went wrong' });
+    expect(state).toHaveClass('invalid-response-state');
+    expect(screen.getByText('We couldn’t retrieve the data from the server. Please refresh the page or try again later.')).toBeInTheDocument();
+    expect(screen.queryByLabelText('Search results')).not.toBeInTheDocument();
+    expect(screen.queryByRole('navigation', { name: 'Pagination' })).not.toBeInTheDocument();
+  });
+
   it('renders inert ellipsis separators in pagination', async () => {
     mockedGetSearchWithCache.mockResolvedValue({
       page: 5, totalPages: 10,

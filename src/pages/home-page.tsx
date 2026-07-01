@@ -46,7 +46,7 @@ export function HomePage() {
     return () => { cancelled = true; };
   }, []);
 
-  if (error) return <main class="shell page"><ApiErrorMessage error={error} /></main>;
+  if (error) return <main class="invalid-response-shell"><ApiErrorMessage error={error} /></main>;
 
   return (
     <main>

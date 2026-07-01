@@ -130,12 +130,12 @@ export function SearchPage() {
             className="browse-type-select"
           />
         </form>
-        {error ? <ApiErrorMessage error={error} /> : null}
+        {error ? <div class="invalid-response-shell in-page"><ApiErrorMessage error={error} /></div> : null}
         {!loading && !error && query && items.length === 0 ? <StateMessage title="No results" /> : null}
-        <section class="browse-grid" aria-label="Search results">
+        {!error ? <section class="browse-grid" aria-label="Search results">
           {items.map((item) => <MediaCard key={`${item.type}-${item.id}`} item={item} />)}
-        </section>
-        {query && totalPages > 1 ? (
+        </section> : null}
+        {!error && query && totalPages > 1 ? (
           <nav class="browse-pagination" aria-label="Pagination">
             <button class="browse-page-button" type="button" aria-label="First page" disabled={currentPage <= 1} onClick={() => goToPage(1)}>«</button>
             <button class="browse-page-button" type="button" aria-label="Previous page" disabled={currentPage <= 1} onClick={() => goToPage(currentPage - 1)}>‹</button>

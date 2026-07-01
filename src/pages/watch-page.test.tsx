@@ -44,12 +44,12 @@ function mockSummaryOverflow(isOverflowing: boolean) {
   Object.defineProperty(HTMLElement.prototype, 'clientHeight', { configurable: true, get: () => clientHeight });
 }
 
-function expectInvalidWatchRoute() {
-  const state = screen.getByRole('status', { name: 'Invalid watch route' });
-  expect(state).toHaveClass('invalid-watch-state');
-  expect(within(state).getByLabelText('Invalid watch route')).toBeInTheDocument();
-  expect(within(state).getByRole('heading', { name: 'Invalid watch route' })).toBeInTheDocument();
-  expect(within(state).getByText('This watch URL does not match a known movie or TV title. Check the link or search for the title again.')).toBeInTheDocument();
+function expectInvalidWatchLink() {
+  const state = screen.getByRole('status', { name: 'Invalid watch link' });
+  expect(state).toHaveClass('invalid-response-state');
+  expect(within(state).getByLabelText('Invalid watch link')).toBeInTheDocument();
+  expect(within(state).getByRole('heading', { name: 'Invalid watch link' })).toBeInTheDocument();
+  expect(within(state).getByText('This watch link doesn’t match a known movie or TV title. Please check the URL or search again.')).toBeInTheDocument();
   expect(screen.queryByLabelText('Player area')).not.toBeInTheDocument();
   expect(screen.queryByLabelText('Recommendations')).not.toBeInTheDocument();
   expect(screen.queryByText('Trailer')).not.toBeInTheDocument();
@@ -79,7 +79,7 @@ describe('WatchPage', () => {
 
     render(<WatchPage />);
 
-    expectInvalidWatchRoute();
+    expectInvalidWatchLink();
   });
 
   it('renders an invalid state and skips the API for unsupported watch type', () => {
@@ -87,7 +87,7 @@ describe('WatchPage', () => {
 
     render(<WatchPage />);
 
-    expectInvalidWatchRoute();
+    expectInvalidWatchLink();
   });
 
   it('defaults missing watch type to movie for valid ids', async () => {
@@ -223,5 +223,19 @@ describe('WatchPage', () => {
 
     await waitFor(() => expect(screen.getByText('Recommended 12')).toBeInTheDocument());
     expect(screen.queryByText('Recommended 13')).not.toBeInTheDocument();
+  });
+
+  it('renders a centered failed-fetch state and skips watch content when title metadata fails', async () => {
+    titleMock.mockRejectedValue(new Error('network'));
+
+    render(<WatchPage />);
+
+    const state = await screen.findByRole('status', { name: 'Something went wrong' });
+    expect(state).toHaveClass('invalid-response-state');
+    expect(screen.getByText('We couldn’t retrieve the data from the server. Please refresh the page or try again later.')).toBeInTheDocument();
+    expect(screen.queryByLabelText('Player area')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Recommendations')).not.toBeInTheDocument();
+    expect(screen.queryByText('Trailer')).not.toBeInTheDocument();
+    expect(screen.queryByText('Characters')).not.toBeInTheDocument();
   });
 });

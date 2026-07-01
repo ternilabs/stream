@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { AlertTriangle, ChevronDown, ChevronUp, Share2, Star, User } from 'preact-feather';
+import { ChevronDown, ChevronUp, Share2, Star, User } from 'preact-feather';
 import { apiClient } from '../lib/api-client';
 import { resolveEmbedUrl } from '../lib/embed-resolver';
 import { getTitleWithCache } from '../lib/queries';
 import { mergeSourceHealth } from '../lib/source-health';
 import { SOURCES } from '../lib/source-registry';
 import { MediaType, TitleDetails, TvSeasonSummary } from '../lib/types';
-import { ApiErrorMessage } from '../components/state-message';
+import { ApiErrorMessage, InvalidWatchLinkState } from '../components/state-message';
 import { MediaCard } from '../components/media-card';
 import { SeasonEpisodePicker } from '../components/season-episode-picker';
 import { ServerSelect } from '../components/server-select';
@@ -36,15 +36,7 @@ function parseWatchRoute(): WatchRoute {
 }
 
 function InvalidWatchRoute() {
-  return (
-    <main class="invalid-watch-shell">
-      <section class="invalid-watch-state" role="status" aria-labelledby="invalid-watch-title">
-        <span class="invalid-watch-icon"><AlertTriangle aria-label="Invalid watch route" /></span>
-        <h1 id="invalid-watch-title">Invalid watch route</h1>
-        <p>This watch URL does not match a known movie or TV title. Check the link or search for the title again.</p>
-      </section>
-    </main>
-  );
+  return <main class="invalid-response-shell"><InvalidWatchLinkState /></main>;
 }
 
 function getValidTvSelection(seasons: TvSeasonSummary[] | undefined, season: number, episode: number) {
@@ -153,6 +145,8 @@ function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
     updateWatchUrl(id, type, nextSeason, nextEpisode);
   }
 
+  if (error) return <main class="invalid-response-shell"><ApiErrorMessage error={error} /></main>;
+
   return (
     <main>
       <div class="wrap detail-shell">
@@ -182,7 +176,6 @@ function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
 
         <aside class="right-panel">
           <section class="panel-card detail-card">
-            {error ? <ApiErrorMessage error={error} /> : null}
             {isLoading ? <DetailSkeleton /> : <>
               <div class="detail-top">
                 <div class="detail-poster">{details?.posterUrl ? <img src={details.posterUrl} alt="" /> : <span class="placeholder"><User aria-hidden="true" /></span>}</div>

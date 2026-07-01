@@ -1,11 +1,12 @@
 import { ErrorBoundary, LocationProvider, Route, Router } from 'preact-iso';
 import { Nav } from './components/nav';
+import { NotFoundState } from './components/state-message';
 import { HomePage } from './pages/home-page';
 import { SearchPage } from './pages/search-page';
 import { WatchPage } from './pages/watch-page';
 
 function NotFound() {
-  return <main class="shell"><h1>Not found</h1></main>;
+  return <main class="invalid-response-shell"><NotFoundState /></main>;
 }
 
 export function App() {

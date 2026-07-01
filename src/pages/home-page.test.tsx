@@ -77,6 +77,16 @@ describe('HomePage', () => {
     expect(screen.getByText('The project is not affiliated with, endorsed by, or connected to any streaming platform.')).toBeInTheDocument();
   });
 
+  it('renders the shared failed-fetch state when home metadata fails', async () => {
+    mockedGetTrendingWithCache.mockRejectedValue(new Error('network'));
+
+    render(<HomePage />);
+
+    const state = await screen.findByRole('status', { name: 'Something went wrong' });
+    expect(state).toHaveClass('invalid-response-state');
+    expect(screen.getByText('We couldn’t retrieve the data from the server. Please refresh the page or try again later.')).toBeInTheDocument();
+  });
+
   it('passes the API returned 20-item lists through to media sections', async () => {
     setViewportWidth(1200);
     render(<HomePage />);
