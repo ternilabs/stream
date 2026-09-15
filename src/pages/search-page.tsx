@@ -5,10 +5,15 @@ import { apiClient } from '../lib/api-client';
 import { getSearchWithCache } from '../lib/queries';
 import { MediaItem } from '../lib/types';
 import { MediaCard } from '../components/media-card';
+import { Pagination } from '../components/pagination';
+import { SkeletonCardGrid } from '../components/skeleton-card';
 import { ApiErrorMessage, StateMessage } from '../components/state-message';
 import { SelectMenu } from '../components/select-menu';
 
 type SearchType = 'multi' | 'tv' | 'movie';
+
+/** claude-opus-5: The API's search page size. Used to reserve grid height on the first query, before any result count is known. */
+const SEARCH_PAGE_SIZE = 24;
 
 function normalizeSearchType(value: string | null): SearchType {
   return value === 'tv' || value === 'movie' ? value : 'multi';
@@ -37,6 +42,7 @@ export function SearchPage() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [error, setError] = useState<unknown>();
   const [loading, setLoading] = useState(initialQuery.length > 0);
+  const [skeletonCount, setSkeletonCount] = useState(SEARCH_PAGE_SIZE);
   const requestId = useRef(0);
 
   useEffect(() => {
@@ -50,23 +56,28 @@ export function SearchPage() {
 
     const currentRequest = requestId.current + 1;
     requestId.current = currentRequest;
+    // claude-opus-5: One named guard instead of repeating the same nested id check in
+    // three callbacks.
+    const isStale = () => requestId.current !== currentRequest;
     setItems([]);
     setError(undefined);
     setLoading(true);
 
     getSearchWithCache(apiClient, { q: trimmed, page, type })
       .then((response) => {
-        if (requestId.current === currentRequest) {
-          setItems(response.results);
-          setCurrentPage(response.page ?? 1);
-          setTotalPages(response.totalPages ?? 1);
-        }
+        if (isStale()) return;
+        setItems(response.results);
+        setSkeletonCount(response.results.length || SEARCH_PAGE_SIZE);
+        setCurrentPage(response.page ?? 1);
+        setTotalPages(response.totalPages ?? 1);
       })
       .catch((nextError) => {
-        if (requestId.current === currentRequest) setError(nextError);
+        if (isStale()) return;
+        setError(nextError);
       })
       .finally(() => {
-        if (requestId.current === currentRequest) setLoading(false);
+        if (isStale()) return;
+        setLoading(false);
       });
   }, [query, type, page]);
 
@@ -97,19 +108,6 @@ export function SearchPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function pageWindow(current: number, total: number): (number | 'ellipsis')[] {
-    const pages = new Set([1, total, current, current - 1, current + 1]);
-    const sorted = [...pages].filter(p => p >= 1 && p <= total).sort((a, b) => a - b);
-    const result: (number | 'ellipsis')[] = [];
-    let previous = 0;
-    for (const p of sorted) {
-      if (p - previous > 1) result.push('ellipsis');
-      result.push(p);
-      previous = p;
-    }
-    return result;
-  }
-
   return (
     <main class="browse-page">
       <div class="browse-shell">
@@ -132,21 +130,15 @@ export function SearchPage() {
         </form>
         {error ? <div class="invalid-response-shell in-page"><ApiErrorMessage error={error} /></div> : null}
         {!loading && !error && query && items.length === 0 ? <StateMessage title="No results" /> : null}
-        {!error ? <section class="browse-grid" aria-label="Search results">
+        {/* claude-opus-5: The results grid had no loading state at all — it went from 0px to full
+            height on arrival while home and watch both skeletoned. */}
+        {loading && !error ? <SkeletonCardGrid count={skeletonCount} className="browse-grid" label="Loading search results" /> : null}
+        {!loading && !error ? <section class="browse-grid" aria-label="Search results">
           {items.map((item) => <MediaCard key={`${item.type}-${item.id}`} item={item} />)}
         </section> : null}
-        {!error && query && totalPages > 1 ? (
-          <nav class="browse-pagination" aria-label="Pagination">
-            <button class="browse-page-button" type="button" aria-label="First page" disabled={currentPage <= 1} onClick={() => goToPage(1)}>«</button>
-            <button class="browse-page-button" type="button" aria-label="Previous page" disabled={currentPage <= 1} onClick={() => goToPage(currentPage - 1)}>‹</button>
-            {pageWindow(currentPage, totalPages).map((item, index) => {
-              if (item === 'ellipsis') return <span class="browse-page-button" aria-hidden="true" key={`e${index}`}>…</span>;
-              return <button class={`browse-page-button${item === currentPage ? ' is-active' : ''}`} type="button" aria-label={`Page ${item}`} aria-current={item === currentPage ? 'page' : undefined} key={item} onClick={() => goToPage(item as number)}>{item}</button>;
-            })}
-            <button class="browse-page-button" type="button" aria-label="Next page" disabled={currentPage >= totalPages} onClick={() => goToPage(currentPage + 1)}>›</button>
-            <button class="browse-page-button" type="button" aria-label="Last page" disabled={currentPage >= totalPages} onClick={() => goToPage(totalPages)}>»</button>
-          </nav>
-        ) : null}
+        {!error && query && totalPages > 1
+          ? <Pagination currentPage={currentPage} totalPages={totalPages} onSelect={goToPage} />
+          : null}
       </div>
     </main>
   );

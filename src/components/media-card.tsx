@@ -1,12 +1,16 @@
 import { Film, Star } from 'preact-feather';
 import { MediaItem } from '../lib/types';
 
+// claude-opus-5: Dropped the `is-visible` class (no rule ever matched it) and the poster's
+// conditional `aria-hidden`, which hid the rating badge from screen readers whenever a title
+// had no poster art.
+
 export function MediaCard({ item }: { item: MediaItem }) {
   const href = `/watch/${item.id}?type=${item.type}`;
   return (
-    <article class="card is-visible">
+    <article class="card">
       <a class="card-link" href={href} aria-label={`Watch ${item.title}`}>
-        <div class="poster" aria-hidden={!item.posterUrl}>
+        <div class="poster">
           {item.rating ? <span class="rating"><Star aria-hidden="true" />{item.rating.toFixed(1)}</span> : null}
           {item.posterUrl ? <img src={item.posterUrl} alt="" /> : <span class="placeholder"><Film aria-hidden="true" /></span>}
         </div>

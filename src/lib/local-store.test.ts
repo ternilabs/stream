@@ -19,23 +19,23 @@ describe('local-store', () => {
     expect(getCachedValue('api-cache', 'trending:movies')).toBeUndefined();
   });
 
-  it('clears all app-owned keys', () => {
-    setCachedValue('settings', 'selectedSource', 'vidlink');
-    localStorage.setItem('other-app:key', 'keep');
-    clearAppStorage();
-    expect(localStorage.getItem('stream:v2:settings')).toBeNull();
-    expect(localStorage.getItem('other-app:key')).toBe('keep');
+  // claude-opus-5: recent-searches is deliberately not in DAILY_NAMESPACES, so it survives the
+  // day rollover that clears the API cache.
+  it('keeps recent searches when the local day changes', () => {
+    setCachedValue('recent-searches', 'queries', ['Dune']);
+    vi.setSystemTime(new Date('2026-06-23T00:01:00'));
+    expect(getCachedValue('recent-searches', 'queries')).toEqual(['Dune']);
   });
 
-  it('clears the raw recent searches key with app storage', () => {
-    setCachedValue('settings', 'selectedSource', 'vidlink');
-    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune']));
+  it('clears all app-owned keys', () => {
+    setCachedValue('api-cache', 'trending:movies', ['a']);
+    setCachedValue('recent-searches', 'queries', ['Dune']);
     localStorage.setItem('other-app:key', 'keep');
 
     clearAppStorage();
 
-    expect(localStorage.getItem('stream:v2:settings')).toBeNull();
-    expect(localStorage.getItem('stream:recent-searches')).toBeNull();
+    expect(localStorage.getItem('stream:v2:api-cache')).toBeNull();
+    expect(localStorage.getItem('stream:v2:recent-searches')).toBeNull();
     expect(localStorage.getItem('other-app:key')).toBe('keep');
   });
 
@@ -49,6 +49,11 @@ describe('local-store', () => {
     expect(localStorage.getItem('stream:v1:settings')).toBeNull();
     expect(localStorage.getItem('stream:recent-searches')).toBeNull();
     expect(localStorage.getItem('other-app:key')).toBe('keep');
+  });
+
+  it('drops a namespace written under a different version', () => {
+    localStorage.setItem('stream:v2:api-cache', JSON.stringify({ version: 1, day: getLocalDayStamp(), values: { a: 1 } }));
+    expect(getCachedValue('api-cache', 'a')).toBeUndefined();
   });
 
   it('dispatches a storage-cleared event', () => {

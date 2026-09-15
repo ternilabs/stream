@@ -132,7 +132,6 @@ export function createApiClient(baseUrl = import.meta.env.VITE_API_BASE_URL ?? '
   }
 
   return {
-    healthz: () => request<{ ok: boolean }>('/healthz'),
     search: async (params: ApiSearchParams) => {
       const query = new URLSearchParams();
       query.set('query', params.q.trim());

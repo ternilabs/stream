@@ -1,0 +1,90 @@
+/* claude-opus-5: Sticky header. `.nav-actions` was declared twice in the original sheet; kept once. */
+/* Bar */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--graphite);
+  border-bottom: 1px solid var(--basalt);
+}
+.nav-inner {
+  height: 58px;
+  display: grid;
+  grid-template-columns: auto minmax(280px,560px) auto;
+  align-items: center;
+  gap: 24px;
+}
+.brand {
+  display: inline-flex;
+  justify-self: start;
+  width: max-content;
+  color: var(--chalk);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -.025em;
+  white-space: nowrap;
+}
+.nav-actions { justify-self: end; }
+.is-search-page .nav-inner { grid-template-columns: 1fr auto; }
+
+/* Icon button */
+.icon-button {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--basalt);
+  border-radius: var(--radius-md);
+  background: var(--obsidian);
+  color: var(--silver);
+}
+.icon-button:hover {
+  background: var(--obsidian);
+  border-color: var(--pewter);
+}
+.icon-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Mobile search chrome */
+.mobile-search-button {
+  display: none;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--silver);
+  border-radius: var(--radius-md);
+}
+.mobile-search-button:hover {
+  background: var(--obsidian);
+  color: var(--ash);
+}
+.mobile-search-button svg {
+  width: 17px;
+  height: 17px;
+}
+.mobile-search-close {
+  display: none;
+  width: 32px;
+  height: 32px;
+  margin-right: 3px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--fog);
+  font-size: 21px;
+  line-height: 1;
+}
+.mobile-search-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: none;
+  background: rgba(4,4,11,.78);
+}
+body.mobile-search-open .mobile-search-scrim { display: block; }
+body.mobile-search-open .nav { z-index: 90; }

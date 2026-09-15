@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from 'preact-feather';
 import { useVisibleCount } from '../hooks/use-visible-count';
 import { MediaItem } from '../lib/types';
 import { MediaCard } from './media-card';
+import { SkeletonCard } from './skeleton-card';
 
 interface MediaSectionProps {
   title: string;
@@ -33,14 +34,10 @@ export function MediaSection({ title, items, loading = false }: MediaSectionProp
         </div>
       </div>
       <div class="grid">
+        {/* claude-opus-5: Was inline skeleton markup that drifted from the real card. SkeletonCard
+            reuses the card's own classes, so the grid no longer reflows when items arrive. */}
         {loading
-          ? skeletonItems.map((item) => (
-            <div class="card skeleton-card" data-testid="media-skeleton-card" aria-hidden="true" key={item}>
-              <div class="poster skeleton-poster" />
-              <div class="meta skeleton-meta"><span /><span /></div>
-              <div class="title skeleton-title" />
-            </div>
-          ))
+          ? skeletonItems.map((item) => <SkeletonCard key={item} />)
           : visibleItems.map((item) => <MediaCard key={`${item.type}-${item.id}`} item={item} />)}
       </div>
     </section>

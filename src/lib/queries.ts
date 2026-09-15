@@ -4,6 +4,13 @@ import { ApiListKind, ApiSearchParams, PagedMediaResponse, SourceHealthApiRespon
 
 type ApiClient = ReturnType<typeof createApiClient>;
 
+/**
+ * claude-opus-5: Requests that have been issued but not yet settled, keyed the same way as the cache.
+ * Two components mounting together (Nav and WatchPage both want source health) therefore
+ * share one network call instead of racing past the empty cache separately.
+ */
+const inFlight = new Map<string, Promise<unknown>>();
+
 function cacheKey(name: string, params: Record<string, string | number | undefined>): string {
   const query = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
@@ -15,9 +22,21 @@ function cacheKey(name: string, params: Record<string, string | number | undefin
 async function cached<T>(key: string, load: () => Promise<T>): Promise<T> {
   const existing = getCachedValue<T>('api-cache', key);
   if (existing !== undefined) return existing;
-  const value = await load();
-  setCachedValue('api-cache', key, value);
-  return value;
+
+  const pending = inFlight.get(key) as Promise<T> | undefined;
+  if (pending) return pending;
+
+  const request = load()
+    .then((value) => {
+      setCachedValue('api-cache', key, value);
+      return value;
+    })
+    .finally(() => {
+      inFlight.delete(key);
+    });
+
+  inFlight.set(key, request);
+  return request;
 }
 
 export function getSearchWithCache(client: ApiClient, params: ApiSearchParams): Promise<PagedMediaResponse> {

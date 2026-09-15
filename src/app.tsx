@@ -1,4 +1,5 @@
 import { ErrorBoundary, LocationProvider, Route, Router } from 'preact-iso';
+import { Footer } from './components/footer';
 import { Nav } from './components/nav';
 import { NotFoundState } from './components/state-message';
 import { HomePage } from './pages/home-page';
@@ -20,6 +21,8 @@ export function App() {
           <Route path="/watch/:id" component={WatchPage} />
           <Route default component={NotFound} />
         </Router>
+        {/* claude-opus-5: Outside the Router so the disclaimer survives every route, including not-found. */}
+        <Footer />
       </ErrorBoundary>
     </LocationProvider>
   );

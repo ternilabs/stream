@@ -1,0 +1,168 @@
+/* claude-opus-5: Media sections, the card grid, and the card skeleton. */
+/* Section */
+.media-section { margin-top: 56px; }
+.media-section:first-of-type { margin-top: 0; }
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+.section-title,
+.media-section h2 {
+  margin: 0;
+  color: var(--chalk);
+  font-family: var(--font-display);
+  font-size: 19px;
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+.section-controls {
+  display: flex;
+  gap: 8px;
+}
+.section-controls button {
+  width: 27px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--basalt);
+  border-radius: var(--radius-sm);
+  background: var(--obsidian);
+  color: var(--silver);
+}
+.section-controls button:disabled {
+  opacity: .38;
+  cursor: not-allowed;
+}
+.section-controls svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6,minmax(0,1fr));
+  gap: 16px;
+}
+.card { min-width: 0; }
+
+/* Card */
+.poster {
+  position: relative;
+  aspect-ratio: 2/3;
+  border: 1px solid var(--basalt);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--graphite);
+}
+.poster:hover { border-color: var(--pewter); }
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--fog);
+}
+.placeholder svg {
+  width: 32px;
+  height: 32px;
+}
+.rating {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--moss-border);
+  background: var(--obsidian);
+  color: var(--signal-green);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .025em;
+}
+.rating svg {
+  width: 10px;
+  height: 10px;
+  fill: currentColor;
+}
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  color: var(--fog);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.title {
+  margin-top: 4px;
+  color: var(--ash);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.38;
+  /* claude-opus-5: Reserve both clamped lines. Without this, cards in one row measured 326px
+     or 344px depending on title length, and every skeleton undershot the taller case. */
+  min-height: 2.76em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Skeleton */
+/* claude-opus-5: Skeletons inherit the real card's geometry classes and only add shimmer,
+   so the two cannot drift apart. */
+.skeleton-card { pointer-events: none; }
+.skeleton-poster,
+.skeleton-meta span,
+.skeleton-title span {
+  background: linear-gradient(90deg, var(--graphite), var(--slate), var(--graphite));
+  background-size: 220% 100%;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+.skeleton-poster {
+  aspect-ratio: 2/3;
+  border: 1px solid var(--basalt);
+  border-radius: var(--radius-md);
+}
+.skeleton-meta { height: 17px; }
+.skeleton-meta span {
+  width: 42px;
+  height: 10px;
+  border-radius: 999px;
+}
+/* claude-opus-5: Two bars inside the reserved two-line box, so the placeholder is exactly as
+   tall as a two-line title instead of a single 15px bar. */
+.skeleton-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+.skeleton-title span {
+  height: 12px;
+  border-radius: 999px;
+}
+.skeleton-title span:first-child { width: 100%; }
+.skeleton-title span:last-child { width: 62%; }
+@keyframes skeleton-pulse {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-poster,
+  .skeleton-meta span,
+  .skeleton-title span,
+  .watch-skeleton,
+  /* claude-opus-5: The player placeholder is the largest animated surface on the page; it has to
+     honour the same motion preference as every other skeleton. */
+  .player-loading { animation: none; }
+}

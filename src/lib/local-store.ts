@@ -1,7 +1,12 @@
-type Namespace = 'api-cache' | 'source-health' | 'recent-searches' | 'settings';
+// claude-opus-5: Dropped the unused 'source-health' and 'settings' namespaces, and
+// `deleteCachedValue`, which nothing called.
+type Namespace = 'api-cache' | 'recent-searches';
 
 const VERSION = 2;
 const PREFIX = `stream:v${VERSION}`;
+
+/** claude-opus-5: Namespaces whose values are dropped when the local day changes. Everything else persists until the version changes. */
+const DAILY_NAMESPACES: ReadonlySet<Namespace> = new Set<Namespace>(['api-cache']);
 
 interface StoredNamespace {
   version: number;
@@ -27,7 +32,8 @@ function readNamespace(namespace: Namespace): StoredNamespace {
 
   try {
     const parsed = JSON.parse(raw) as StoredNamespace;
-    if (parsed.version !== VERSION || parsed.day !== getLocalDayStamp()) {
+    const expired = DAILY_NAMESPACES.has(namespace) && parsed.day !== getLocalDayStamp();
+    if (parsed.version !== VERSION || expired) {
       localStorage.removeItem(storageKey(namespace));
       return fallback;
     }
@@ -50,12 +56,8 @@ export function getCachedValue<T>(namespace: Namespace, key: string): T | undefi
 export function setCachedValue(namespace: Namespace, key: string, value: unknown): void {
   const data = readNamespace(namespace);
   data.values[key] = value;
-  writeNamespace(namespace, data);
-}
-
-export function deleteCachedValue(namespace: Namespace, key: string): void {
-  const data = readNamespace(namespace);
-  delete data.values[key];
+  // claude-opus-5: Stamp on write so a non-daily namespace still records when it was last touched.
+  data.day = getLocalDayStamp();
   writeNamespace(namespace, data);
 }
 

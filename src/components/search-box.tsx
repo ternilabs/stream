@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'preact/hooks';
-import { ArrowRight, Clock, Search, X } from 'preact-feather';
+import { ArrowRight, Clock, Search, Star, X } from 'preact-feather';
 import { apiClient } from '../lib/api-client';
 import { getSearchWithCache } from '../lib/queries';
-import { APP_STORAGE_CLEARED_EVENT } from '../lib/local-store';
+import { APP_STORAGE_CLEARED_EVENT, getCachedValue, setCachedValue } from '../lib/local-store';
 import { MediaItem } from '../lib/types';
 
-const RECENTS_KEY = 'stream:recent-searches';
+// claude-opus-5: Recents used to be written straight to `stream:recent-searches`, the only
+// storage path that bypassed local-store's versioning. Routed through the normal API now; the
+// namespace is deliberately not daily-expiring, unlike the API cache.
+const RECENTS_LIMIT = 5;
+const RECENTS_ENTRY = 'queries';
 
 function readRecents(): string[] {
-  try {
-    const value = localStorage.getItem(RECENTS_KEY);
-    const parsed = value ? JSON.parse(value) : [];
-    return Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === 'string').slice(0, 5) : [];
-  } catch {
-    return [];
-  }
+  const stored = getCachedValue<unknown>('recent-searches', RECENTS_ENTRY);
+  if (!Array.isArray(stored)) return [];
+  return stored.filter((item): item is string => typeof item === 'string').slice(0, RECENTS_LIMIT);
 }
 
 function writeRecents(values: string[]) {
-  localStorage.setItem(RECENTS_KEY, JSON.stringify(values.slice(0, 5)));
+  setCachedValue('recent-searches', RECENTS_ENTRY, values.slice(0, RECENTS_LIMIT));
 }
 
 function labelFor(item: MediaItem) {
@@ -162,7 +162,8 @@ export function SearchBox({ initialQuery, onSearch, onSelect, onClose }: { initi
                   {item.posterUrl ? <img src={item.posterUrl} alt="" /> : fallbackThumbLabel(item)}
                 </span>
                 <span class="result-copy"><span class="result-title">{item.title}</span><span class="result-meta">{labelFor(item)}</span></span>
-                <span class="result-rating">{item.rating ? `★ ${item.rating.toFixed(1)}` : 'OPEN'}</span>
+                {/* claude-opus-5: Star icon instead of a literal ★, matching MediaCard. */}
+                <span class="result-rating">{item.rating ? <><Star aria-hidden="true" />{item.rating.toFixed(1)}</> : 'OPEN'}</span>
               </button>
             ))}
           </div>

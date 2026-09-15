@@ -1,0 +1,102 @@
+/* claude-opus-5: Breakpoints. Announcement-bar and two-column footer overrides removed with the markup they targeted. */
+@media (max-width:1050px) {
+  .detail-shell { grid-template-columns: 1fr; }
+  .right-panel { grid-template-columns: 1fr 1fr; }
+  .detail-card { grid-column: 1 / -1; }
+  .player-placeholder { min-height: 420px; }
+  .reco-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .nav-inner { grid-template-columns: auto minmax(240px,1fr) auto; }
+  .is-search-page .nav-inner { grid-template-columns: 1fr auto; }
+  .grid,
+.browse-grid {
+    grid-template-columns: repeat(4,minmax(0,1fr));
+  }
+}
+
+@media (max-width:760px) {
+  .wrap,
+.browse-shell {
+    width: min(100% - 32px,var(--page-max));
+  }
+  .nav-inner {
+    height: 58px;
+    padding: 0;
+    grid-template-columns: 1fr auto auto;
+    gap: 10px;
+    position: relative;
+  }
+  .mobile-search-button { display: grid; }
+  body.mobile-search-open .mobile-search-button { display: none; }
+  .nav-inner>div:has(.search-wrap) {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+    z-index: 100;
+  }
+  .nav-inner>div.is-mobile-open { display: block; }
+  .search { background: var(--slate); }
+  .search-panel {
+    top: calc(100% + 8px);
+    max-height: calc(100vh - 145px);
+    overflow: auto;
+  }
+  .mobile-search-close { display: block; }
+  .nav-actions { justify-self: end; }
+  main {
+    padding-top: 24px;
+    padding-bottom: 48px;
+  }
+  .media-section { margin-top: 44px; }
+  .grid,
+.browse-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 12px;
+  }
+  .section-title,
+.media-section h2 {
+    font-size: 18px;
+  }
+  .browse-search-row { grid-template-columns: 1fr; }
+  .browse-pagination {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .detail-shell,
+.left-panel,
+.right-panel {
+    gap: 14px;
+  }
+  .right-panel { grid-template-columns: 1fr; }
+  .player-placeholder { min-height: 300px; }
+  .now-row {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .server-select { grid-column: auto; }
+  .detail-skeleton { grid-template-columns: 92px minmax(0,1fr); }
+  .server-menu,
+.select-menu-list {
+    left: 0;
+    right: auto;
+  }
+  .reco-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 12px;
+  }
+  .detail-top { grid-template-columns: 92px minmax(0,1fr); }
+  .trailer-list { grid-template-columns: 1fr; }
+}
+
+@media (max-width:460px) {
+  .brand { font-size: 16px; }
+  .player-placeholder { min-height: 240px; }
+  .detail-card,
+.trailer-card,
+.characters-card,
+.recommendation {
+    padding: 0;
+  }
+}

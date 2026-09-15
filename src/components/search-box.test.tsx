@@ -1,7 +1,12 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/preact';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { APP_STORAGE_CLEARED_EVENT } from '../lib/local-store';
+import { clearAppStorage, getCachedValue, setCachedValue } from '../lib/local-store';
 import { SearchBox } from './search-box';
+
+// claude-opus-5: Recents moved off the raw `stream:recent-searches` key onto the versioned
+// local-store namespace, so the tests go through the same API the component does.
+const seedRecents = (values: string[]) => setCachedValue('recent-searches', 'queries', values);
+const storedRecents = () => getCachedValue<string[]>('recent-searches', 'queries') ?? [];
 
 const searchMock = vi.fn();
 
@@ -35,7 +40,7 @@ describe('SearchBox', () => {
   });
 
   it('shows saved recents for short queries and supports clearing them', () => {
-    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune', 'Fallout']));
+    seedRecents(['Dune', 'Fallout']);
     render(<SearchBox initialQuery="" onSearch={() => undefined} />);
 
     expect(screen.getByText('Recent Searches')).toBeInTheDocument();
@@ -51,7 +56,7 @@ describe('SearchBox', () => {
   });
 
   it('caps recents at five and removes one recent without submitting it', () => {
-    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune', 'Fallout', 'Matrix', 'Alien', 'Shogun', 'Extra']));
+    seedRecents(['Dune', 'Fallout', 'Matrix', 'Alien', 'Shogun', 'Extra']);
     const onSearch = vi.fn();
     render(<SearchBox initialQuery="" onSearch={onSearch} />);
 
@@ -64,7 +69,7 @@ describe('SearchBox', () => {
 
     expect(screen.queryByText('Dune')).not.toBeInTheDocument();
     expect(onSearch).not.toHaveBeenCalled();
-    expect(JSON.parse(localStorage.getItem('stream:recent-searches') ?? '[]')).toEqual(['Fallout', 'Matrix', 'Alien', 'Shogun']);
+    expect(storedRecents()).toEqual(['Fallout', 'Matrix', 'Alien', 'Shogun']);
   });
 
   it('debounces quick-result requests by 500ms and ignores short queries', async () => {
@@ -149,7 +154,7 @@ describe('SearchBox', () => {
     fireEvent.click(screen.getByRole('button', { name: /View all results for "result"/i }));
 
     expect(onSearch).toHaveBeenCalledWith('result');
-    expect(JSON.parse(localStorage.getItem('stream:recent-searches') ?? '[]')).toEqual(['result']);
+    expect(storedRecents()).toEqual(['result']);
 
     vi.useRealTimers();
   });
@@ -196,7 +201,8 @@ describe('SearchBox', () => {
     expect(screen.getByAltText('').closest('.thumb')).toHaveClass('has-image');
     expect(screen.getByText('TV')).toBeInTheDocument();
     expect(screen.getByText('MOVIE - 1999')).toBeInTheDocument();
-    expect(screen.getByText('★ 8.7')).toBeInTheDocument();
+    // claude-opus-5: Rating is now a Star icon plus the number, matching MediaCard.
+    expect(screen.getByText('8.7')).toBeInTheDocument();
     expect(screen.getByText('OPEN')).toBeInTheDocument();
 
     vi.useRealTimers();
@@ -222,13 +228,13 @@ describe('SearchBox', () => {
     expect(onClose.mock.invocationCallOrder[0]).toBeLessThan(onSelect.mock.invocationCallOrder[0]);
     expect(screen.queryByText('The Matrix')).not.toBeInTheDocument();
     expect(screen.getByPlaceholderText('Search any title...')).toHaveValue('');
-    expect(JSON.parse(localStorage.getItem('stream:recent-searches') ?? '[]')).toEqual(['matrix']);
+    expect(storedRecents()).toEqual(['matrix']);
 
     vi.useRealTimers();
   });
 
   it('renders recent search actions without nesting buttons', () => {
-    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune']));
+    seedRecents(['Dune']);
     render(<SearchBox initialQuery="" onSearch={() => undefined} />);
 
     const recentButton = screen.getByRole('button', { name: 'Search for Dune' });
@@ -239,7 +245,7 @@ describe('SearchBox', () => {
   });
 
   it('submits query when clicking the recent search select button', () => {
-    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune']));
+    seedRecents(['Dune']);
     const onSearch = vi.fn();
     render(<SearchBox initialQuery="" onSearch={onSearch} />);
 
@@ -248,7 +254,7 @@ describe('SearchBox', () => {
   });
 
   it('removes recent search when clicking the remove button', () => {
-    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune']));
+    seedRecents(['Dune']);
     render(<SearchBox initialQuery="" onSearch={() => undefined} />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Remove Dune from recent searches' }));
@@ -256,13 +262,12 @@ describe('SearchBox', () => {
   });
 
   it('clears visible recent searches when app storage is cleared', async () => {
-    localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune']));
+    seedRecents(['Dune']);
     render(<SearchBox initialQuery="" onSearch={() => undefined} />);
 
     expect(screen.getByRole('button', { name: 'Search for Dune' })).toBeInTheDocument();
 
-    localStorage.removeItem('stream:recent-searches');
-    window.dispatchEvent(new Event(APP_STORAGE_CLEARED_EVENT));
+    clearAppStorage();
 
     await waitFor(() => expect(screen.queryByRole('button', { name: 'Search for Dune' })).not.toBeInTheDocument());
   });

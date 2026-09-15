@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { useLocation, useRoute } from 'preact-iso';
 import { ChevronDown, ChevronUp, Share2, Star, User } from 'preact-feather';
 import { apiClient } from '../lib/api-client';
 import { resolveEmbedUrl } from '../lib/embed-resolver';
@@ -7,6 +8,7 @@ import { MediaType, TitleDetails, TvSeasonSummary } from '../lib/types';
 import { ApiErrorMessage, InvalidWatchLinkState, ServersUnavailableState } from '../components/state-message';
 import { useSourceHealth } from '../hooks/use-source-health';
 import { MediaCard } from '../components/media-card';
+import { SkeletonCardGrid } from '../components/skeleton-card';
 import { SeasonEpisodePicker } from '../components/season-episode-picker';
 import { ServerSelect } from '../components/server-select';
 
@@ -17,25 +19,20 @@ const PLAYER_IFRAME_PERMISSIONS = {
   mozallowfullscreen: 'true',
 } as const;
 
+/** claude-opus-5: Matches the twelve recommendations the loaded page renders, so the grid does not resize on load. */
+const RECOMMENDATION_COUNT = 12;
+
 type WatchRoute =
   | { isValid: true; id: number; type: MediaType }
   | { isValid: false };
 
-function parseWatchRoute(): WatchRoute {
-  const pathParts = window.location.pathname.split('/').filter(Boolean);
-  const idText = pathParts[1] ?? '';
-  const id = Number(idText);
-  const params = new URLSearchParams(window.location.search);
-  const rawType = params.get('type');
+function parseWatchRoute(rawId: string | undefined, rawType: string | undefined): WatchRoute {
+  const id = Number(rawId);
 
-  if (!Number.isInteger(id) || id <= 0) return { isValid: false };
-  if (rawType !== null && rawType !== 'movie' && rawType !== 'tv') return { isValid: false };
+  if (!rawId || !Number.isInteger(id) || id <= 0) return { isValid: false };
+  if (rawType !== undefined && rawType !== 'movie' && rawType !== 'tv') return { isValid: false };
 
   return { isValid: true, id, type: rawType === 'tv' ? 'tv' : 'movie' };
-}
-
-function InvalidWatchRoute() {
-  return <main class="invalid-response-shell"><InvalidWatchLinkState /></main>;
 }
 
 function getValidTvSelection(seasons: TvSeasonSummary[] | undefined, season: number, episode: number) {
@@ -47,44 +44,73 @@ function getValidTvSelection(seasons: TvSeasonSummary[] | undefined, season: num
   return { season: selectedSeason.seasonNumber, episode: selectedEpisode.episodeNumber };
 }
 
-function updateWatchUrl(id: number, type: MediaType, season?: number, episode?: number) {
-  const next = new URLSearchParams(window.location.search);
+function watchUrl(id: number, type: MediaType, season?: number, episode?: number): string {
+  const next = new URLSearchParams();
   next.set('type', type);
   if (type === 'tv' && season && episode) {
     next.set('season', String(season));
     next.set('episode', String(episode));
-  } else {
-    next.delete('season');
-    next.delete('episode');
   }
-  window.history.replaceState(null, '', `/watch/${id}?${next.toString()}`);
+  return `/watch/${id}?${next.toString()}`;
 }
 
+/**
+ * claude-opus-5: Mirrors the loaded detail card's own containers so the panel keeps its height when
+ * content arrives. Using the real class names is what keeps the two in step.
+ */
 function DetailSkeleton() {
   return (
-    <div class="detail-skeleton" aria-label="Loading title details">
-      <div class="watch-skeleton poster" />
-      <div class="watch-skeleton-lines">
-        <span class="watch-skeleton line wide" />
-        <span class="watch-skeleton line" />
-        <span class="watch-skeleton line short" />
+    <div class="detail-skeleton" role="status" aria-label="Loading title details">
+      <div class="detail-top">
+        <div class="detail-poster watch-skeleton" />
+        <div class="detail-facts-skeleton">
+          <span class="watch-skeleton line wide" />
+          <span class="watch-skeleton line" />
+          <span class="watch-skeleton line short" />
+          <span class="watch-skeleton line short" />
+        </div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-skeleton-lines">
+          <span class="watch-skeleton line wide" />
+          <span class="watch-skeleton line wide" />
+          <span class="watch-skeleton line wide" />
+          <span class="watch-skeleton line short" />
+        </div>
+        <span class="see-more watch-skeleton" />
+      </div>
+      <div class="tag-list">
+        <span class="tag watch-skeleton" />
+        <span class="tag watch-skeleton" />
       </div>
     </div>
   );
 }
 
-function RecommendationSkeleton() {
-  return <div class="reco-grid" aria-label="Loading recommendations">{Array.from({ length: 6 }, (_, index) => <div class="skeleton-card" key={index}><div class="skeleton-poster" /><div class="skeleton-title" /></div>)}</div>;
+function TrailerSkeleton() {
+  return <span class="trailer-button watch-skeleton" role="status" aria-label="Loading trailer" />;
 }
 
 function CharacterSkeleton() {
-  return <div class="character-list" aria-label="Loading characters">{Array.from({ length: 4 }, (_, index) => <div class="character-row" key={index}><span class="avatar watch-skeleton" /><span class="watch-skeleton-lines"><span class="watch-skeleton line" /><span class="watch-skeleton line short" /></span></div>)}</div>;
+  return (
+    <div class="character-list" role="status" aria-label="Loading characters">
+      {Array.from({ length: 4 }, (_, index) => (
+        <div class="character-row" key={index}>
+          <span class="avatar watch-skeleton" />
+          <span class="watch-skeleton-lines">
+            <span class="watch-skeleton line" />
+            <span class="watch-skeleton line short" />
+          </span>
+        </div>
+      ))}
+    </div>
+  );
 }
 
-function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
-  const params = new URLSearchParams(window.location.search);
-  const [season, setSeason] = useState(Number(params.get('season')) || 1);
-  const [episode, setEpisode] = useState(Number(params.get('episode')) || 1);
+function ValidWatchPage({ id, type, initialSeason, initialEpisode }: { id: number; type: MediaType; initialSeason: number; initialEpisode: number }) {
+  const { route } = useLocation();
+  const [season, setSeason] = useState(initialSeason);
+  const [episode, setEpisode] = useState(initialEpisode);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
   const [descriptionTruncated, setDescriptionTruncated] = useState(false);
   const summaryRef = useRef<HTMLParagraphElement>(null);
@@ -101,6 +127,7 @@ function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
   const canRenderPlayer = Boolean(source) && (type === 'movie' || Boolean(validTvSelection));
   const embedUrl = canRenderPlayer ? resolveEmbedUrl(source, { type, id, season: validTvSelection?.season ?? season, episode: validTvSelection?.episode ?? episode }) : undefined;
   const sourcesUnavailable = sourceHealth.isUnavailable || (!sourceHealth.isLoading && availableSources.length === 0);
+  const isPlayerPending = isLoading || sourceHealth.isLoading;
   const production = details?.production?.[0] ?? 'Unknown';
   const visibleCast = charactersExpanded ? details?.cast ?? [] : (details?.cast ?? []).slice(0, 4);
   const showCharacterToggle = (details?.cast?.length ?? 0) > 4;
@@ -147,14 +174,14 @@ function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
     if (validSelection.season !== season || validSelection.episode !== episode) {
       setSeason(validSelection.season);
       setEpisode(validSelection.episode);
-      updateWatchUrl(id, type, validSelection.season, validSelection.episode);
+      route(watchUrl(id, type, validSelection.season, validSelection.episode), true);
     }
-  }, [details, episode, id, season, type]);
+  }, [details, episode, id, route, season, type]);
 
   function updateEpisode(nextSeason: number, nextEpisode: number) {
     setSeason(nextSeason);
     setEpisode(nextEpisode);
-    updateWatchUrl(id, type, nextSeason, nextEpisode);
+    route(watchUrl(id, type, nextSeason, nextEpisode), true);
   }
 
   if (error) return <main class="invalid-response-shell"><ApiErrorMessage error={error} /></main>;
@@ -165,12 +192,18 @@ function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
         <div class="left-panel">
           <section class="player-card" aria-label="Player area">
             <div class="player-placeholder">
-              {sourcesUnavailable ? <ServersUnavailableState compact /> : embedUrl ? <iframe class="player-frame" src={embedUrl} title={details?.title ?? 'Selected stream source'} {...PLAYER_IFRAME_PERMISSIONS} /> : <div class="blocked-player">Episodes are unavailable until valid season data exists.</div>}
+              {sourcesUnavailable
+                ? <ServersUnavailableState compact />
+                : embedUrl
+                  ? <iframe class="player-frame" src={embedUrl} title={details?.title ?? 'Selected stream source'} {...PLAYER_IFRAME_PERMISSIONS} />
+                  : isPlayerPending
+                    ? <div class="player-loading" role="status" aria-label="Loading player" />
+                    : <div class="blocked-player">{type === 'tv' ? 'Episodes are unavailable until valid season data exists.' : 'This title is unavailable on the selected server.'}</div>}
             </div>
             <div class="player-controls">
               <div class="now-row">
                 <div class="now-copy"><span class="kicker">Now playing</span><span class="now-title">{details?.title ?? (isLoading ? 'Loading title...' : `Title ${id}`)}{type === 'tv' && validTvSelection ? ` S${validTvSelection.season} E${validTvSelection.episode}` : ''}</span></div>
-                {sourcesUnavailable ? null : <ServerSelect sources={sources} value={sourceId} onChange={setSourceId} />}
+                {sourcesUnavailable ? null : <ServerSelect sources={sources} value={sourceId} loading={sourceHealth.isLoading} onChange={setSourceId} />}
               </div>
               {type === 'tv' ? <SeasonEpisodePicker seasons={details?.seasons ?? []} season={validTvSelection?.season ?? season} episode={validTvSelection?.episode ?? episode} onChange={updateEpisode} /> : null}
               <div class="note-line">Please try different servers if one isn't working, and consider using ad blockers or the Brave browser.</div>
@@ -179,8 +212,8 @@ function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
 
           <section class="panel-card recommendation" aria-label="Recommendations">
             <div class="section-head"><h2 class="section-title">Recommendation</h2></div>
-            {isLoading ? <RecommendationSkeleton /> : <div class="reco-grid">
-              {(details?.recommended ?? []).slice(0, 12).map((item) => <MediaCard item={item} key={`${item.type}-${item.id}`} />)}
+            {isLoading ? <SkeletonCardGrid count={RECOMMENDATION_COUNT} className="reco-grid" label="Loading recommendations" /> : <div class="reco-grid">
+              {(details?.recommended ?? []).slice(0, RECOMMENDATION_COUNT).map((item) => <MediaCard item={item} key={`${item.type}-${item.id}`} />)}
               {!error && !details?.recommended?.length ? <div class="empty-row">No recommendations available.</div> : null}
             </div>}
           </section>
@@ -210,7 +243,13 @@ function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
 
           <section class="panel-card trailer-card">
             <div class="section-head"><h2 class="section-title">Trailer</h2></div>
-            <div class="trailer-list">{details?.trailerUrl ? <a class="trailer-button" href={details.trailerUrl} target="_blank" rel="noreferrer">Open trailer <Share2 aria-hidden="true" /></a> : <span class="empty-row">No trailer available.</span>}</div>
+            <div class="trailer-list">
+              {isLoading
+                ? <TrailerSkeleton />
+                : details?.trailerUrl
+                  ? <a class="trailer-button" href={details.trailerUrl} target="_blank" rel="noreferrer">Open trailer <Share2 aria-hidden="true" /></a>
+                  : <span class="empty-row">No trailer available.</span>}
+            </div>
           </section>
 
           <section class="panel-card characters-card">
@@ -227,8 +266,18 @@ function ValidWatchPage({ id, type }: { id: number; type: MediaType }) {
 }
 
 export function WatchPage() {
-  const route = parseWatchRoute();
-  if (!route.isValid) return <InvalidWatchRoute />;
+  const { params, query } = useRoute();
+  const route = parseWatchRoute(params.id, query.type);
 
-  return <ValidWatchPage id={route.id} type={route.type} />;
+  if (!route.isValid) return <main class="invalid-response-shell"><InvalidWatchLinkState /></main>;
+
+  return (
+    <ValidWatchPage
+      key={`${route.type}-${route.id}`}
+      id={route.id}
+      type={route.type}
+      initialSeason={Number(query.season) || 1}
+      initialEpisode={Number(query.episode) || 1}
+    />
+  );
 }

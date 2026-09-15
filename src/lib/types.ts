@@ -2,10 +2,6 @@ export type MediaType = 'movie' | 'tv';
 export type ApiListKind = 'movies' | 'tv';
 export type SourceHealthStatus = 'up' | 'down' | 'unknown';
 
-export interface ApiErrorEnvelope {
-  error: { code: string; message: string };
-}
-
 export interface ApiSearchParams {
   q: string;
   page?: number;
@@ -20,7 +16,6 @@ export interface MediaItem {
   year?: string;
   overview?: string;
   posterUrl?: string;
-  backdropUrl?: string;
   rating?: number;
 }
 
@@ -66,7 +61,6 @@ export interface TvSeasonSummary {
 
 export interface TitleDetails extends MediaItem {
   genres?: string[];
-  runtimeMinutes?: number;
   trailerUrl?: string;
   production?: string[];
   seasons?: TvSeasonSummary[];
