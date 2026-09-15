@@ -1,0 +1,118 @@
+/* claude-opus-5: Shared custom dropdown, used by the server picker, the season/episode pickers and the browse-page type filter. */
+.server-select,
+.select-menu {
+  position: relative;
+  min-width: 0;
+}
+.server-select-button,
+.select-menu-button {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--basalt);
+  background: var(--slate);
+  color: var(--ash);
+  border-radius: var(--radius-md);
+  padding: 0 12px;
+  font-size: 13px;
+  text-align: left;
+}
+.server-select-button:disabled,
+.select-menu-button:disabled {
+  opacity: .58;
+  cursor: not-allowed;
+}
+.server-select-button svg,
+.select-menu-button svg {
+  width: 14px;
+  height: 14px;
+  color: var(--fog);
+  flex: 0 0 auto;
+}
+.server-select-button:hover,
+.select-menu-button:hover {
+  border-color: var(--pewter);
+  color: var(--ash);
+}
+.server-menu,
+.select-menu-list {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 6px);
+  right: 0;
+  display: none;
+  min-width: 100%;
+  max-height: min(280px,50vh);
+  overflow: auto;
+  padding: 6px;
+  background: var(--obsidian);
+  border: 1px solid var(--basalt);
+  border-radius: var(--radius-md);
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+.server-select.is-open .server-menu,
+.select-menu.is-open .select-menu-list {
+  display: grid;
+  gap: 4px;
+}
+.server-select.is-above .server-menu,
+.select-menu.is-above .select-menu-list {
+  top: auto;
+  bottom: calc(100% + 6px);
+}
+.server-option,
+.select-menu-option {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr) auto;
+  align-items: center;
+  gap: 9px;
+  border: 0;
+  background: transparent;
+  color: var(--silver);
+  border-radius: var(--radius-sm);
+  padding: 8px 9px;
+  font-size: 13px;
+  text-align: left;
+}
+.server-option:hover,
+.server-option.is-selected,
+.select-menu-option:hover,
+.select-menu-option.is-selected {
+  background: var(--slate);
+  color: var(--ash);
+}
+.select-menu-option:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+.select-menu-option:disabled:hover {
+  background: transparent;
+  color: var(--silver);
+}
+
+/* Option marks */
+.radio {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  border: 1px solid var(--fog);
+}
+.is-selected .radio {
+  background: var(--signal-green);
+  border-color: var(--signal-green);
+}
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--signal-green);
+  box-shadow: 0 0 0 3px rgba(113,208,131,.1);
+}
+.status-dot.is-down {
+  background: #e06b6b;
+  box-shadow: 0 0 0 3px rgba(224,107,107,.1);
+}

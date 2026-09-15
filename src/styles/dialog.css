@@ -1,0 +1,195 @@
+/* claude-opus-5: Settings dialog and the storage-clear confirmation. `body.modal-open` is now actually toggled by SettingsDialog; it was previously dead. */
+body.modal-open { overflow: hidden; }
+.modal-backdrop,
+.alert-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(4,4,11,.72);
+}
+.modal-backdrop.is-open,
+.alert-backdrop.is-open {
+  display: flex;
+}
+.settings-dialog,
+.alert-dialog {
+  width: min(100%,520px);
+  max-height: min(88vh,680px);
+  background: var(--obsidian);
+  border: 1px solid var(--basalt);
+  border-radius: var(--radius-dialog);
+  color: var(--ash);
+}
+.settings-dialog {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Head */
+.dialog-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid var(--basalt);
+}
+.dialog-title {
+  margin: 0;
+  color: var(--chalk);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+.dialog-note {
+  margin-top: 4px;
+  color: var(--fog);
+  font-size: 12px;
+}
+.close-dialog {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--fog);
+  border-radius: var(--radius-sm);
+}
+.close-dialog:hover {
+  background: var(--slate);
+  color: var(--silver);
+}
+.close-dialog svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Body */
+.dialog-body {
+  padding: 18px 20px 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.server-head { margin-bottom: 12px; }
+.server-list {
+  max-height: 360px;
+  overflow: auto;
+  display: grid;
+  gap: 8px;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pewter) transparent;
+}
+.server-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  background: var(--slate);
+  border: 1px solid var(--basalt);
+  border-radius: var(--radius-md);
+}
+.server-name {
+  color: var(--ash);
+  font-size: 13px;
+  font-weight: 500;
+}
+.server-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--fog);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.server-status .status-dot {
+  margin-left: 0;
+  background: var(--fog);
+  box-shadow: none;
+}
+.server-status.online { color: var(--signal-green); }
+.server-status.online .status-dot { background: var(--signal-green); }
+.server-unavailable {
+  display: grid;
+  gap: 6px;
+  padding: 4px 0 2px;
+}
+.server-unavailable h3 {
+  margin: 0;
+  color: var(--chalk);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+}
+.server-unavailable p {
+  margin: 0;
+  color: var(--fog);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Foot */
+.dialog-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 18px 20px 20px;
+}
+.clear-storage {
+  border: 0;
+  background: transparent;
+  color: var(--fog);
+  font-size: 13px;
+  padding: 8px 0;
+}
+.clear-storage:hover { color: var(--silver); }
+
+/* Alert */
+.alert-backdrop {
+  z-index: 120;
+  background: rgba(4,4,11,.78);
+}
+.alert-dialog { padding: 20px; }
+.alert-title {
+  margin: 0;
+  color: var(--chalk);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+}
+.alert-copy {
+  margin: 8px 0 20px;
+  color: var(--silver);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.alert-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.alert-actions button {
+  border: 1px solid var(--basalt);
+  border-radius: var(--radius-md);
+  padding: 9px 14px;
+  font-size: 13px;
+  color: var(--ash);
+  background: var(--slate);
+}
+.alert-actions button:hover { border-color: var(--pewter); }
+.alert-actions .danger {
+  color: var(--carbon);
+  background: var(--signal-green);
+  border-color: var(--moss-border);
+}

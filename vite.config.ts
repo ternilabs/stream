@@ -8,5 +8,8 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/test/setup.ts',
+    // claude-opus-5: Vitest's default include also matches e2e/*.spec.ts. Those are Playwright
+    // specs and must not be collected here.
+    include: ['src/**/*.test.{ts,tsx}'],
   },
 });

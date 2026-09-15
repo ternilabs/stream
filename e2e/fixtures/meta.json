@@ -1,0 +1,24 @@
+{
+ "movieId": 1386315,
+ "movieTitle": "The Runner",
+ "movieHasTrailer": true,
+ "movieCastCount": 20,
+ "movieRecommendedCount": 20,
+ "tvId": 125988,
+ "tvTitle": "Silo",
+ "tvSeasons": [
+  1,
+  2,
+  3
+ ],
+ "tvSeasonTitles": [
+  "Season 1",
+  "Season 2",
+  "Season 3"
+ ],
+ "tvFirstSeasonEpisodes": 10,
+ "searchTotalPages": 6,
+ "searchPageSize": 24,
+ "sourcesUp": 18,
+ "sourcesTotal": 18
+}

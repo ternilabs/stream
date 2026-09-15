@@ -45,36 +45,10 @@ describe('HomePage', () => {
     render(<HomePage />);
 
     expect(screen.queryByText('Loading metadata')).not.toBeInTheDocument();
-    expect(screen.getByText('Announcement')).toBeInTheDocument();
     expect(screen.getByRole('region', { name: 'Trending Movies' })).toHaveAttribute('aria-busy', 'true');
     expect(screen.getByRole('button', { name: 'Previous Trending Movies' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Next Trending Movies' })).toBeDisabled();
-    expect(screen.getAllByTestId('media-skeleton-card')).toHaveLength(24);
-  });
-
-  it('renders announcement title, date label, safe links, and required notices', async () => {
-    setViewportWidth(1200);
-    render(<HomePage />);
-
-    await waitFor(() => expect(screen.getByText('Announcement')).toBeInTheDocument());
-    expect(screen.getByText('Jun 22')).toBeInTheDocument();
-    expect(screen.queryByText('Daily cache active')).not.toBeInTheDocument();
-
-    const githubLink = screen.getByRole('link', { name: 'original GitHub repository' });
-    expect(githubLink).toHaveAttribute('href', 'https://github.com/ternilabs/stream');
-    expect(githubLink).toHaveAttribute('target', '_blank');
-    expect(githubLink).toHaveAttribute('rel', 'noopener noreferrer');
-
-    const koFiLink = screen.getByRole('link', { name: 'Ko-fi' });
-    expect(koFiLink).toHaveAttribute('href', 'https://ko-fi.com/mkgpdev');
-    expect(koFiLink).toHaveAttribute('target', '_blank');
-    expect(koFiLink).toHaveAttribute('rel', 'noopener noreferrer');
-
-    expect(githubLink.closest('li') as HTMLLIElement).toHaveTextContent('Report bugs or open pull requests through the original GitHub repository.');
-    expect(koFiLink.closest('li') as HTMLLIElement).toHaveTextContent('Support performance improvements and independent servers through Ko-fi.');
-    expect(screen.getByText('The project is intended for educational and private use only. The developer does not condone or encourage copyright infringement.')).toBeInTheDocument();
-    expect(screen.getByText('TerniLabs does not store media and uses third-party APIs and providers.')).toBeInTheDocument();
-    expect(screen.getByText('The project is not affiliated with, endorsed by, or connected to any streaming platform.')).toBeInTheDocument();
+    expect(screen.getAllByTestId('skeleton-card')).toHaveLength(24);
   });
 
   it('renders the shared failed-fetch state when home metadata fails', async () => {

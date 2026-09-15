@@ -1,6 +1,20 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/preact';
+import { LocationProvider, Route, Router } from 'preact-iso';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { WatchPage } from './watch-page';
+
+// claude-opus-5: WatchPage now reads its params through preact-iso's useRoute instead of
+// window.location, so it has to be mounted inside a router the way the app mounts it.
+function renderWatch() {
+  return render(
+    <LocationProvider>
+      <Router>
+        <Route path="/watch/:id" component={WatchPage} />
+        <Route default component={() => null} />
+      </Router>
+    </LocationProvider>,
+  );
+}
 
 const titleMock = vi.fn();
 
@@ -96,7 +110,7 @@ describe('WatchPage', () => {
   it.each(['/watch/foo', '/watch/0', '/watch/-1', '/watch/1.5'])('renders an invalid state and skips the API for invalid id %s', (path) => {
     window.history.replaceState(null, '', path);
 
-    render(<WatchPage />);
+    renderWatch();
 
     expectInvalidWatchLink();
   });
@@ -104,7 +118,7 @@ describe('WatchPage', () => {
   it('renders an invalid state and skips the API for unsupported watch type', () => {
     window.history.replaceState(null, '', '/watch/1?type=person');
 
-    render(<WatchPage />);
+    renderWatch();
 
     expectInvalidWatchLink();
   });
@@ -112,7 +126,7 @@ describe('WatchPage', () => {
   it('defaults missing watch type to movie for valid ids', async () => {
     window.history.replaceState(null, '', '/watch/1');
 
-    render(<WatchPage />);
+    renderWatch();
 
     await screen.findByTitle('Test Movie');
     expect(titleMock).toHaveBeenCalledWith(expect.anything(), 'movie', 1);
@@ -121,15 +135,48 @@ describe('WatchPage', () => {
   it('renders skeletons while title details are loading', () => {
     titleMock.mockReturnValue(new Promise(() => {}));
 
-    render(<WatchPage />);
+    renderWatch();
 
     expect(screen.getByLabelText('Loading title details')).toBeInTheDocument();
     expect(screen.getByLabelText('Loading recommendations')).toBeInTheDocument();
     expect(screen.getByLabelText('Loading characters')).toBeInTheDocument();
   });
 
+  // claude-opus-5: While loading, these three slots used to render definite negatives — "No
+  // trailer available.", "No servers available", and the TV-only season message on a movie page.
+  it('does not assert missing trailer, servers, or episodes while still loading', () => {
+    titleMock.mockReturnValue(new Promise(() => {}));
+    sourceHealthMock.mockReturnValue({ sources: [], availableSources: [], isLoading: true, isUnavailable: false });
+
+    renderWatch();
+
+    expect(screen.queryByText('No trailer available.')).not.toBeInTheDocument();
+    expect(screen.queryByText('Episodes are unavailable until valid season data exists.')).not.toBeInTheDocument();
+    expect(screen.queryByText('No servers available')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('Loading player')).toBeInTheDocument();
+    expect(screen.getByLabelText('Loading trailer')).toBeInTheDocument();
+    expect(screen.getByText('Loading servers…')).toBeInTheDocument();
+  });
+
+  it('tells a movie viewer the title is unavailable rather than talking about episodes', async () => {
+    sourceHealthMock.mockReturnValue({ sources: [], availableSources: [], isLoading: false, isUnavailable: false });
+
+    renderWatch();
+
+    await waitFor(() => expect(screen.getByRole('status', { name: 'Servers unavailable' })).toBeInTheDocument());
+    expect(screen.queryByText('Episodes are unavailable until valid season data exists.')).not.toBeInTheDocument();
+  });
+
+  it('renders as many recommendation skeletons as recommendations', () => {
+    titleMock.mockReturnValue(new Promise(() => {}));
+
+    renderWatch();
+
+    expect(within(screen.getByLabelText('Loading recommendations')).getAllByTestId('skeleton-card')).toHaveLength(12);
+  });
+
   it('renders movie player iframe after movie details load', async () => {
-    render(<WatchPage />);
+    renderWatch();
 
     const iframe = await screen.findByTitle('Test Movie');
     expect(iframe).toHaveAttribute('allow', 'autoplay; fullscreen *; picture-in-picture; encrypted-media');
@@ -138,7 +185,7 @@ describe('WatchPage', () => {
     expect(iframe).toHaveAttribute('mozallowfullscreen', 'true');
   });
 
-  it('shows only the first Production value and removes the player share button', async () => {
+  it('shows only the first Production value', async () => {
     titleMock.mockResolvedValue({
       id: 1,
       title: 'Test Movie',
@@ -151,19 +198,18 @@ describe('WatchPage', () => {
       cast: [],
     });
 
-    render(<WatchPage />);
+    renderWatch();
 
     await waitFor(() => expect(screen.getByText('Movie Studio')).toBeInTheDocument());
     expect(screen.queryByText('Movie Studio, Second Studio')).not.toBeInTheDocument();
     expect(screen.queryByText('Second Studio')).not.toBeInTheDocument();
     expect(screen.getByText('Production')).toBeInTheDocument();
     expect(screen.queryByText('Type')).not.toBeInTheDocument();
-    expect(screen.queryByLabelText('Share title')).not.toBeInTheDocument();
   });
 
   it('expands and collapses the description only when collapsed text is truncated', async () => {
     mockSummaryOverflow(true);
-    render(<WatchPage />);
+    renderWatch();
 
     const seeMore = await screen.findByRole('button', { name: 'See more description' });
     expect(seeMore).toHaveAttribute('aria-expanded', 'false');
@@ -177,7 +223,7 @@ describe('WatchPage', () => {
 
   it('hides the description toggle when collapsed text is not truncated', async () => {
     mockSummaryOverflow(false);
-    render(<WatchPage />);
+    renderWatch();
 
     await waitFor(() => expect(screen.getByText('Movie description')).toBeInTheDocument());
     expect(screen.queryByRole('button', { name: 'See more description' })).not.toBeInTheDocument();
@@ -187,7 +233,7 @@ describe('WatchPage', () => {
     titleMock.mockResolvedValue(tvDetails);
     window.history.replaceState(null, '', '/watch/2?type=tv&season=1&episode=1');
 
-    render(<WatchPage />);
+    renderWatch();
 
     await waitFor(() => expect(screen.getByText('Character 4')).toBeInTheDocument());
     expect(screen.queryByText('Character 5')).not.toBeInTheDocument();
@@ -204,7 +250,7 @@ describe('WatchPage', () => {
     titleMock.mockResolvedValue(tvDetails);
     window.history.replaceState(null, '', '/watch/2?type=tv&season=1&episode=1');
 
-    render(<WatchPage />);
+    renderWatch();
 
     await waitFor(() => expect(screen.getByTitle('Test Show')).toBeInTheDocument());
 
@@ -220,7 +266,7 @@ describe('WatchPage', () => {
     titleMock.mockResolvedValue({ ...tvDetails, seasons: [] });
     window.history.replaceState(null, '', '/watch/2?type=tv');
 
-    render(<WatchPage />);
+    renderWatch();
 
     await waitFor(() => expect(screen.getByText('Episodes are unavailable until valid season data exists.')).toBeInTheDocument());
     expect(screen.queryByTitle('Test Show')).not.toBeInTheDocument();
@@ -230,7 +276,7 @@ describe('WatchPage', () => {
     titleMock.mockResolvedValue(tvDetails);
     window.history.replaceState(null, '', '/watch/2?type=tv&season=99&episode=99');
 
-    render(<WatchPage />);
+    renderWatch();
 
     await waitFor(() => expect(window.location.search).toContain('season=1'));
     expect(window.location.search).toContain('episode=1');
@@ -238,7 +284,7 @@ describe('WatchPage', () => {
 
   it('renders twelve recommendations from title details', async () => {
     titleMock.mockResolvedValue(tvDetails);
-    render(<WatchPage />);
+    renderWatch();
 
     await waitFor(() => expect(screen.getByText('Recommended 12')).toBeInTheDocument());
     expect(screen.queryByText('Recommended 13')).not.toBeInTheDocument();
@@ -247,7 +293,7 @@ describe('WatchPage', () => {
   it('renders a centered failed-fetch state and skips watch content when title metadata fails', async () => {
     titleMock.mockRejectedValue(new Error('network'));
 
-    render(<WatchPage />);
+    renderWatch();
 
     const state = await screen.findByRole('status', { name: 'Something went wrong' });
     expect(state).toHaveClass('invalid-response-state');
@@ -261,7 +307,7 @@ describe('WatchPage', () => {
   it('keeps metadata but blocks player controls when source data is unavailable', async () => {
     sourceHealthMock.mockReturnValue({ sources: [], availableSources: [], isLoading: false, isUnavailable: true });
 
-    render(<WatchPage />);
+    renderWatch();
 
     await waitFor(() => expect(screen.getByText('Test Movie')).toBeInTheDocument());
     expect(screen.getByRole('status', { name: 'Servers unavailable' })).toBeInTheDocument();
@@ -271,7 +317,7 @@ describe('WatchPage', () => {
   });
 
   it('disables down sources and uses an up source for playback', async () => {
-    render(<WatchPage />);
+    renderWatch();
 
     const iframe = await screen.findByTitle('Test Movie');
     expect(iframe).toHaveAttribute('src', 'https://mapple.uk/watch/movie/1?autoPlay=true');

@@ -27,7 +27,7 @@ describe('SettingsDialog', () => {
 
   it('clears app storage and closes both dialogs after confirmation', async () => {
     const onClose = vi.fn();
-    setCachedValue('settings', 'selectedSource', 'vidlink');
+    setCachedValue('recent-searches', 'queries', ['Dune']);
     localStorage.setItem('stream:recent-searches', JSON.stringify(['Dune']));
 
     render(<SettingsDialog open sources={mergeSourceHealth(SOURCES, { checkedAt: null, sources: [{ id: 'mapple', name: 'Mapple', isUp: true }] })} sourcesUnavailable={false} onClose={onClose} />);
@@ -35,7 +35,7 @@ describe('SettingsDialog', () => {
     fireEvent.click(screen.getByText('Clear local storage'));
     fireEvent.click(screen.getByText('Clear storage'));
 
-    expect(localStorage.getItem('stream:v2:settings')).toBeNull();
+    expect(localStorage.getItem('stream:v2:recent-searches')).toBeNull();
     expect(localStorage.getItem('stream:recent-searches')).toBeNull();
     expect(onClose).toHaveBeenCalledTimes(1);
     await waitFor(() => expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument());

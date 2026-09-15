@@ -1,6 +1,12 @@
 import { AlertTriangle } from 'preact-feather';
 import { ApiFailure } from '../lib/types';
 
+/** claude-opus-5: Single source for copy that appears both as a full state and inline in the settings dialog. */
+export const SERVERS_UNAVAILABLE = {
+  title: 'Servers unavailable',
+  detail: 'No streaming servers are available right now. Please try again later.',
+} as const;
+
 export function StateMessage({ title, detail }: { title: string; detail?: string }) {
   return <div class="state-message" role="status"><strong>{title}</strong>{detail ? <p>{detail}</p> : null}</div>;
 }
@@ -29,7 +35,7 @@ export function NotFoundState() {
 }
 
 export function ServersUnavailableState({ compact = false }: { compact?: boolean }) {
-  return <InvalidResponseState className={compact ? 'is-compact' : ''} title="Servers unavailable" detail="No streaming servers are available right now. Please try again later." />;
+  return <InvalidResponseState className={compact ? 'is-compact' : ''} title={SERVERS_UNAVAILABLE.title} detail={SERVERS_UNAVAILABLE.detail} />;
 }
 
 export function ApiErrorMessage({ error }: { error: unknown }) {

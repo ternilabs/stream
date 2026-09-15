@@ -24,7 +24,7 @@ describe('MediaSection', () => {
     render(<MediaSection title="Trending" items={[]} loading />);
 
     expect(screen.getByRole('region', { name: 'Trending' })).toHaveAttribute('aria-busy', 'true');
-    expect(screen.getAllByTestId('media-skeleton-card')).toHaveLength(4);
+    expect(screen.getAllByTestId('skeleton-card')).toHaveLength(4);
     expect(screen.queryByRole('article')).not.toBeInTheDocument();
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });

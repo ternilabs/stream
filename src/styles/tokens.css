@@ -1,0 +1,28 @@
+/* claude-opus-5: Design tokens. Dropped --fern-ground, --iron, --steel and --gap: nothing referenced them. */
+
+@theme {
+  --font-sans: "Red Hat Text Variable", sans-serif;
+}
+
+:root{
+  --signal-green:#71d083;
+  --moss-border:#2d5736;
+  --link-blue:#70b8ff;
+  --carbon:#04040b;
+  --graphite:#121113;
+  --obsidian:#1a191b;
+  --slate:#232225;
+  --basalt:#2b292d;
+  --pewter:#3c393f;
+  --fog:#7c7a85;
+  --silver:#b5b2bc;
+  --ash:#eeeef0;
+  --chalk:#e5e5e5;
+  --font-display:'Red Hat Display Variable',Inter,sans-serif;
+  --font-text:'Red Hat Text Variable',Inter,sans-serif;
+  --font-mono:'Red Hat Mono Variable','JetBrains Mono',monospace;
+  --page-max:1200px;
+  --radius-sm:2px;
+  --radius-md:6px;
+  --radius-dialog:10px;
+}

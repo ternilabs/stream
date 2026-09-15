@@ -1,0 +1,2625 @@
+{
+ "/v1/sources": {
+  "checkedAt": null,
+  "sources": [
+   {
+    "id": "mapple",
+    "name": "Mapple",
+    "isUp": true
+   },
+   {
+    "id": "superembed",
+    "name": "SuperEmbed",
+    "isUp": true
+   },
+   {
+    "id": "vidlink",
+    "name": "VidLink",
+    "isUp": true
+   },
+   {
+    "id": "vidsrc",
+    "name": "VidSrc",
+    "isUp": true
+   },
+   {
+    "id": "2embed",
+    "name": "2Embed",
+    "isUp": true
+   },
+   {
+    "id": "111movies",
+    "name": "111Movies",
+    "isUp": true
+   },
+   {
+    "id": "vidfast",
+    "name": "VidFast",
+    "isUp": true
+   },
+   {
+    "id": "vidzee",
+    "name": "VidZee",
+    "isUp": true
+   },
+   {
+    "id": "spencerdevs",
+    "name": "SpencerDevs",
+    "isUp": true
+   },
+   {
+    "id": "xpass",
+    "name": "XPass",
+    "isUp": true
+   },
+   {
+    "id": "vidcore",
+    "name": "VidCore",
+    "isUp": true
+   },
+   {
+    "id": "cinemaos",
+    "name": "CinemaOS",
+    "isUp": true
+   },
+   {
+    "id": "airflix",
+    "name": "Airflix",
+    "isUp": true
+   },
+   {
+    "id": "peachify",
+    "name": "Peachify",
+    "isUp": true
+   },
+   {
+    "id": "vidzen",
+    "name": "Vidzen",
+    "isUp": true
+   },
+   {
+    "id": "vidplays",
+    "name": "VidPlays",
+    "isUp": true
+   },
+   {
+    "id": "videasy",
+    "name": "VidEasy",
+    "isUp": true
+   },
+   {
+    "id": "zxcstream",
+    "name": "ZxcStream",
+    "isUp": true
+   }
+  ]
+ },
+ "/v1/trending/movies": {
+  "data": [
+   {
+    "id": 1386315,
+    "type": "movie",
+    "title": "The Runner",
+    "rating": 6.283,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/uxCaBoYXsDC4A0SqTm3SISj0OwK.jpg",
+    "status": "released"
+   },
+   {
+    "id": 860508,
+    "type": "movie",
+    "title": "The Whisper Man",
+    "rating": 6.724,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/6UqflU8Qqkz7Dq4swJPqs0ZJjY4.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1204680,
+    "type": "movie",
+    "title": "Coyote vs. Acme",
+    "rating": 7.6,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/orkLtdgMGiO9rTVMqJ1kKwrnup1.jpg",
+    "status": "released"
+   },
+   {
+    "id": 969681,
+    "type": "movie",
+    "title": "Spider-Man: Brand New Day",
+    "rating": 7.867,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/bjiS5ipwxb9JFy3XRRN4OAilSeX.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1368337,
+    "type": "movie",
+    "title": "The Odyssey",
+    "rating": 7.997,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/5rhTDKUhPYvpdQIijFIs5VoWsON.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1339713,
+    "type": "movie",
+    "title": "Obsession",
+    "rating": 8.201,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/bRwnj8WEKBCvmfeUNOukJPwB43K.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1288059,
+    "type": "movie",
+    "title": "I Want Your Sex",
+    "rating": 6.138,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/pR7SIX3AwqdoD96OI44oLG98e7g.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1288445,
+    "type": "movie",
+    "title": "Mutiny",
+    "rating": 6.367,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/pu2VxGlpGwffOx292w18b1tv96j.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1560520,
+    "type": "movie",
+    "title": "Batman: Knightfall Part 1: Knightfall",
+    "rating": 9.098,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/360qdtu2hLnqMu8SVHMywn420w1.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1083381,
+    "type": "movie",
+    "title": "Backrooms",
+    "rating": 7.066,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/rhGx6E3qRNMgj3i5su2oukNHwIQ.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1315772,
+    "type": "movie",
+    "title": "Minions & Monsters",
+    "rating": 7.57,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/4LwvU9SZc8QQzW1X1FAPhNbXnEU.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1084244,
+    "type": "movie",
+    "title": "Toy Story 5",
+    "rating": 8.3,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/9VWplgfRcYkUao9QGQXUP3rWQK7.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1480574,
+    "type": "movie",
+    "title": "Just Play Dead",
+    "rating": 6.6,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/glALx6QaIgw1u4joXsnfHTjWi6D.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1514026,
+    "type": "movie",
+    "title": "Buddy",
+    "rating": 8.375,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/6Lh4ZlsAISFQFVfLZ90sE9ycVnN.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1631807,
+    "type": "movie",
+    "title": "The Secret Woman",
+    "rating": 6.328,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/5FC5vUHFz0fbJOd0bhyzJpCSLrc.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1291595,
+    "type": "movie",
+    "title": "Insidious: Out of the Further",
+    "rating": 6.529,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/4tTrW9dXCByS5wt2pXVWb58zNjz.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1384216,
+    "type": "movie",
+    "title": "The Dog Stars",
+    "rating": 6.713,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/5O616X9vmRzQdB68PHzBewPittd.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1101383,
+    "type": "movie",
+    "title": "The End of Oak Street",
+    "rating": 6.347,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/fYXqpgPmHMphSF2W30GbTeJVIa5.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1081003,
+    "type": "movie",
+    "title": "Supergirl",
+    "rating": 6.712,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/uhzRnTW4DM13UQBvZP3eVNzQTuz.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1516698,
+    "type": "movie",
+    "title": "The Last Sunrise",
+    "rating": 6.555,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/3PWJqDfygN0YNNjWsDUOXclCp3h.jpg",
+    "status": "released"
+   },
+   {
+    "id": 950028,
+    "type": "movie",
+    "title": "The Invite",
+    "rating": 7.27,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/b7Dr8Chzse8VagexAporUu2RtLx.jpg",
+    "status": "released"
+   },
+   {
+    "id": 192139,
+    "type": "movie",
+    "title": "The Brink of War",
+    "rating": 7.206,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/vCIQeQ2ynVqEjIvtbOXGnKtcgAX.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1391021,
+    "type": "movie",
+    "title": "Once Upon a Time in the Middle East",
+    "rating": 9.214,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/wAuGgXjA7GV8NrKfmUKl2AP8vqG.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1101412,
+    "type": "movie",
+    "title": "Fall 2: Deadpoint",
+    "rating": 6,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/sY65bOZcjQqO6VdpOXLN5VcW61e.jpg",
+    "status": "released"
+   }
+  ],
+  "pagination": {
+   "page": 1,
+   "totalPages": 417,
+   "totalResults": 10000,
+   "hasNext": true,
+   "hasPrevious": false
+  }
+ },
+ "/v1/trending/tv": {
+  "data": [
+   {
+    "id": 125988,
+    "type": "tv",
+    "title": "Silo",
+    "rating": 8.205,
+    "year": 2023,
+    "cover": "https://image.tmdb.org/t/p/w500/gMYZZvnkVNTqSVnVCphWbPXwWwb.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 95350,
+    "type": "tv",
+    "title": "Lanterns",
+    "rating": 8.267,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/gpC7h43xPMEV3goYMQShfJbTtLq.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 236235,
+    "type": "tv",
+    "title": "The Gentlemen",
+    "rating": 7.827,
+    "year": 2024,
+    "cover": "https://image.tmdb.org/t/p/w500/tw3tzfXaSpmUZIB8ZNqNEGzMBCy.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 108978,
+    "type": "tv",
+    "title": "Reacher",
+    "rating": 8.11,
+    "year": 2022,
+    "cover": "https://image.tmdb.org/t/p/w500/f1VCQIG2iCyOookdgOzwtUpwWC0.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 30984,
+    "type": "tv",
+    "title": "Bleach",
+    "rating": 8.4,
+    "year": 2004,
+    "cover": "https://image.tmdb.org/t/p/w500/2EewmxXe72ogD0EaWM8gqa0ccIw.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 196322,
+    "type": "tv",
+    "title": "Dark Matter",
+    "rating": 7.79,
+    "year": 2024,
+    "cover": "https://image.tmdb.org/t/p/w500/2DPmTlv8F0V1TQBPmlsGOVOhtWk.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 299952,
+    "type": "tv",
+    "title": "The Early Spring",
+    "rating": 7.6,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/yiAzR6wGqjyAotZ4DvFvFeo8QS0.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 287238,
+    "type": "tv",
+    "title": "Furious",
+    "rating": 7.17,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/xnxxrEKtBaIcI1ewq50pLkOMU6u.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 97546,
+    "type": "tv",
+    "title": "Ted Lasso",
+    "rating": 8.368,
+    "year": 2020,
+    "cover": "https://image.tmdb.org/t/p/w500/uRHsiw1wLxPHFXkkv4Ix1s0O6f4.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 37854,
+    "type": "tv",
+    "title": "One Piece",
+    "rating": 8.749,
+    "year": 1999,
+    "cover": "https://image.tmdb.org/t/p/w500/dB4EDhre2dsC2kxYDavyKWqLQwi.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 290193,
+    "type": "tv",
+    "title": "Mousetrap",
+    "rating": 7.759,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/2mwgHfOyrFrmvozjFoEXHRdfGhv.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 94997,
+    "type": "tv",
+    "title": "House of the Dragon",
+    "rating": 8.384,
+    "year": 2022,
+    "cover": "https://image.tmdb.org/t/p/w500/7V0Ebks0GgpKvQ7QbLAIdX5dos4.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 329471,
+    "type": "tv",
+    "title": "The Grand Tour",
+    "rating": 9.75,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/kq6XB6xmD86txW4UR32tT2JUiN9.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 113962,
+    "type": "tv",
+    "title": "Lioness",
+    "rating": 8.121,
+    "year": 2023,
+    "cover": "https://image.tmdb.org/t/p/w500/rzpHPSEgPTpRs8EHbygwsOw7jC0.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 65942,
+    "type": "tv",
+    "title": "Re:ZERO -Starting Life in Another World-",
+    "rating": 8.1,
+    "year": 2016,
+    "cover": "https://image.tmdb.org/t/p/w500/oHqYrPAsIiTD5m4DuxumV4er8BU.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 290234,
+    "type": "tv",
+    "title": "Lovesick",
+    "rating": 5,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/91s80WxRqIirFSpGVtiXJoS1GA5.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 247168,
+    "type": "tv",
+    "title": "Chad Powers",
+    "rating": 8,
+    "year": 2025,
+    "cover": "https://image.tmdb.org/t/p/w500/aXetUcD4wfalCj90QmT6kSvwO6D.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 615,
+    "type": "tv",
+    "title": "Futurama",
+    "rating": 8.365,
+    "year": 1999,
+    "cover": "https://image.tmdb.org/t/p/w500/eM8bbTn8C8vUwwS6upzzm7gX31u.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 287620,
+    "type": "tv",
+    "title": "Stuart Fails to Save the Universe",
+    "rating": 8.982,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/txj8ujTZwGUjpCdhCsQBnTlh4aS.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 260458,
+    "type": "tv",
+    "title": "Adults",
+    "rating": 6,
+    "year": 2025,
+    "cover": "https://image.tmdb.org/t/p/w500/oJUoRlVXGl3MJb62Ugi1G08GPbx.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 76479,
+    "type": "tv",
+    "title": "The Boys",
+    "rating": 8.435,
+    "year": 2019,
+    "cover": "https://image.tmdb.org/t/p/w500/in1R2dDc421JxsoRWaIIAqVI2KE.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 94664,
+    "type": "tv",
+    "title": "Mushoku Tensei: Jobless Reincarnation",
+    "rating": 8.414,
+    "year": 2021,
+    "cover": "https://image.tmdb.org/t/p/w500/gLKOYIMyKlUHW0SVdskhgf9C0yy.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 247718,
+    "type": "tv",
+    "title": "MobLand",
+    "rating": 8.348,
+    "year": 2025,
+    "cover": "https://image.tmdb.org/t/p/w500/abeH7n5pcuQcwYcTxG6DTZvXLP1.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 298168,
+    "type": "tv",
+    "title": "The Shards",
+    "rating": 7.3,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/wP0GdqwVu2g1y3q1KzBXuSrdTvX.jpg",
+    "status": "ongoing"
+   }
+  ],
+  "pagination": {
+   "page": 1,
+   "totalPages": 417,
+   "totalResults": 10000,
+   "hasNext": true,
+   "hasPrevious": false
+  }
+ },
+ "/v1/top-rated/movies": {
+  "data": [
+   {
+    "id": 980431,
+    "type": "movie",
+    "title": "Avatar Aang: The Last Airbender",
+    "rating": 9.198,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/3sgnSfNT27Bx5O5ukr7B26mhEQq.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1632181,
+    "type": "movie",
+    "title": "Accidental Partners",
+    "rating": 8.88,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/j0CIVzeR7hRAPBPGR54qDZoOQpp.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1007757,
+    "type": "movie",
+    "title": "Swapped",
+    "rating": 8.871,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/tHhxWxge06goXU6ZQH1hj7vK8Hd.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1621552,
+    "type": "movie",
+    "title": "Facing El Chapo",
+    "rating": 8.8,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/z8eF0ACFFKtIZ4pUeo02PCzxRVO.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1311031,
+    "type": "movie",
+    "title": "Demon Slayer: Kimetsu no Yaiba Infinity Castle",
+    "rating": 8.785,
+    "year": 2025,
+    "cover": "https://image.tmdb.org/t/p/w500/fWVSwgjpT2D78VUh6X8UBd2rorW.jpg",
+    "status": "released"
+   },
+   {
+    "id": 278,
+    "type": "movie",
+    "title": "The Shawshank Redemption",
+    "rating": 8.729,
+    "year": 1994,
+    "cover": "https://image.tmdb.org/t/p/w500/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg",
+    "status": "released"
+   },
+   {
+    "id": 238,
+    "type": "movie",
+    "title": "The Godfather",
+    "rating": 8.686,
+    "year": 1972,
+    "cover": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+    "status": "released"
+   },
+   {
+    "id": 936075,
+    "type": "movie",
+    "title": "Michael",
+    "rating": 8.653,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/dueFqKLvjftnELZaGYwY7xinfaI.jpg",
+    "status": "released"
+   },
+   {
+    "id": 687163,
+    "type": "movie",
+    "title": "Project Hail Mary",
+    "rating": 8.644,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/yihdXomYb5kTeSivtFndMy5iDmf.jpg",
+    "status": "released"
+   },
+   {
+    "id": 240,
+    "type": "movie",
+    "title": "The Godfather Part II",
+    "rating": 8.6,
+    "year": 1974,
+    "cover": "https://image.tmdb.org/t/p/w500/sSuQTCZwqKrNBNIsksO9IAUoWP9.jpg",
+    "status": "released"
+   },
+   {
+    "id": 389,
+    "type": "movie",
+    "title": "12 Angry Men",
+    "rating": 8.571,
+    "year": 1957,
+    "cover": "https://image.tmdb.org/t/p/w500/zhG3vKWyDRaZYoaww1UVAi29T9h.jpg",
+    "status": "released"
+   },
+   {
+    "id": 424,
+    "type": "movie",
+    "title": "Schindler's List",
+    "rating": 8.57,
+    "year": 1993,
+    "cover": "https://image.tmdb.org/t/p/w500/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1232449,
+    "type": "movie",
+    "title": "Young Hearts",
+    "rating": 8.561,
+    "year": 2025,
+    "cover": "https://image.tmdb.org/t/p/w500/iGCtYxfuvXfy0BD5m6p7vKuPOxS.jpg",
+    "status": "released"
+   },
+   {
+    "id": 155,
+    "type": "movie",
+    "title": "The Dark Knight",
+    "rating": 8.535,
+    "year": 2008,
+    "cover": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+    "status": "released"
+   },
+   {
+    "id": 129,
+    "type": "movie",
+    "title": "Spirited Away",
+    "rating": 8.535,
+    "year": 2002,
+    "cover": "https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1218925,
+    "type": "movie",
+    "title": "Chainsaw Man - The Movie: Reze Arc",
+    "rating": 8.537,
+    "year": 2025,
+    "cover": "https://image.tmdb.org/t/p/w500/pHyxb2RV5wLlboAwm9ZJ9qTVEDw.jpg",
+    "status": "released"
+   },
+   {
+    "id": 497,
+    "type": "movie",
+    "title": "The Green Mile",
+    "rating": 8.506,
+    "year": 1999,
+    "cover": "https://image.tmdb.org/t/p/w500/8VG8fDNiy50H4FedGwdSVUPoaJe.jpg",
+    "status": "released"
+   },
+   {
+    "id": 122,
+    "type": "movie",
+    "title": "The Lord of the Rings: The Return of the King",
+    "rating": 8.507,
+    "year": 2003,
+    "cover": "https://image.tmdb.org/t/p/w500/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg",
+    "status": "released"
+   },
+   {
+    "id": 19404,
+    "type": "movie",
+    "title": "Dilwale Dulhania Le Jayenge",
+    "rating": 8.503,
+    "year": 1995,
+    "cover": "https://image.tmdb.org/t/p/w500/lfRkUr7DYdHldAqi3PwdQGBRBPM.jpg",
+    "status": "released"
+   },
+   {
+    "id": 496243,
+    "type": "movie",
+    "title": "Parasite",
+    "rating": 8.49,
+    "year": 2019,
+    "cover": "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
+    "status": "released"
+   },
+   {
+    "id": 157336,
+    "type": "movie",
+    "title": "Interstellar",
+    "rating": 8.5,
+    "year": 2014,
+    "cover": "https://image.tmdb.org/t/p/w500/yQvGrMoipbRoddT0ZR8tPoR7NfX.jpg",
+    "status": "released"
+   },
+   {
+    "id": 372058,
+    "type": "movie",
+    "title": "Your Name.",
+    "rating": 8.485,
+    "year": 2017,
+    "cover": "https://image.tmdb.org/t/p/w500/vfJFJPepRKapMd5G2ro7klIRysq.jpg",
+    "status": "released"
+   },
+   {
+    "id": 680,
+    "type": "movie",
+    "title": "Pulp Fiction",
+    "rating": 8.5,
+    "year": 1994,
+    "cover": "https://image.tmdb.org/t/p/w500/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg",
+    "status": "released"
+   },
+   {
+    "id": 429,
+    "type": "movie",
+    "title": "The Good, the Bad and the Ugly",
+    "rating": 8.466,
+    "year": 1967,
+    "cover": "https://image.tmdb.org/t/p/w500/bX2xnavhMYjWDoZp1VM6VnU1xwe.jpg",
+    "status": "released"
+   }
+  ],
+  "pagination": {
+   "page": 1,
+   "totalPages": 466,
+   "totalResults": 11178,
+   "hasNext": true,
+   "hasPrevious": false
+  }
+ },
+ "/v1/top-rated/tv": {
+  "data": [
+   {
+    "id": 276161,
+    "type": "tv",
+    "title": "Teach You a Lesson",
+    "rating": 9.411,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/fMECSPrTmRClSViMsXFYmiYIcWP.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 299167,
+    "type": "tv",
+    "title": "Dutton Ranch",
+    "rating": 9.168,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/xsiecCxd8lkcAluw0wWwbW5CwSv.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 278573,
+    "type": "tv",
+    "title": "Perfect Crown",
+    "rating": 9.123,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/ocXkHSslrSWMz2ZJGl5MjF6dQr3.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 1396,
+    "type": "tv",
+    "title": "Breaking Bad",
+    "rating": 8.951,
+    "year": 2008,
+    "cover": "https://image.tmdb.org/t/p/w500/anFx9aTOOYqgS3v7x3R84Kz67ly.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 273240,
+    "type": "tv",
+    "title": "Off Campus",
+    "rating": 8.918,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/tcPc5ZMBO4y2BtCJMe3o2nwZb2B.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 259837,
+    "type": "tv",
+    "title": "The WONDERfools",
+    "rating": 8.861,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/jj7AYkz2OLRDL1wfJmjTXyWQ5I4.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 245026,
+    "type": "tv",
+    "title": "Wizards Beyond Waverly Place",
+    "rating": 8.8,
+    "year": 2024,
+    "cover": "https://image.tmdb.org/t/p/w500/5hrBpjFzIqmN9k7QxEC610gwZGw.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 209867,
+    "type": "tv",
+    "title": "Frieren: Beyond Journey's End",
+    "rating": 8.805,
+    "year": 2023,
+    "cover": "https://image.tmdb.org/t/p/w500/dqZENchTd7lp5zht7BdlqM7RBhD.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 85077,
+    "type": "tv",
+    "title": "The Chosen",
+    "rating": 8.794,
+    "year": 2019,
+    "cover": "https://image.tmdb.org/t/p/w500/dqVUFuNrMFWt7uGNWlpo91VKYOI.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 219246,
+    "type": "tv",
+    "title": "When Life Gives You Tangerines",
+    "rating": 8.788,
+    "year": 2025,
+    "cover": "https://image.tmdb.org/t/p/w500/Afrz3QAcQcsT6w4S5wrKUxmYPWM.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 246,
+    "type": "tv",
+    "title": "Avatar: The Last Airbender",
+    "rating": 8.78,
+    "year": 2005,
+    "cover": "https://image.tmdb.org/t/p/w500/yaGt4GIutpbXHsv48tWceWg6s56.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 259666,
+    "type": "tv",
+    "title": "No One Will Miss Us",
+    "rating": 8.771,
+    "year": 2024,
+    "cover": "https://image.tmdb.org/t/p/w500/5U3WiAz67fJn5gnvFk4zOJAx9Sc.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 64010,
+    "type": "tv",
+    "title": "Reply 1988",
+    "rating": 8.8,
+    "year": 2015,
+    "cover": "https://image.tmdb.org/t/p/w500/655MownSWwplhvVlXERRJ4OSOG2.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 37854,
+    "type": "tv",
+    "title": "One Piece",
+    "rating": 8.75,
+    "year": 1999,
+    "cover": "https://image.tmdb.org/t/p/w500/dB4EDhre2dsC2kxYDavyKWqLQwi.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 94605,
+    "type": "tv",
+    "title": "Arcane",
+    "rating": 8.749,
+    "year": 2021,
+    "cover": "https://image.tmdb.org/t/p/w500/fqldf2t8ztc9aiwn3k6mlX3tvRT.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 301507,
+    "type": "tv",
+    "title": "Heated Rivalry",
+    "rating": 8.7,
+    "year": 2025,
+    "cover": "https://image.tmdb.org/t/p/w500/3YCKbtAkYWCMDLHvkUjGhG7eWoS.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 250307,
+    "type": "tv",
+    "title": "The Pitt",
+    "rating": 8.731,
+    "year": 2025,
+    "cover": "https://image.tmdb.org/t/p/w500/kvFSpESyBZMjaeOJDx7RS3P1jey.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 87108,
+    "type": "tv",
+    "title": "Chernobyl",
+    "rating": 8.724,
+    "year": 2019,
+    "cover": "https://image.tmdb.org/t/p/w500/hlLXt2tOPT6RRnjiUmoxyG1LTFi.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 31911,
+    "type": "tv",
+    "title": "Fullmetal Alchemist: Brotherhood",
+    "rating": 8.713,
+    "year": 2009,
+    "cover": "https://image.tmdb.org/t/p/w500/5ZFUEOULaVml7pQuXxhpR2SmVUw.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 60059,
+    "type": "tv",
+    "title": "Better Call Saul",
+    "rating": 8.711,
+    "year": 2015,
+    "cover": "https://image.tmdb.org/t/p/w500/zjg4jpK1Wp2kiRvtt5ND0kznako.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 138502,
+    "type": "tv",
+    "title": "X-Men '97",
+    "rating": 8.692,
+    "year": 2024,
+    "cover": "https://image.tmdb.org/t/p/w500/2HKBc5UiFw8JrruHq8S1Y7TnlW0.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 200709,
+    "type": "tv",
+    "title": "Weak Hero",
+    "rating": 8.689,
+    "year": 2022,
+    "cover": "https://image.tmdb.org/t/p/w500/5Sd01WeraL2oA3Vv6O4rcRxockn.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 1429,
+    "type": "tv",
+    "title": "Attack on Titan",
+    "rating": 8.684,
+    "year": 2013,
+    "cover": "https://image.tmdb.org/t/p/w500/hTP1DtLGFamjfu8WqjnuQdP1n4i.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 127532,
+    "type": "tv",
+    "title": "Solo Leveling",
+    "rating": 8.682,
+    "year": 2024,
+    "cover": "https://image.tmdb.org/t/p/w500/geCRueV3ElhRTr0xtJuEWJt6dJ1.jpg",
+    "status": "ongoing"
+   }
+  ],
+  "pagination": {
+   "page": 1,
+   "totalPages": 106,
+   "totalResults": 2543,
+   "hasNext": true,
+   "hasPrevious": false
+  }
+ },
+ "/v1/titles/movie/1386315": {
+  "id": 1386315,
+  "type": "movie",
+  "title": "The Runner",
+  "rating": 6.281,
+  "year": 2026,
+  "cover": "https://image.tmdb.org/t/p/w500/uxCaBoYXsDC4A0SqTm3SISj0OwK.jpg",
+  "status": "released",
+  "production": [
+   "Amazon MGM Studios",
+   "Rockwood Pictures"
+  ],
+  "aired": {
+   "start": "2026-09-03",
+   "end": null
+  },
+  "description": "Maia Marten, a brilliant London lawyer, has her life shattered by a single call on her morning run: her son has been taken. To get him back, she must keep running, obey every ruthless command, and trust no one-each second a test of how far a mother will go to save her child.",
+  "genres": [
+   "Thriller",
+   "Action"
+  ],
+  "trailers": [
+   {
+    "name": "Official Trailer",
+    "key": "zz4rsZLcauY",
+    "url": "https://www.youtube.com/watch?v=zz4rsZLcauY"
+   }
+  ],
+  "cast": [
+   {
+    "character": "Maia",
+    "actor": "Gal Gadot",
+    "profile": "https://image.tmdb.org/t/p/w185/qCJB1ACi5VjtY4ypXuv3hjAvbSu.jpg"
+   },
+   {
+    "character": "The Caller",
+    "actor": "Damian Lewis",
+    "profile": "https://image.tmdb.org/t/p/w185/puOXtVatFnAxoOmsFO8z7KTfyJW.jpg"
+   },
+   {
+    "character": "Noah",
+    "actor": "Rory Wilmot",
+    "profile": "https://image.tmdb.org/t/p/w185/qi56VP9tSU0F0VJ59Aq0yU4nIR9.jpg"
+   },
+   {
+    "character": "Ted",
+    "actor": "Alfred Enoch",
+    "profile": "https://image.tmdb.org/t/p/w185/eEVvPHmxRBcEGqtoTujncmwNDhR.jpg"
+   },
+   {
+    "character": "Tafa",
+    "actor": "Phoenix Di Sebastiani",
+    "profile": "https://image.tmdb.org/t/p/w185/mBkkZ5irQZPsxdcCIPLCvNv5iT8.jpg"
+   },
+   {
+    "character": "Wiry Dude",
+    "actor": "Nathan Kirby",
+    "profile": "https://image.tmdb.org/t/p/w185/5bnrS0ZncCFaL1DCm7n7Z6qHBlL.jpg"
+   },
+   {
+    "character": "Buddy",
+    "actor": "H\u00e9lder Fernandes",
+    "profile": "https://image.tmdb.org/t/p/w185/rt8Cp421KbfANb6b6AmMGlVz8wR.jpg"
+   },
+   {
+    "character": "NCA Officer 1",
+    "actor": "Will Austin",
+    "profile": "https://image.tmdb.org/t/p/w185/hwlsIMEImnpOc046cROxtVyJ2Ao.jpg"
+   },
+   {
+    "character": "NCA Officer 2",
+    "actor": "Mark Hampton",
+    "profile": "https://image.tmdb.org/t/p/w185/1QU9wjU4fxzYmJALQREMJYSVzS8.jpg"
+   },
+   {
+    "character": "NCA Officer 3",
+    "actor": "Stevie Binns",
+    "profile": "https://image.tmdb.org/t/p/w185/8z91lF6y3CFTT55YVC3qcBHLO1L.jpg"
+   },
+   {
+    "character": "Forensics Officer",
+    "actor": "John Leader",
+    "profile": "https://image.tmdb.org/t/p/w185/861Sr9u3AhZX0UIeOj3UnTm3gcF.jpg"
+   },
+   {
+    "character": "Boat Captain",
+    "actor": "Kenton Lloyd Morgan",
+    "profile": null
+   },
+   {
+    "character": "Hotel Security",
+    "actor": "Simon Nader",
+    "profile": "https://image.tmdb.org/t/p/w185/14fZw63UwG4NA5pbg3EJNiiYUkb.jpg"
+   },
+   {
+    "character": "Alice (School Mum)",
+    "actor": "Jessie Cave",
+    "profile": "https://image.tmdb.org/t/p/w185/bo1zUtdS878MzOVrPV6hnIN90CT.jpg"
+   },
+   {
+    "character": "Waterloo Bridge Police Officer",
+    "actor": "Michael Raymond Fox",
+    "profile": null
+   },
+   {
+    "character": "Ulysses Suite Police Officer 1",
+    "actor": "Simon Shorten",
+    "profile": "https://image.tmdb.org/t/p/w185/r1fAL4L4SpFeKxHQByVf7s3uVtv.jpg"
+   },
+   {
+    "character": "Ulysses Suite Police Officer 2",
+    "actor": "Miles Mitchell",
+    "profile": null
+   },
+   {
+    "character": "Canal Mum",
+    "actor": "Raquel Appiah",
+    "profile": null
+   },
+   {
+    "character": "Business Man",
+    "actor": "Lorenzo Martelli",
+    "profile": null
+   },
+   {
+    "character": "Old Man at Canal",
+    "actor": "Clive Kneller",
+    "profile": "https://image.tmdb.org/t/p/w185/fnDPEcGkhTHm6MozkziQb3WsuI9.jpg"
+   }
+  ],
+  "recommended": [
+   {
+    "id": 293768,
+    "type": "movie",
+    "title": "Kidnap",
+    "rating": 6.255,
+    "year": 2017,
+    "cover": "https://image.tmdb.org/t/p/w500/fwdOX3PEZlOLXr9SMpgRnSmTVFp.jpg",
+    "status": "released"
+   },
+   {
+    "id": 86597,
+    "type": "movie",
+    "title": "The Tall Man",
+    "rating": 6.047,
+    "year": 2012,
+    "cover": "https://image.tmdb.org/t/p/w500/iZGQsDlYcNaJf2MVopAZHs69FI4.jpg",
+    "status": "released"
+   },
+   {
+    "id": 497814,
+    "type": "movie",
+    "title": "Breaking In",
+    "rating": 5.931,
+    "year": 2018,
+    "cover": "https://image.tmdb.org/t/p/w500/nuCxJwcQOEKYoiHTgcf4em8TxWv.jpg",
+    "status": "released"
+   },
+   {
+    "id": 9039,
+    "type": "movie",
+    "title": "Trapped",
+    "rating": 6.153,
+    "year": 2002,
+    "cover": "https://image.tmdb.org/t/p/w500/4sujD0KP5O90TXAWrTjqDPBTnfQ.jpg",
+    "status": "released"
+   },
+   {
+    "id": 3092,
+    "type": "movie",
+    "title": "Seance on a Wet Afternoon",
+    "rating": 7.242,
+    "year": 1964,
+    "cover": "https://image.tmdb.org/t/p/w500/dHu7nuNwXTXoPdpNOEPKhHfCBk5.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1242265,
+    "type": "movie",
+    "title": "Fuze",
+    "rating": 7.2,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/oMFdQE5hMJ9JjhNORegwTo0GKmh.jpg",
+    "status": "released"
+   },
+   {
+    "id": 421313,
+    "type": "movie",
+    "title": "Eliminators",
+    "rating": 6.372,
+    "year": 2016,
+    "cover": "https://image.tmdb.org/t/p/w500/pUB91wOMQrmkforP7ntIMy2zkdn.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1280450,
+    "type": "movie",
+    "title": "Stolen Girl",
+    "rating": 6.4,
+    "year": 2025,
+    "cover": "https://image.tmdb.org/t/p/w500/njU663VbT88zZjsJYizfWcam6sS.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1383731,
+    "type": "movie",
+    "title": "Protector",
+    "rating": 8.389,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/icOZpnGuH9YrEaW3wrw5GJaXGih.jpg",
+    "status": "released"
+   },
+   {
+    "id": 3595,
+    "type": "movie",
+    "title": "Ransom",
+    "rating": 6.693,
+    "year": 1996,
+    "cover": "https://image.tmdb.org/t/p/w500/4nmOA5ZOY2VlHzwSlKY03sF2JUz.jpg",
+    "status": "released"
+   },
+   {
+    "id": 333354,
+    "type": "movie",
+    "title": "Extortion",
+    "rating": 6.1,
+    "year": 2017,
+    "cover": "https://image.tmdb.org/t/p/w500/nmIHFblhZ2uBGepSYzvKYFDfvhp.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1381027,
+    "type": "movie",
+    "title": "Good Boy",
+    "rating": 7.3,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/eWb841fMkSNly5gfL9J1N0xzVYI.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1196573,
+    "type": "movie",
+    "title": "She Rides Shotgun",
+    "rating": 7.026,
+    "year": 2025,
+    "cover": "https://image.tmdb.org/t/p/w500/nvqW8mOm818QDio3GKKmPLK8kXj.jpg",
+    "status": "released"
+   },
+   {
+    "id": 4547,
+    "type": "movie",
+    "title": "Panic Room",
+    "rating": 6.795,
+    "year": 2002,
+    "cover": "https://image.tmdb.org/t/p/w500/hANYbvfwxmkC9E4yY6YyJxYxlSJ.jpg",
+    "status": "released"
+   },
+   {
+    "id": 24832,
+    "type": "movie",
+    "title": "Damage",
+    "rating": 6.581,
+    "year": 2009,
+    "cover": "https://image.tmdb.org/t/p/w500/2qH5K0RDwcTRvXnIkzuO2X7QQwA.jpg",
+    "status": "released"
+   },
+   {
+    "id": 2252,
+    "type": "movie",
+    "title": "Eastern Promises",
+    "rating": 7.348,
+    "year": 2007,
+    "cover": "https://image.tmdb.org/t/p/w500/nLwv1pxRCRZucQaqs6oPkq7HH3K.jpg",
+    "status": "released"
+   },
+   {
+    "id": 29396,
+    "type": "movie",
+    "title": "Strait-Jacket",
+    "rating": 6.559,
+    "year": 1964,
+    "cover": "https://image.tmdb.org/t/p/w500/eNL4ydW0KVhennniy3QSYYv18Hp.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1030987,
+    "type": "movie",
+    "title": "Sympathy for the Devil",
+    "rating": 5.927,
+    "year": 2023,
+    "cover": "https://image.tmdb.org/t/p/w500/afGdVMa80LMs6ibLP22CwM5uI4e.jpg",
+    "status": "released"
+   },
+   {
+    "id": 574060,
+    "type": "movie",
+    "title": "Gunpowder Milkshake",
+    "rating": 6.264,
+    "year": 2021,
+    "cover": "https://image.tmdb.org/t/p/w500/56ofGPMOZCwlTjTao5fB7vnGOoj.jpg",
+    "status": "released"
+   },
+   {
+    "id": 40350,
+    "type": "movie",
+    "title": "Fright",
+    "rating": 6.027,
+    "year": 1971,
+    "cover": "https://image.tmdb.org/t/p/w500/3HpslY91rWbmbBRPZS0It1uWarD.jpg",
+    "status": "released"
+   }
+  ]
+ },
+ "/v1/titles/tv/125988": {
+  "id": 125988,
+  "type": "tv",
+  "title": "Silo",
+  "rating": 8.205,
+  "year": 2023,
+  "cover": "https://image.tmdb.org/t/p/w500/gMYZZvnkVNTqSVnVCphWbPXwWwb.jpg",
+  "status": "ongoing",
+  "production": [
+   "AMC Studios",
+   "Nemofilms",
+   "Mimir Films",
+   "Apple Studios"
+  ],
+  "aired": {
+   "start": "2023-05-04",
+   "end": "2026-09-03"
+  },
+  "description": "In a ruined and toxic future, thousands live in a giant silo deep underground. After its sheriff breaks a cardinal rule and residents die mysteriously, engineer Juliette starts to uncover shocking secrets and the truth about the silo.",
+  "genres": [
+   "Sci-Fi & Fantasy",
+   "Drama"
+  ],
+  "trailers": [
+   {
+    "name": "Official Trailer",
+    "key": "8ZYhuvIv1pA",
+    "url": "https://www.youtube.com/watch?v=8ZYhuvIv1pA"
+   }
+  ],
+  "cast": [
+   {
+    "character": "Juliette Nichols",
+    "actor": "Rebecca Ferguson",
+    "profile": "https://image.tmdb.org/t/p/w185/ra53cM1aNmdH0aFhj8yBqPOj2fb.jpg"
+   },
+   {
+    "character": "Robert Sims",
+    "actor": "Common",
+    "profile": "https://image.tmdb.org/t/p/w185/7Gk5L3rg6uZAGp7SWWTJRP32IJ3.jpg"
+   },
+   {
+    "character": "Paul Billings",
+    "actor": "Chinaza Uche",
+    "profile": "https://image.tmdb.org/t/p/w185/5fbbLI9BPiByyIIRYu9pbRQwyUN.jpg"
+   },
+   {
+    "character": "Daniel Keene",
+    "actor": "Ashley Zukerman",
+    "profile": "https://image.tmdb.org/t/p/w185/tKT5ybCjMOV4whEQ6jy8ZQnrP7C.jpg"
+   },
+   {
+    "character": "Knox",
+    "actor": "Shane McRae",
+    "profile": "https://image.tmdb.org/t/p/w185/ixNSdZDJ6fZzZc2Pdx4Dwr8wHir.jpg"
+   },
+   {
+    "character": "Shirley Campbell",
+    "actor": "Remmie Milner",
+    "profile": "https://image.tmdb.org/t/p/w185/4LDy6vhBZ11kOevBdAGBRM34d3L.jpg"
+   },
+   {
+    "character": "Camille Sims",
+    "actor": "Alexandria Riley",
+    "profile": "https://image.tmdb.org/t/p/w185/7rEJ2m0ur4uFPG0YzBQpYQB8Crt.jpg"
+   },
+   {
+    "character": "Henry",
+    "actor": "Reed Birney",
+    "profile": "https://image.tmdb.org/t/p/w185/dfLgNLUt6Xs2MJJTi6B1iWdXjU6.jpg"
+   },
+   {
+    "character": "Senator Thurman",
+    "actor": "Laura Innes",
+    "profile": "https://image.tmdb.org/t/p/w185/eO6hk2e7rowODSAgAq61mnv62Cv.jpg"
+   },
+   {
+    "character": "Charlotte Keene",
+    "actor": "Jessica Brown Findlay",
+    "profile": "https://image.tmdb.org/t/p/w185/zaqkavcb9ur0W1h1QAxJfKnCJ2h.jpg"
+   },
+   {
+    "character": "Hank Murphy",
+    "actor": "Billy Postlethwaite",
+    "profile": "https://image.tmdb.org/t/p/w185/62omaRURpSOCZZr0yP0KowgrjkE.jpg"
+   },
+   {
+    "character": "Anna",
+    "actor": "Morven Christie",
+    "profile": "https://image.tmdb.org/t/p/w185/fTlG9uWyaiQt9UATyPYswjo9EGh.jpg"
+   },
+   {
+    "character": "Victor",
+    "actor": "Matt Craven",
+    "profile": "https://image.tmdb.org/t/p/w185/tWF8B3Dj7zvKRmkTplp7ice6Wo9.jpg"
+   },
+   {
+    "character": "Bernard Holland",
+    "actor": "Tim Robbins",
+    "profile": "https://image.tmdb.org/t/p/w185/3FfJMIVwXgsIXbAT8ECBSZJAncR.jpg"
+   }
+  ],
+  "recommended": [
+   {
+    "id": 287527,
+    "type": "tv",
+    "title": "The Testaments",
+    "rating": 8.296,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/xVsFopLisBoiKdXXecaNTN4pJ9A.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 85273,
+    "type": "tv",
+    "title": "NOS4A2",
+    "rating": 7.283,
+    "year": 2019,
+    "cover": "https://image.tmdb.org/t/p/w500/gnosVTTRTCqooJuipwU6C0bgOGf.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 79680,
+    "type": "tv",
+    "title": "Snowpiercer",
+    "rating": 7.348,
+    "year": 2020,
+    "cover": "https://image.tmdb.org/t/p/w500/exKzfiKzMdQBHrdd7zNmKauJkbg.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 86550,
+    "type": "tv",
+    "title": "Y: The Last Man",
+    "rating": 6.643,
+    "year": 2021,
+    "cover": "https://image.tmdb.org/t/p/w500/xJvTO2fLOQWwJlQ4MAt7rP8Yno0.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 77459,
+    "type": "tv",
+    "title": "The Passage",
+    "rating": 6.941,
+    "year": 2019,
+    "cover": "https://image.tmdb.org/t/p/w500/np1jcUOCjTGpoIzKwCnV35zxu5B.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 1425,
+    "type": "tv",
+    "title": "House of Cards",
+    "rating": 8.009,
+    "year": 2013,
+    "cover": "https://image.tmdb.org/t/p/w500/hKWxWjFwnMvkWQawbhvC0Y7ygQ8.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 62017,
+    "type": "tv",
+    "title": "The Man in the High Castle",
+    "rating": 7.526,
+    "year": 2015,
+    "cover": "https://image.tmdb.org/t/p/w500/xhoDZbMNeyCA0BGPZQsdIiO43Dp.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 71914,
+    "type": "tv",
+    "title": "The Wheel of Time",
+    "rating": 7.588,
+    "year": 2021,
+    "cover": "https://image.tmdb.org/t/p/w500/ihBi24EIr5kwAeY2PqmsgAcCj4n.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 1402,
+    "type": "tv",
+    "title": "The Walking Dead",
+    "rating": 8.083,
+    "year": 2010,
+    "cover": "https://image.tmdb.org/t/p/w500/ng3cMtxYKt1OSQYqFlnKWnVsqNO.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 48866,
+    "type": "tv",
+    "title": "The 100",
+    "rating": 7.879,
+    "year": 2014,
+    "cover": "https://image.tmdb.org/t/p/w500/wHIMMLFsk32wIzDmawWkYVbxFCS.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 46639,
+    "type": "tv",
+    "title": "American Gods",
+    "rating": 7.084,
+    "year": 2017,
+    "cover": "https://image.tmdb.org/t/p/w500/3KCAZaKHmoMIN9dHutqaMtubQqD.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 90972,
+    "type": "tv",
+    "title": "Station Eleven",
+    "rating": 7.039,
+    "year": 2021,
+    "cover": "https://image.tmdb.org/t/p/w500/xWlhMOzRxUpu4uzkWcDQOaESCE.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 93784,
+    "type": "tv",
+    "title": "Tales from the Loop",
+    "rating": 7.026,
+    "year": 2020,
+    "cover": "https://image.tmdb.org/t/p/w500/56D0QFyLhrRp1ZTBz8Gw10qtZas.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 62858,
+    "type": "tv",
+    "title": "Colony",
+    "rating": 6.865,
+    "year": 2016,
+    "cover": "https://image.tmdb.org/t/p/w500/qfS0mp22XfTig2EK3jWKiyx7kNy.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 86374,
+    "type": "tv",
+    "title": "War of the Worlds",
+    "rating": 7.231,
+    "year": 2019,
+    "cover": "https://image.tmdb.org/t/p/w500/yThmbQkxSzW4HHdAaoj8RYHFH3i.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 60948,
+    "type": "tv",
+    "title": "12 Monkeys",
+    "rating": 7.435,
+    "year": 2015,
+    "cover": "https://image.tmdb.org/t/p/w500/w5u1PqBYfDyfrlkxADTA38jYG3I.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 106379,
+    "type": "tv",
+    "title": "Fallout",
+    "rating": 8.1,
+    "year": 2024,
+    "cover": "https://image.tmdb.org/t/p/w500/c15BtJxCXMrISLVmysdsnZUPQft.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 42009,
+    "type": "tv",
+    "title": "Black Mirror",
+    "rating": 8.289,
+    "year": 2011,
+    "cover": "https://image.tmdb.org/t/p/w500/seN6rRfN0I6n8iDXjlSMk1QjNcq.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 99741,
+    "type": "tv",
+    "title": "Devils",
+    "rating": 7.297,
+    "year": 2020,
+    "cover": "https://image.tmdb.org/t/p/w500/l4Pl7APWpRANULCirWTrcMPfdIl.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 94305,
+    "type": "tv",
+    "title": "The Walking Dead: World Beyond",
+    "rating": 7.327,
+    "year": 2020,
+    "cover": "https://image.tmdb.org/t/p/w500/6HanIV2hTLE2w7A5bI1KJb3bTL7.jpg",
+    "status": "ongoing"
+   }
+  ],
+  "seasons": [
+   {
+    "seasonNumber": 1,
+    "title": "Season 1",
+    "episodeCount": 10,
+    "episodes": [
+     {
+      "episodeNumber": 1,
+      "title": "Freedom Day",
+      "aired": "2023-05-04"
+     },
+     {
+      "episodeNumber": 2,
+      "title": "Holston's Pick",
+      "aired": "2023-05-04"
+     },
+     {
+      "episodeNumber": 3,
+      "title": "Machines",
+      "aired": "2023-05-11"
+     },
+     {
+      "episodeNumber": 4,
+      "title": "Truth",
+      "aired": "2023-05-18"
+     },
+     {
+      "episodeNumber": 5,
+      "title": "The Janitor's Boy",
+      "aired": "2023-05-25"
+     },
+     {
+      "episodeNumber": 6,
+      "title": "The Relic",
+      "aired": "2023-06-01"
+     },
+     {
+      "episodeNumber": 7,
+      "title": "The Flamekeepers",
+      "aired": "2023-06-08"
+     },
+     {
+      "episodeNumber": 8,
+      "title": "Hanna",
+      "aired": "2023-06-15"
+     },
+     {
+      "episodeNumber": 9,
+      "title": "The Getaway",
+      "aired": "2023-06-22"
+     },
+     {
+      "episodeNumber": 10,
+      "title": "Outside",
+      "aired": "2023-06-29"
+     }
+    ]
+   },
+   {
+    "seasonNumber": 2,
+    "title": "Season 2",
+    "episodeCount": 10,
+    "episodes": [
+     {
+      "episodeNumber": 1,
+      "title": "The Engineer",
+      "aired": "2024-11-14"
+     },
+     {
+      "episodeNumber": 2,
+      "title": "Order",
+      "aired": "2024-11-21"
+     },
+     {
+      "episodeNumber": 3,
+      "title": "Solo",
+      "aired": "2024-11-26"
+     },
+     {
+      "episodeNumber": 4,
+      "title": "The Harmonium",
+      "aired": "2024-12-05"
+     },
+     {
+      "episodeNumber": 5,
+      "title": "Descent",
+      "aired": "2024-12-12"
+     },
+     {
+      "episodeNumber": 6,
+      "title": "Barricades",
+      "aired": "2024-12-19"
+     },
+     {
+      "episodeNumber": 7,
+      "title": "The Dive",
+      "aired": "2024-12-26"
+     },
+     {
+      "episodeNumber": 8,
+      "title": "The Book of Quinn",
+      "aired": "2025-01-02"
+     },
+     {
+      "episodeNumber": 9,
+      "title": "The Safeguard",
+      "aired": "2025-01-09"
+     },
+     {
+      "episodeNumber": 10,
+      "title": "Into the Fire",
+      "aired": "2025-01-16"
+     }
+    ]
+   },
+   {
+    "seasonNumber": 3,
+    "title": "Season 3",
+    "episodeCount": 10,
+    "episodes": [
+     {
+      "episodeNumber": 1,
+      "title": "Who Are You?",
+      "aired": "2026-07-02"
+     },
+     {
+      "episodeNumber": 2,
+      "title": "It's All Good",
+      "aired": "2026-07-09"
+     },
+     {
+      "episodeNumber": 3,
+      "title": "A Dark Web",
+      "aired": "2026-07-16"
+     },
+     {
+      "episodeNumber": 4,
+      "title": "Whatever You Do, Don't Go Home",
+      "aired": "2026-07-23"
+     },
+     {
+      "episodeNumber": 5,
+      "title": "Memory",
+      "aired": "2026-07-30"
+     },
+     {
+      "episodeNumber": 6,
+      "title": "The Drive",
+      "aired": "2026-08-06"
+     },
+     {
+      "episodeNumber": 7,
+      "title": "Radio",
+      "aired": "2026-08-13"
+     },
+     {
+      "episodeNumber": 8,
+      "title": "Gray Goo",
+      "aired": "2026-08-20"
+     },
+     {
+      "episodeNumber": 9,
+      "title": "Farewell",
+      "aired": "2026-08-27"
+     },
+     {
+      "episodeNumber": 10,
+      "title": "Troy",
+      "aired": "2026-09-03"
+     }
+    ]
+   }
+  ]
+ },
+ "/v1/search?query=matrix&page=1&type=multi": {
+  "data": [
+   {
+    "id": 603,
+    "type": "movie",
+    "title": "The Matrix",
+    "rating": 8.257,
+    "year": 1999,
+    "cover": "https://image.tmdb.org/t/p/w500/dXNAPwY7VrqMAo51EKhhCJfaGb5.jpg",
+    "status": "released"
+   },
+   {
+    "id": 604,
+    "type": "movie",
+    "title": "The Matrix Reloaded",
+    "rating": 7.086,
+    "year": 2003,
+    "cover": "https://image.tmdb.org/t/p/w500/aA5qHS0FbSXO8PxcxUIHbDrJyuh.jpg",
+    "status": "released"
+   },
+   {
+    "id": 711,
+    "type": "tv",
+    "title": "Threat Matrix",
+    "rating": 6.143,
+    "year": 2003,
+    "cover": "https://image.tmdb.org/t/p/w500/xOeA42Rc9EiIe0dGnwywLqYKetG.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 605,
+    "type": "movie",
+    "title": "The Matrix Revolutions",
+    "rating": 6.758,
+    "year": 2003,
+    "cover": "https://image.tmdb.org/t/p/w500/qEWiBXJGXK28jGBAm8oFKKTB0WD.jpg",
+    "status": "released"
+   },
+   {
+    "id": 624860,
+    "type": "movie",
+    "title": "The Matrix Resurrections",
+    "rating": 6.309,
+    "year": 2021,
+    "cover": "https://image.tmdb.org/t/p/w500/8c4a8kE7PizaGQQnditMmI1xbRp.jpg",
+    "status": "released"
+   },
+   {
+    "id": 11393,
+    "type": "tv",
+    "title": "Matrix",
+    "rating": 6.75,
+    "year": 1993,
+    "cover": "https://image.tmdb.org/t/p/w500/2gBnvu6OEMq7Po2qMXd4JiAA4ZD.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 33322,
+    "type": "movie",
+    "title": "Armitage III: Poly Matrix",
+    "rating": 6.465,
+    "year": 1996,
+    "cover": "https://image.tmdb.org/t/p/w500/7sUCRdjGe7VggDCGIHywfguYdAK.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1217455,
+    "type": "movie",
+    "title": "The Matrix: Generation",
+    "rating": 6.92,
+    "year": 2023,
+    "cover": "https://image.tmdb.org/t/p/w500/53McB8R9RUBxfINRxWaPwUMtL5Q.jpg",
+    "status": "released"
+   },
+   {
+    "id": 51767,
+    "type": "movie",
+    "title": "Sexual Matrix",
+    "rating": 6.413,
+    "year": 2000,
+    "cover": "https://image.tmdb.org/t/p/w500/vmhBIPKyYCWlp2PrIIc6EXZlP9Z.jpg",
+    "status": "released"
+   },
+   {
+    "id": 21769,
+    "type": "movie",
+    "title": "Armitage: Dual Matrix",
+    "rating": 6.393,
+    "year": 2002,
+    "cover": "https://image.tmdb.org/t/p/w500/tmila2EqReVL2Tz8HBvRGIjdI9N.jpg",
+    "status": "released"
+   },
+   {
+    "id": 14543,
+    "type": "movie",
+    "title": "The Matrix Revisited",
+    "rating": 6.935,
+    "year": 2001,
+    "cover": "https://image.tmdb.org/t/p/w500/fNG2JOskhQnttmAaj2knM5h59Io.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1142175,
+    "type": "movie",
+    "title": "Matrix Dream Maze",
+    "rating": 5.5,
+    "year": 2023,
+    "cover": "https://image.tmdb.org/t/p/w500/3OJJzgNQhY4t0dSuKTXUDg591uu.jpg",
+    "status": "released"
+   },
+   {
+    "id": 790345,
+    "type": "movie",
+    "title": "Dinosaur Matrix",
+    "rating": 0,
+    "year": 1985,
+    "cover": "https://image.tmdb.org/t/p/w500/22AwsGF9PXc2cq72kH9P3mNzHGY.jpg",
+    "status": "released"
+   },
+   {
+    "id": 107392,
+    "type": "movie",
+    "title": "Chess Boxing Matrix",
+    "rating": 6.85,
+    "year": 1988,
+    "cover": "https://image.tmdb.org/t/p/w500/iq8zeotrIDwjViRgnISwEwHJQ87.jpg",
+    "status": "released"
+   },
+   {
+    "id": 411948,
+    "type": "movie",
+    "title": "Matrix",
+    "rating": 7.3,
+    "year": 1971,
+    "cover": "https://image.tmdb.org/t/p/w500/wwGvUPEM6MRiXv3gRNaVUlUCHiT.jpg",
+    "status": "released"
+   },
+   {
+    "id": 775293,
+    "type": "movie",
+    "title": "Matrix",
+    "rating": 6.8,
+    "year": 1973,
+    "cover": "https://image.tmdb.org/t/p/w500/frDqG8rmqKUg4HzQ604LZo8VLHB.jpg",
+    "status": "released"
+   },
+   {
+    "id": 555879,
+    "type": "movie",
+    "title": "Matrix",
+    "rating": 7.1,
+    "year": 1998,
+    "cover": "https://image.tmdb.org/t/p/w500/AfFD10ZqEx2vkxM2yvRZkybsGB7.jpg",
+    "status": "released"
+   },
+   {
+    "id": 221495,
+    "type": "movie",
+    "title": "The Matrix Recalibrated",
+    "rating": 6.958,
+    "year": 2004,
+    "cover": "https://image.tmdb.org/t/p/w500/gRni1Q651AZPnLqZczmahiIxG0s.jpg",
+    "status": "released"
+   },
+   {
+    "id": 684431,
+    "type": "movie",
+    "title": "Making \"The Matrix\"",
+    "rating": 7.389,
+    "year": 1999,
+    "cover": "https://image.tmdb.org/t/p/w500/m2yIfRJYwpCgHON1Ig1pNKMWTxp.jpg",
+    "status": "released"
+   },
+   {
+    "id": 452828,
+    "type": "movie",
+    "title": "Die Luther Matrix",
+    "rating": 4,
+    "year": 2017,
+    "cover": "https://image.tmdb.org/t/p/w500/7RFxQOYXPgqBY0E2yuDqkTT2Y0z.jpg",
+    "status": "released"
+   },
+   {
+    "id": 68447,
+    "type": "tv",
+    "title": "Matrix Chiambretti",
+    "rating": 0,
+    "year": 2016,
+    "cover": null,
+    "status": "ongoing"
+   },
+   {
+    "id": 18401,
+    "type": "tv",
+    "title": "Paranormal Matrix",
+    "rating": 0,
+    "year": 2016,
+    "cover": null,
+    "status": "ongoing"
+   },
+   {
+    "id": 38368,
+    "type": "tv",
+    "title": "Approval Matrix",
+    "rating": 0,
+    "year": 2011,
+    "cover": null,
+    "status": "ongoing"
+   },
+   {
+    "id": 591955,
+    "type": "movie",
+    "title": "The Matrix Reloaded Revisited",
+    "rating": 6.8,
+    "year": 2004,
+    "cover": "https://image.tmdb.org/t/p/w500/gb7C4oRzYWXWCuZMR1cwtHa53Pz.jpg",
+    "status": "released"
+   }
+  ],
+  "pagination": {
+   "page": 1,
+   "totalPages": 6,
+   "totalResults": 127,
+   "hasNext": true,
+   "hasPrevious": false
+  }
+ },
+ "/v1/search?query=matrix&page=2&type=multi": {
+  "data": [
+   {
+    "id": 684431,
+    "type": "movie",
+    "title": "Making \"The Matrix\"",
+    "rating": 7.389,
+    "year": 1999,
+    "cover": "https://image.tmdb.org/t/p/w500/m2yIfRJYwpCgHON1Ig1pNKMWTxp.jpg",
+    "status": "released"
+   },
+   {
+    "id": 452828,
+    "type": "movie",
+    "title": "Die Luther Matrix",
+    "rating": 4,
+    "year": 2017,
+    "cover": "https://image.tmdb.org/t/p/w500/7RFxQOYXPgqBY0E2yuDqkTT2Y0z.jpg",
+    "status": "released"
+   },
+   {
+    "id": 68447,
+    "type": "tv",
+    "title": "Matrix Chiambretti",
+    "rating": 0,
+    "year": 2016,
+    "cover": null,
+    "status": "ongoing"
+   },
+   {
+    "id": 18401,
+    "type": "tv",
+    "title": "Paranormal Matrix",
+    "rating": 0,
+    "year": 2016,
+    "cover": null,
+    "status": "ongoing"
+   },
+   {
+    "id": 38368,
+    "type": "tv",
+    "title": "Approval Matrix",
+    "rating": 0,
+    "year": 2011,
+    "cover": null,
+    "status": "ongoing"
+   },
+   {
+    "id": 591955,
+    "type": "movie",
+    "title": "The Matrix Reloaded Revisited",
+    "rating": 6.8,
+    "year": 2004,
+    "cover": "https://image.tmdb.org/t/p/w500/gb7C4oRzYWXWCuZMR1cwtHa53Pz.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1456523,
+    "type": "movie",
+    "title": "Matrix II",
+    "rating": 0,
+    "year": 1974,
+    "cover": "https://image.tmdb.org/t/p/w500/8KCbKg3de6GmdN8osCDuDc6yH0m.jpg",
+    "status": "released"
+   },
+   {
+    "id": 344225,
+    "type": "movie",
+    "title": "Sex and the Matrix",
+    "rating": 6.722,
+    "year": 2000,
+    "cover": "https://image.tmdb.org/t/p/w500/oCYKLcutQzMIeeonk8xhXxlDmq.jpg",
+    "status": "released"
+   },
+   {
+    "id": 386137,
+    "type": "movie",
+    "title": "Matrix AB",
+    "rating": 7.3,
+    "year": 2015,
+    "cover": "https://image.tmdb.org/t/p/w500/iBxdPaM2ViRK36WdprG6muKHeT3.jpg",
+    "status": "released"
+   },
+   {
+    "id": 116501,
+    "type": "tv",
+    "title": "Escape The Matrix",
+    "rating": 10,
+    "year": 2020,
+    "cover": "https://image.tmdb.org/t/p/w500/ur6GSomJqsmpkY16zvXi4q9CtRK.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 1386216,
+    "type": "movie",
+    "title": "The Matrix",
+    "rating": 0,
+    "year": 2004,
+    "cover": "https://image.tmdb.org/t/p/w500/u9Mt7yFDTEqtZ9R6O5Cu3ECSiBV.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1128583,
+    "type": "movie",
+    "title": "The Religion Matrix",
+    "rating": 0,
+    "year": 2021,
+    "cover": "https://image.tmdb.org/t/p/w500/leFJDPvLoJKuzWY8iXFgHuyazgN.jpg",
+    "status": "released"
+   },
+   {
+    "id": 393587,
+    "type": "movie",
+    "title": "Matrix III",
+    "rating": 7,
+    "year": 1972,
+    "cover": "https://image.tmdb.org/t/p/w500/5OwWTs0guJwcIXFgZdiDqtXLiFm.jpg",
+    "status": "released"
+   },
+   {
+    "id": 503880,
+    "type": "movie",
+    "title": "The Matrix Revolutions Revisited",
+    "rating": 7.1,
+    "year": 2004,
+    "cover": "https://image.tmdb.org/t/p/w500/61ASnmqvzpuz9VEfFElo3e2nIft.jpg",
+    "status": "released"
+   },
+   {
+    "id": 486584,
+    "type": "movie",
+    "title": "Dot Matrix",
+    "rating": 0,
+    "year": 2017,
+    "cover": "https://image.tmdb.org/t/p/w500/sBHEpQCAJh0qhQ6QI5stiF8vaLp.jpg",
+    "status": "released"
+   },
+   {
+    "id": 285435,
+    "type": "movie",
+    "title": "Dot Matrix",
+    "rating": 0,
+    "year": 2013,
+    "cover": null,
+    "status": "released"
+   },
+   {
+    "id": 560403,
+    "type": "movie",
+    "title": "Skin Matrix",
+    "rating": 0,
+    "year": 1984,
+    "cover": "https://image.tmdb.org/t/p/w500/olKcWYqELJUmhDYj6E4KBM5WgMN.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1091448,
+    "type": "movie",
+    "title": "Matrix Jumper",
+    "rating": 5,
+    "year": 2022,
+    "cover": null,
+    "status": "released"
+   },
+   {
+    "id": 1536631,
+    "type": "movie",
+    "title": "180 Years of Matrix Croatica",
+    "rating": 0,
+    "year": 2022,
+    "cover": "https://image.tmdb.org/t/p/w500/4SZQqcsaETKSKo15lYQO8RAcBpv.jpg",
+    "status": "released"
+   },
+   {
+    "id": 684735,
+    "type": "movie",
+    "title": "Making 'Enter the Matrix'",
+    "rating": 6.111,
+    "year": 2003,
+    "cover": "https://image.tmdb.org/t/p/w500/9dYkNzrjfVpgABgssYUReQTXGsz.jpg",
+    "status": "released"
+   },
+   {
+    "id": 647777,
+    "type": "movie",
+    "title": "Exit The Matrix",
+    "rating": 6,
+    "year": 2019,
+    "cover": "https://image.tmdb.org/t/p/w500/6K8XMPENGGht4MGfbOaKy8fOHwj.jpg",
+    "status": "released"
+   },
+   {
+    "id": 217056,
+    "type": "movie",
+    "title": "Matrix of Evil",
+    "rating": 5.3,
+    "year": 2003,
+    "cover": "https://image.tmdb.org/t/p/w500/A2kExZKGqluSZMO4BiilAfs2axG.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1712133,
+    "type": "movie",
+    "title": "Exit the matrix",
+    "rating": 5,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/fVgzuNUOmsJUYpCmvmMQjNtL3ZZ.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1731594,
+    "type": "movie",
+    "title": "How Do You Remember The Matrix?",
+    "rating": 0,
+    "year": 2026,
+    "cover": "https://image.tmdb.org/t/p/w500/3Ju2UcOtyPJXxKHrj7dLGDOLC7H.jpg",
+    "status": "released"
+   }
+  ],
+  "pagination": {
+   "page": 2,
+   "totalPages": 6,
+   "totalResults": 127,
+   "hasNext": true,
+   "hasPrevious": true
+  }
+ },
+ "/v1/search?query=matrix&page=1&type=movie": {
+  "data": [
+   {
+    "id": 603,
+    "type": "movie",
+    "title": "The Matrix",
+    "rating": 8.257,
+    "year": 1999,
+    "cover": "https://image.tmdb.org/t/p/w500/dXNAPwY7VrqMAo51EKhhCJfaGb5.jpg",
+    "status": "released"
+   },
+   {
+    "id": 604,
+    "type": "movie",
+    "title": "The Matrix Reloaded",
+    "rating": 7.086,
+    "year": 2003,
+    "cover": "https://image.tmdb.org/t/p/w500/aA5qHS0FbSXO8PxcxUIHbDrJyuh.jpg",
+    "status": "released"
+   },
+   {
+    "id": 605,
+    "type": "movie",
+    "title": "The Matrix Revolutions",
+    "rating": 6.758,
+    "year": 2003,
+    "cover": "https://image.tmdb.org/t/p/w500/qEWiBXJGXK28jGBAm8oFKKTB0WD.jpg",
+    "status": "released"
+   },
+   {
+    "id": 624860,
+    "type": "movie",
+    "title": "The Matrix Resurrections",
+    "rating": 6.309,
+    "year": 2021,
+    "cover": "https://image.tmdb.org/t/p/w500/8c4a8kE7PizaGQQnditMmI1xbRp.jpg",
+    "status": "released"
+   },
+   {
+    "id": 33322,
+    "type": "movie",
+    "title": "Armitage III: Poly Matrix",
+    "rating": 6.465,
+    "year": 1997,
+    "cover": "https://image.tmdb.org/t/p/w500/7sUCRdjGe7VggDCGIHywfguYdAK.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1217455,
+    "type": "movie",
+    "title": "The Matrix: Generation",
+    "rating": 6.92,
+    "year": 2023,
+    "cover": "https://image.tmdb.org/t/p/w500/53McB8R9RUBxfINRxWaPwUMtL5Q.jpg",
+    "status": "released"
+   },
+   {
+    "id": 51767,
+    "type": "movie",
+    "title": "Sexual Matrix",
+    "rating": 6.413,
+    "year": 2000,
+    "cover": "https://image.tmdb.org/t/p/w500/vmhBIPKyYCWlp2PrIIc6EXZlP9Z.jpg",
+    "status": "released"
+   },
+   {
+    "id": 21769,
+    "type": "movie",
+    "title": "Armitage: Dual Matrix",
+    "rating": 6.393,
+    "year": 2002,
+    "cover": "https://image.tmdb.org/t/p/w500/tmila2EqReVL2Tz8HBvRGIjdI9N.jpg",
+    "status": "released"
+   },
+   {
+    "id": 14543,
+    "type": "movie",
+    "title": "The Matrix Revisited",
+    "rating": 6.935,
+    "year": 2001,
+    "cover": "https://image.tmdb.org/t/p/w500/fNG2JOskhQnttmAaj2knM5h59Io.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1142175,
+    "type": "movie",
+    "title": "Matrix Dream Maze",
+    "rating": 5.5,
+    "year": 2023,
+    "cover": "https://image.tmdb.org/t/p/w500/3OJJzgNQhY4t0dSuKTXUDg591uu.jpg",
+    "status": "released"
+   },
+   {
+    "id": 790345,
+    "type": "movie",
+    "title": "Dinosaur Matrix",
+    "rating": 0,
+    "year": 1985,
+    "cover": "https://image.tmdb.org/t/p/w500/22AwsGF9PXc2cq72kH9P3mNzHGY.jpg",
+    "status": "released"
+   },
+   {
+    "id": 107392,
+    "type": "movie",
+    "title": "Chess Boxing Matrix",
+    "rating": 6.85,
+    "year": 1988,
+    "cover": "https://image.tmdb.org/t/p/w500/iq8zeotrIDwjViRgnISwEwHJQ87.jpg",
+    "status": "released"
+   },
+   {
+    "id": 411948,
+    "type": "movie",
+    "title": "Matrix",
+    "rating": 7.3,
+    "year": 1971,
+    "cover": "https://image.tmdb.org/t/p/w500/wwGvUPEM6MRiXv3gRNaVUlUCHiT.jpg",
+    "status": "released"
+   },
+   {
+    "id": 141225,
+    "type": "movie",
+    "title": "Buhera m\u00e1trix",
+    "rating": 6.125,
+    "year": 2007,
+    "cover": "https://image.tmdb.org/t/p/w500/mSA91zntAssOuzGiakE3foA1MM0.jpg",
+    "status": "released"
+   },
+   {
+    "id": 373223,
+    "type": "movie",
+    "title": "Matrix",
+    "rating": 6.4,
+    "year": 1973,
+    "cover": "https://image.tmdb.org/t/p/w500/wx2s9xYeC6uP2auuuVg99yl4RpU.jpg",
+    "status": "released"
+   },
+   {
+    "id": 775293,
+    "type": "movie",
+    "title": "Matrix",
+    "rating": 6.8,
+    "year": 1973,
+    "cover": "https://image.tmdb.org/t/p/w500/frDqG8rmqKUg4HzQ604LZo8VLHB.jpg",
+    "status": "released"
+   },
+   {
+    "id": 555879,
+    "type": "movie",
+    "title": "Matrix",
+    "rating": 7.1,
+    "year": 1998,
+    "cover": "https://image.tmdb.org/t/p/w500/AfFD10ZqEx2vkxM2yvRZkybsGB7.jpg",
+    "status": "released"
+   },
+   {
+    "id": 221495,
+    "type": "movie",
+    "title": "The Matrix Recalibrated",
+    "rating": 6.958,
+    "year": 2004,
+    "cover": "https://image.tmdb.org/t/p/w500/gRni1Q651AZPnLqZczmahiIxG0s.jpg",
+    "status": "released"
+   },
+   {
+    "id": 684431,
+    "type": "movie",
+    "title": "Making \"The Matrix\"",
+    "rating": 7.389,
+    "year": 1999,
+    "cover": "https://image.tmdb.org/t/p/w500/m2yIfRJYwpCgHON1Ig1pNKMWTxp.jpg",
+    "status": "released"
+   },
+   {
+    "id": 591955,
+    "type": "movie",
+    "title": "The Matrix Reloaded Revisited",
+    "rating": 6.8,
+    "year": 2004,
+    "cover": "https://image.tmdb.org/t/p/w500/gb7C4oRzYWXWCuZMR1cwtHa53Pz.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1456523,
+    "type": "movie",
+    "title": "Matrix II",
+    "rating": 0,
+    "year": 1974,
+    "cover": "https://image.tmdb.org/t/p/w500/8KCbKg3de6GmdN8osCDuDc6yH0m.jpg",
+    "status": "released"
+   },
+   {
+    "id": 386137,
+    "type": "movie",
+    "title": "Matrix AB",
+    "rating": 7.3,
+    "year": 2015,
+    "cover": "https://image.tmdb.org/t/p/w500/iBxdPaM2ViRK36WdprG6muKHeT3.jpg",
+    "status": "released"
+   },
+   {
+    "id": 344225,
+    "type": "movie",
+    "title": "Sex and the Matrix",
+    "rating": 6.722,
+    "year": 2000,
+    "cover": "https://image.tmdb.org/t/p/w500/oCYKLcutQzMIeeonk8xhXxlDmq.jpg",
+    "status": "released"
+   },
+   {
+    "id": 1386216,
+    "type": "movie",
+    "title": "The Matrix",
+    "rating": 0,
+    "year": 2004,
+    "cover": "https://image.tmdb.org/t/p/w500/u9Mt7yFDTEqtZ9R6O5Cu3ECSiBV.jpg",
+    "status": "released"
+   }
+  ],
+  "pagination": {
+   "page": 1,
+   "totalPages": 4,
+   "totalResults": 92,
+   "hasNext": true,
+   "hasPrevious": false
+  }
+ },
+ "/v1/search?query=matrix&page=1&type=tv": {
+  "data": [
+   {
+    "id": 711,
+    "type": "movie",
+    "title": "Threat Matrix",
+    "rating": 6.143,
+    "year": 2003,
+    "cover": "https://image.tmdb.org/t/p/w500/xOeA42Rc9EiIe0dGnwywLqYKetG.jpg",
+    "status": "released"
+   },
+   {
+    "id": 11393,
+    "type": "movie",
+    "title": "Matrix",
+    "rating": 6.75,
+    "year": 1993,
+    "cover": "https://image.tmdb.org/t/p/w500/2gBnvu6OEMq7Po2qMXd4JiAA4ZD.jpg",
+    "status": "released"
+   },
+   {
+    "id": 68447,
+    "type": "movie",
+    "title": "Matrix Chiambretti",
+    "rating": 0,
+    "year": 2016,
+    "cover": null,
+    "status": "released"
+   },
+   {
+    "id": 18401,
+    "type": "movie",
+    "title": "Paranormal Matrix",
+    "rating": 0,
+    "year": 2016,
+    "cover": null,
+    "status": "released"
+   },
+   {
+    "id": 38368,
+    "type": "movie",
+    "title": "Approval Matrix",
+    "rating": 0,
+    "year": 2011,
+    "cover": null,
+    "status": "released"
+   },
+   {
+    "id": 116501,
+    "type": "movie",
+    "title": "Escape The Matrix",
+    "rating": 10,
+    "year": 2020,
+    "cover": "https://image.tmdb.org/t/p/w500/ur6GSomJqsmpkY16zvXi4q9CtRK.jpg",
+    "status": "released"
+   },
+   {
+    "id": 325692,
+    "type": "movie",
+    "title": "The Approval Matrix",
+    "rating": 0,
+    "year": 2014,
+    "cover": null,
+    "status": "released"
+   },
+   {
+    "id": 297975,
+    "type": "movie",
+    "title": "The OSC object show",
+    "rating": 0,
+    "year": 2025,
+    "cover": "https://image.tmdb.org/t/p/w500/8yTXcUHwQzC0vQ6HIwhhoc2jQwb.jpg",
+    "status": "released"
+   }
+  ],
+  "pagination": {
+   "page": 1,
+   "totalPages": 1,
+   "totalResults": 10,
+   "hasNext": false,
+   "hasPrevious": false
+  }
+ },
+ "/v1/search?query=matrix&page=1&limit=6": {
+  "data": [
+   {
+    "id": 603,
+    "type": "movie",
+    "title": "The Matrix",
+    "rating": 8.257,
+    "year": 1999,
+    "cover": "https://image.tmdb.org/t/p/w500/dXNAPwY7VrqMAo51EKhhCJfaGb5.jpg",
+    "status": "released"
+   },
+   {
+    "id": 604,
+    "type": "movie",
+    "title": "The Matrix Reloaded",
+    "rating": 7.086,
+    "year": 2003,
+    "cover": "https://image.tmdb.org/t/p/w500/aA5qHS0FbSXO8PxcxUIHbDrJyuh.jpg",
+    "status": "released"
+   },
+   {
+    "id": 711,
+    "type": "tv",
+    "title": "Threat Matrix",
+    "rating": 6.143,
+    "year": 2003,
+    "cover": "https://image.tmdb.org/t/p/w500/xOeA42Rc9EiIe0dGnwywLqYKetG.jpg",
+    "status": "ongoing"
+   },
+   {
+    "id": 605,
+    "type": "movie",
+    "title": "The Matrix Revolutions",
+    "rating": 6.758,
+    "year": 2003,
+    "cover": "https://image.tmdb.org/t/p/w500/qEWiBXJGXK28jGBAm8oFKKTB0WD.jpg",
+    "status": "released"
+   },
+   {
+    "id": 624860,
+    "type": "movie",
+    "title": "The Matrix Resurrections",
+    "rating": 6.309,
+    "year": 2021,
+    "cover": "https://image.tmdb.org/t/p/w500/8c4a8kE7PizaGQQnditMmI1xbRp.jpg",
+    "status": "released"
+   },
+   {
+    "id": 11393,
+    "type": "tv",
+    "title": "Matrix",
+    "rating": 6.75,
+    "year": 1993,
+    "cover": "https://image.tmdb.org/t/p/w500/2gBnvu6OEMq7Po2qMXd4JiAA4ZD.jpg",
+    "status": "ongoing"
+   }
+  ],
+  "pagination": {
+   "page": 1,
+   "totalPages": 22,
+   "totalResults": 127,
+   "hasNext": true,
+   "hasPrevious": false
+  }
+ },
+ "/v1/search?query=zqxjkvwnobody&page=1&type=multi": {
+  "data": [],
+  "pagination": {
+   "page": 1,
+   "totalPages": 0,
+   "totalResults": 0,
+   "hasNext": false,
+   "hasPrevious": false
+  }
+ },
+ "/v1/search?query=zqxjkvwnobody&page=1&limit=6": {
+  "data": [],
+  "pagination": {
+   "page": 1,
+   "totalPages": 0,
+   "totalResults": 0,
+   "hasNext": false,
+   "hasPrevious": false
+  }
+ }
+}

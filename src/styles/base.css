@@ -1,0 +1,119 @@
+/* claude-opus-5: Document reset, layout primitives, and the shared error/empty states. */
+/* Document */
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+body {
+  background: var(--carbon);
+  color: var(--ash);
+  font-family: var(--font-text);
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: .025em;
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  color: var(--link-blue);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+button,
+input,
+select {
+  font: inherit;
+}
+button { cursor: pointer; }
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* claude-opus-5: The app never had a footer before, so nothing pinned the page to the viewport.
+   On short pages (an empty search, a not-found route) the footer would otherwise float in the
+   middle of the screen with dead space beneath it. */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main { flex: 1 0 auto; }
+footer { margin-top: auto; }
+
+/* Layout primitives */
+.wrap {
+  width: min(var(--page-max),calc(100% - 48px));
+  margin-inline: auto;
+}
+.card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.card-link:hover { text-decoration: none; }
+main { padding: 32px 0 64px; }
+
+/* Shared states */
+.state-message {
+  border: 1px solid var(--basalt);
+  background: var(--graphite);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  color: var(--silver);
+}
+.invalid-response-shell {
+  min-height: calc(100vh - 60px);
+  display: grid;
+  place-items: center;
+  padding: 32px 24px 64px;
+}
+.invalid-response-shell.in-page {
+  min-height: 360px;
+  padding: 28px 0;
+}
+.invalid-response-state {
+  width: min(100%,460px);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 12px;
+}
+.invalid-response-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  color: var(--signal-green);
+}
+.invalid-response-icon svg {
+  width: 24px;
+  height: 24px;
+}
+.invalid-response-state h1 {
+  margin: 0;
+  color: var(--chalk);
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: .01em;
+}
+.invalid-response-state p {
+  margin: 0;
+  color: var(--silver);
+  font-size: 14px;
+  max-width: 42ch;
+}
+.invalid-response-state.is-compact { width: min(100%,360px); }
+.empty-row {
+  color: var(--fog);
+  font-size: 13px;
+  padding: 8px 3px;
+}

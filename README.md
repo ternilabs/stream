@@ -9,7 +9,7 @@
 [![Preact](https://img.shields.io/badge/Preact-673ab8?style=flat-square&logo=preact&logoColor=white)](https://preactjs.com)
 [![Vite](https://img.shields.io/badge/Vite-646cff?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
 [![License](https://img.shields.io/badge/License-TerniLabs-blue?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.3-71d083?style=flat-square)](#)
+[![Version](https://img.shields.io/badge/Version-1.0.4-71d083?style=flat-square)](#)
 
 [Overview](#overview) • [Features](#features) • [Getting started](#getting-started) • [Usage](#usage) • [Architecture](#architecture) • [Configuration](#configuration) • [Disclaimer](#disclaimer)
 
@@ -19,7 +19,7 @@
 
 TerniLabs Stream is a single-page web app built with [Preact](https://preactjs.com) and [Vite](https://vitejs.dev) that browses movie and TV metadata and routes playback to one of 18 third-party embed providers. It is a client for a separate `stream-api` service: this repository contains the UI only.
 
-The app is designed as a fast, dependency-light reference implementation for a catalog browser. It uses Preact Signals for fine-grained reactivity, [preact-iso](https://github.com/preactjs/preact-iso) for client-side routing, and a 24-hour localStorage cache layer that keeps the upstream API inside its free-tier rate limit.
+The app is designed as a fast, dependency-light reference implementation for a catalog browser. It uses Preact hooks for state, [preact-iso](https://github.com/preactjs/preact-iso) for client-side routing, and a 24-hour localStorage cache layer that keeps the upstream API inside its free-tier rate limit.
 
 > [!IMPORTANT]
 > This project is intended **for educational and private use only**. The developer does not condone or encourage copyright infringement. TerniLabs does not store or host any media. All streams are served by third-party providers that are not affiliated with, endorsed by, or connected to this project.
@@ -28,11 +28,13 @@ The app is designed as a fast, dependency-light reference implementation for a c
 
 - **Three routes** — Home (`/`), Search (`/search`), Watch (`/watch/:id`).
 - **Home page** — four paged sections (Trending Movies, Trending TV, Top Rated Movies, Top Rated TV) with skeleton loading and viewport-aware card counts (6 / 4 / 2 by breakpoint).
+- **Footer** — a site-wide disclaimer stating the project is not affiliated with any streaming platform.
 - **Search** — debounced quick-search panel with up to 6 results, recent searches (max 5, deduplicated, individually removable), and a dedicated `/search` route with All / TV / Movie filter and first/prev/next/last pagination.
 - **Watch page** — server selector, TV season and episode pickers populated from API metadata, detail card, trailer link, up to 12 recommendations, and expandable description and cast lists.
 - **Settings dialog** — live source health indicators merged from the API snapshot, with a confirmed local-storage clear action.
 - **Daily cache** — 24-hour localStorage cache that transparently reuses API responses.
 - **Rate-limit friendly** — daily-resetting Ko-fi donation prompt shown when the API returns 429, with no extra request cost.
+- **Stable loading** — skeletons are built from the same classes as the content they replace, so pages do not reflow when data arrives.
 - **Accessibility** — `aria-expanded`, `aria-current`, listbox / option semantics on all custom dropdowns, and `prefers-reduced-motion` respected on shimmer and spinners.
 - **Responsive** — 6 / 4 / 2 column media grids and a mobile-only search overlay with scrim and Escape-to-close.
 
@@ -41,14 +43,14 @@ The app is designed as a fast, dependency-light reference implementation for a c
 | Concern | Choice |
 | --- | --- |
 | UI runtime | [Preact](https://preactjs.com) `10.x` |
-| Reactivity | [`@preact/signals`](https://github.com/preactjs/signals) + [`@preact-signals/query`](https://github.com/preact-iso) |
 | Routing | [`preact-iso`](https://github.com/preactjs/preact-iso) |
 | Icons | [`preact-feather`](https://github.com/feathericons/react-feather) |
 | Fonts | [`@fontsource-variable/red-hat-*`](https://fontsource.org) (Display, Text, Mono) |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com) via `@tailwindcss/vite` |
 | Build tool | [Vite](https://vitejs.dev) `8.x` |
 | Language | [TypeScript](https://www.typescriptlang.org) `6.x` (strict) |
-| Tests | [Vitest](https://vitest.dev) + [Testing Library](https://testing-library.com) + [jsdom](https://github.com/jsdom/jsdom) |
+| Unit tests | [Vitest](https://vitest.dev) + [Testing Library](https://testing-library.com) + [jsdom](https://github.com/jsdom/jsdom) |
+| End-to-end tests | [Playwright](https://playwright.dev) |
 
 ## Getting started
 
@@ -94,6 +96,20 @@ npm test            # vitest run
 npm run test:watch  # vitest watch mode
 ```
 
+### End-to-end tests
+
+```bash
+npm run e2e         # Playwright, against captured API fixtures
+npm run e2e:ui      # Playwright UI mode
+npm run e2e:live    # same specs against the live stream-api
+```
+
+The suite runs against fixtures in `e2e/fixtures/` by default, so it is deterministic offline and
+in CI. That also gives the layout-shift assertions stable data to measure. `e2e:live` points the
+same specs at the real API and skips the assertions that depend on exact fixture contents.
+
+Browsers install once with `npx playwright install chromium`.
+
 ## Usage
 
 ### Routes
@@ -125,27 +141,32 @@ npm run test:watch  # vitest watch mode
 
 ```
 src/
-├── app.tsx                # LocationProvider + ErrorBoundary + Router
+├── app.tsx                # LocationProvider + ErrorBoundary + Router + Footer
 ├── main.tsx               # Preact render entry point
 ├── components/            # Nav, SearchBox, MediaCard, MediaSection, etc.
 ├── pages/                 # HomePage, SearchPage, WatchPage
-├── hooks/                 # useVisibleCount
+├── hooks/                 # useVisibleCount, useSourceHealth
 ├── lib/
 │   ├── api-client.ts      # Typed fetch wrapper, 4 s timeout, single 502 retry
 │   ├── embed-resolver.ts  # URL template → embed URL for 18 sources
 │   ├── local-store.ts     # Versioned localStorage helpers
-│   ├── queries.ts         # 24 h cache layer over the API client
+│   ├── queries.ts         # 24 h cache + in-flight de-duplication over the API client
 │   ├── source-health.ts   # Merges registry with API health snapshot
 │   ├── source-registry.ts # 18 embed providers (movie + tv templates)
 │   └── types.ts           # Shared domain and API types
-├── styles.css             # Tailwind v4 + design tokens
+├── styles/                # Tailwind v4 entry, tokens, and one file per area
 └── test/                  # Vitest setup
+
+e2e/
+├── fixtures/              # API responses captured from stream-api
+├── support/               # Route mocking and shared helpers
+└── *.spec.ts              # Playwright specs
 ```
 
 ### Data flow
 
 1. The `api-client` issues typed requests to `stream-api` with a 4 s timeout and a single retry on `502`.
-2. `queries.ts` wraps every call in a versioned 24 h `localStorage` cache, so the second mount of a route or page is free.
+2. `queries.ts` wraps every call in a versioned 24 h `localStorage` cache, so the second mount of a route or page is free. Callers that ask for the same key before the first request settles share that request rather than issuing their own.
 3. `source-registry.ts` lists 18 third-party embed providers; `source-health.ts` overlays the API's health snapshot to drive the status dots in the settings dialog.
 4. `embed-resolver.ts` turns `(source, { type, id, season, episode })` into the final embed URL — no media is proxied through this app.
 5. The home, search, and watch pages all read through `queries.ts`, so caching is transparent.

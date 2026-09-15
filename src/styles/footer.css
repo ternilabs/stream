@@ -1,0 +1,13 @@
+/* claude-opus-5: Global disclaimer footer. The original `.footer-line` was a two-column layout for a footer that was never rendered; it is now a single centred line. */
+footer {
+  background: var(--obsidian);
+  padding: 18px 0;
+}
+.footer-line {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: var(--fog);
+  font-size: 12px;
+  line-height: 1.5;
+}
